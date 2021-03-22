@@ -4,16 +4,27 @@ import 'package:setthi/screens/LandingScreen.dart';
 import 'package:setthi/screens/mainScreen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(SetthiApp());
 }
 
-class MyApp extends StatelessWidget {
-  final auth = true;
+class SetthiApp extends StatefulWidget {
+  @override
+  _SetthiAppState createState() => _SetthiAppState();
+}
+
+class _SetthiAppState extends State<SetthiApp> {
+  var auth = false;
+  void login() {
+    setState(() {
+      auth = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: appName,
-      home: auth ? LandingScreen() : MainScreen(),
+      home: auth ? MainScreen() : LandingScreen(login),
     );
   }
 }

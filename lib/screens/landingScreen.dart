@@ -8,6 +8,9 @@ import 'package:setthi/widgets/logo/logoImage.dart';
 import 'package:setthi/widgets/logo/logoText.dart';
 
 class LandingScreen extends StatelessWidget {
+  // Mock changing page
+  final Function login;
+  LandingScreen(this.login);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +26,11 @@ class LandingScreen extends StatelessWidget {
           kSizedBoxVerticalXXS,
           Descriptiontext(),
           kSizedBoxVerticalL,
-          PrimaryButton(text: "SIGN IN", onPressed: () {}),
+          PrimaryButton(
+              text: "SIGN IN",
+              onPressed: () {
+                login();
+              }),
           CustomDivider(),
           SecondaryButton(text: "REGISTER", onPressed: () {}),
         ],
