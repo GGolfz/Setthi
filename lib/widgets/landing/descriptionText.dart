@@ -11,8 +11,8 @@ class Descriptiontext extends StatelessWidget {
       width: double.infinity,
       child: Text(descriptionText,
           textAlign: TextAlign.center,
-          style:
-              GoogleFonts.prompt(fontSize: kSizeXS * 1.5, color: kNeutral800)),
+          style: GoogleFonts.quicksand(
+              fontSize: kSizeXS * 1.6, color: kNeutral800)),
     );
   }
 }

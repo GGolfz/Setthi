@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/constants.dart';
+import 'package:setthi/widgets/buttons/primaryButton.dart';
 import 'package:setthi/widgets/landing/descriptionText.dart';
 import 'package:setthi/widgets/logo/logoImage.dart';
 import 'package:setthi/widgets/logo/logoText.dart';
@@ -9,12 +10,17 @@ class LandingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeS * 1.5),
+      padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeM),
       width: double.infinity,
       height: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [LogoImage(), LogoText(), Descriptiontext()],
+        children: [
+          LogoImage(),
+          LogoText(),
+          Descriptiontext(),
+          PrimaryButton(text: "Sign In", onPressed: () {})
+        ],
       ),
     ));
   }
