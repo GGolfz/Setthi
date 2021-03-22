@@ -3,6 +3,7 @@ import 'package:setthi/config/constants.dart';
 import 'package:setthi/widgets/buttons/primaryButton.dart';
 import 'package:setthi/widgets/buttons/secondaryButton.dart';
 import 'package:setthi/widgets/landing/descriptionText.dart';
+import 'package:setthi/widgets/layout/customDivider.dart';
 import 'package:setthi/widgets/logo/logoImage.dart';
 import 'package:setthi/widgets/logo/logoText.dart';
 
@@ -19,9 +20,12 @@ class LandingScreen extends StatelessWidget {
         children: [
           LogoImage(),
           LogoText(),
+          kSizedBoxVerticalXXS,
           Descriptiontext(),
+          kSizedBoxVerticalL,
           PrimaryButton(text: "SIGN IN", onPressed: () {}),
-          SecondaryButton(text: "REGISTER", onPressed: () {})
+          CustomDivider(),
+          SecondaryButton(text: "REGISTER", onPressed: () {}),
         ],
       ),
     ));
