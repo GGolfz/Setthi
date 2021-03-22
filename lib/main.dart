@@ -8,7 +8,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final auth = false;
+  final auth = true;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
