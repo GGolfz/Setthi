@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/widgets/buttons/primaryButton.dart';
+import 'package:setthi/widgets/buttons/secondaryButton.dart';
 import 'package:setthi/widgets/landing/descriptionText.dart';
 import 'package:setthi/widgets/logo/logoImage.dart';
 import 'package:setthi/widgets/logo/logoText.dart';
@@ -19,7 +20,8 @@ class LandingScreen extends StatelessWidget {
           LogoImage(),
           LogoText(),
           Descriptiontext(),
-          PrimaryButton(text: "Sign In", onPressed: () {})
+          PrimaryButton(text: "SIGN IN", onPressed: () {}),
+          SecondaryButton(text: "REGISTER", onPressed: () {})
         ],
       ),
     ));
