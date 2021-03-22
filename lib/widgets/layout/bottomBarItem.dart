@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
+import 'package:setthi/config/constants.dart';
 
 class BottomBarItem extends StatelessWidget {
   final IconData icon;
@@ -14,10 +15,10 @@ class BottomBarItem extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-      minWidth: 50,
+    return IconButton(
+      splashRadius: kSizeS * 1.6,
       onPressed: () => changeTab(tab),
-      child: Column(
+      icon: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(

@@ -1,17 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/widgets/logoImage.dart';
-import 'package:setthi/widgets/logoText.dart';
+import 'package:setthi/config/constants.dart';
+import 'package:setthi/widgets/buttons/primaryButton.dart';
+import 'package:setthi/widgets/buttons/secondaryButton.dart';
+import 'package:setthi/widgets/landing/descriptionText.dart';
+import 'package:setthi/widgets/layout/customDivider.dart';
+import 'package:setthi/widgets/logo/logoImage.dart';
+import 'package:setthi/widgets/logo/logoText.dart';
 
 class LandingScreen extends StatelessWidget {
+  // Mock changing page
+  final Function login;
+  LandingScreen(this.login);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
+      padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeM),
       width: double.infinity,
       height: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [LogoImage(), LogoText()],
+        children: [
+          LogoImage(),
+          LogoText(),
+          kSizedBoxVerticalXXS,
+          Descriptiontext(),
+          kSizedBoxVerticalL,
+          PrimaryButton(
+              text: "SIGN IN",
+              onPressed: () {
+                login();
+              }),
+          CustomDivider(),
+          SecondaryButton(text: "REGISTER", onPressed: () {}),
+        ],
       ),
     ));
   }
