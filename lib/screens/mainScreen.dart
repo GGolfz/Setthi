@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/widgets/addButton.dart';
+import 'package:setthi/widgets/buttons/addButton.dart';
 import './budgetScreen.dart';
 import './moreScreen.dart';
 import './timelineScreen.dart';
 import './walletScreen.dart';
-import '../widgets/bottomBar.dart';
+import '../widgets/layout/bottomBar.dart';
 
 class MainScreen extends StatefulWidget {
   @override

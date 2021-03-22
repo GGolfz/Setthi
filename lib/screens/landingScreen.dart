@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/constants.dart';
-import 'package:setthi/widgets/descriptionText.dart';
-import 'package:setthi/widgets/logoImage.dart';
-import 'package:setthi/widgets/logoText.dart';
+import 'package:setthi/widgets/landing/descriptionText.dart'xt.dart';
+import 'package:setthi/widgets/logo/logoImage.dart'dart';
+import 'package:setthi/widgets/logo/logoText.dart'dart';
 
 class LandingScreen extends StatelessWidget {
   @override

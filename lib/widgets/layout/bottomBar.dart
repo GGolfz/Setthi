@@ -3,9 +3,9 @@ import 'package:setthi/screens/budgetScreen.dart';
 import 'package:setthi/screens/moreScreen.dart';
 import 'package:setthi/screens/timelineScreen.dart';
 import 'package:setthi/screens/walletScreen.dart';
-import 'package:setthi/widgets/bottomBarItem.dart';
-import '../config/constants.dart';
-import '../config/color.dart';
+import 'package:setthi/widgets/layout/bottomBarItem.dart';
+import '../../config/constants.dart';
+import '../../config/color.dart';
 
 class BottomBar extends StatelessWidget {
   final String currentTab;
