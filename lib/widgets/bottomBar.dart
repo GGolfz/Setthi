@@ -14,13 +14,17 @@ class BottomBar extends StatelessWidget {
   final barItems = [
     {'icon': Icons.list, 'tab': TimelineScreen.routeName, 'blank': false},
     {
-      'icon': Icons.wallet_travel,
+      'icon': Icons.account_balance_wallet,
       'tab': WalletScreen.routeName,
       'blank': false
     },
     {'blank': true},
-    {'icon': Icons.attach_money, 'tab': BudgetScreen.routeName, 'blank': false},
-    {'icon': Icons.more, 'tab': MoreScreen.routeName, 'blank': false}
+    {
+      'icon': Icons.monetization_on,
+      'tab': BudgetScreen.routeName,
+      'blank': false
+    },
+    {'icon': Icons.more_horiz, 'tab': MoreScreen.routeName, 'blank': false}
   ];
   @override
   Widget build(BuildContext context) {
