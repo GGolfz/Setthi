@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/string.dart';
-import 'package:setthi/screens/LandingScreen.dart';
-import 'package:setthi/screens/mainScreen.dart';
+import './config/string.dart';
+import './screens/LandingScreen.dart';
+import './screens/mainScreen.dart';
 
 void main() {
   runApp(SetthiApp());

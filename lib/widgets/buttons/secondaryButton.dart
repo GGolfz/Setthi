@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
+import '../../config/color.dart';
+import '../../config/constants.dart';
+import '../../config/style.dart';
 
 class SecondaryButton extends StatelessWidget {
   final String text;
@@ -35,10 +35,7 @@ class SecondaryButton extends StatelessWidget {
           vertical: kSizeXS,
           horizontal: kSizeM,
         ),
-        child: Text(text,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.quicksand(
-                fontSize: kSizeS * 1.25, color: kGold500)),
+        child: Text(text, textAlign: TextAlign.center, style: kHeadline4Gold),
       ),
     );
   }
