@@ -29,3 +29,4 @@ const kTitleGradient = const LinearGradient(
     end: Alignment.centerRight,
     colors: [Color(0xFFA9A5A3), Color(0xFFD4B356)],
     stops: [0.3, 1]);
+const kTransparent = Colors.transparent;
