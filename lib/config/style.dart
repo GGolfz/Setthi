@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
+import './color.dart';
+import './constants.dart';
 
 final kHeadline1Black = GoogleFonts.quicksand(
     fontSize: kFontSizeHeadline1,

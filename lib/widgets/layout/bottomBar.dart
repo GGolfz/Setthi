@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/screens/budgetScreen.dart';
-import 'package:setthi/screens/moreScreen.dart';
-import 'package:setthi/screens/timelineScreen.dart';
-import 'package:setthi/screens/walletScreen.dart';
-import 'package:setthi/widgets/layout/bottomBarItem.dart';
+import '../../screens/budgetScreen.dart';
+import '../../screens/moreScreen.dart';
+import '../../screens/timelineScreen.dart';
+import '../../screens/walletScreen.dart';
+import '../../widgets/layout/bottomBarItem.dart';
 import '../../config/constants.dart';
 import '../../config/color.dart';
 

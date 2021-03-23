@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/config/string.dart';
-import 'package:setthi/config/style.dart';
-import 'package:setthi/modal/authType.dart';
-import 'package:setthi/widgets/auth/authTextField.dart';
-import 'package:setthi/widgets/buttons/primaryButton.dart';
+import '../../config/color.dart';
+import '../../config/constants.dart';
+import '../../config/string.dart';
+import '../../config/style.dart';
+import '../../modal/authType.dart';
+import '../../widgets/auth/authTextField.dart';
+import '../../widgets/buttons/primaryButton.dart';
 
 class RegisterForm extends StatefulWidget {
   final Function changeModal;

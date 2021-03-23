@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/string.dart';
-import 'package:setthi/config/style.dart';
+import '../../config/string.dart';
+import '../../config/style.dart';
 
 class Descriptiontext extends StatelessWidget {
   @override

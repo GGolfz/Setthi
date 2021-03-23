@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/modal/authType.dart';
-import 'package:setthi/widgets/auth/registerForm.dart';
-import 'package:setthi/widgets/auth/signinForm.dart';
-import 'package:setthi/widgets/buttons/primaryButton.dart';
-import 'package:setthi/widgets/buttons/secondaryButton.dart';
-import 'package:setthi/widgets/landing/descriptionText.dart';
-import 'package:setthi/widgets/layout/customDivider.dart';
-import 'package:setthi/widgets/logo/logoImage.dart';
-import 'package:setthi/widgets/logo/logoText.dart';
+import '../config/color.dart';
+import '../config/constants.dart';
+import '../modal/authType.dart';
+import '../widgets/auth/registerForm.dart';
+import '../widgets/auth/signinForm.dart';
+import '../widgets/buttons/primaryButton.dart';
+import '../widgets/buttons/secondaryButton.dart';
+import '../widgets/landing/descriptionText.dart';
+import '../widgets/layout/customDivider.dart';
+import '../widgets/logo/logoImage.dart';
+import '../widgets/logo/logoText.dart';
 
 class LandingScreen extends StatelessWidget {
   // Mock changing page

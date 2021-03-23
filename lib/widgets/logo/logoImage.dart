@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/constants.dart';
+import '../../config/constants.dart';
 
 class LogoImage extends StatelessWidget {
   @override
