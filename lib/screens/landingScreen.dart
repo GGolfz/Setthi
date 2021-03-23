@@ -3,6 +3,7 @@ import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/modal/authType.dart';
 import 'package:setthi/widgets/auth/registerForm.dart';
+import 'package:setthi/widgets/auth/signinForm.dart';
 import 'package:setthi/widgets/buttons/primaryButton.dart';
 import 'package:setthi/widgets/buttons/secondaryButton.dart';
 import 'package:setthi/widgets/landing/descriptionText.dart';
@@ -30,7 +31,7 @@ class LandingScreen extends StatelessWidget {
 
   Widget _buildBottomModalContainer(Widget widget, type) {
     return Container(
-      height: type == AuthType.login ? 350 : 400,
+      height: type == AuthType.signin ? 350 : 400,
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: kSizeS * 1.5, vertical: kSizeS),
       decoration: BoxDecoration(
@@ -46,9 +47,15 @@ class LandingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     void _changeModal(type) {
       switch (type) {
-        case AuthType.login:
+        case AuthType.signin:
+          Navigator.of(context).pop();
+          _showBottomModal(
+              context, SigninForm(changeModal: _changeModal), AuthType.signin);
           break;
         case AuthType.register:
+          Navigator.of(context).pop();
+          _showBottomModal(context, RegisterForm(changeModal: _changeModal),
+              AuthType.register);
           break;
         default:
           Navigator.of(context).pop();
@@ -72,14 +79,17 @@ class LandingScreen extends StatelessWidget {
               PrimaryButton(
                   text: "SIGN IN",
                   onPressed: () {
-                    login();
+                    _showBottomModal(context,
+                        SigninForm(changeModal: _changeModal), AuthType.signin);
                   }),
               CustomDivider(),
               SecondaryButton(
                   text: "REGISTER",
                   onPressed: () {
                     _showBottomModal(
-                        context, RegisterForm(), AuthType.register);
+                        context,
+                        RegisterForm(changeModal: _changeModal),
+                        AuthType.register);
                   }),
             ],
           ),

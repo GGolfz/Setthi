@@ -5,24 +5,22 @@ import 'package:setthi/modal/authType.dart';
 import 'package:setthi/widgets/auth/authTextField.dart';
 import 'package:setthi/widgets/buttons/primaryButton.dart';
 
-class RegisterForm extends StatefulWidget {
+class SigninForm extends StatefulWidget {
   final Function changeModal;
-  const RegisterForm({this.changeModal});
+  const SigninForm({this.changeModal});
   @override
-  _RegisterFormState createState() => _RegisterFormState();
+  _SigninFormState createState() => _SigninFormState();
 }
 
-class _RegisterFormState extends State<RegisterForm> {
+class _SigninFormState extends State<SigninForm> {
   final _email = TextEditingController();
   final _password = TextEditingController();
-  final _confirmPassword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   @override
   void dispose() {
     _email.dispose();
     _password.dispose();
-    _confirmPassword.dispose();
 
     super.dispose();
   }
@@ -37,7 +35,7 @@ class _RegisterFormState extends State<RegisterForm> {
             children: [
               kSizedBoxVerticalS,
               Text(
-                "Register",
+                "Sign In",
                 style: TextStyle(color: kNeutralWhite, fontSize: kSizeS * 1.5),
               ),
               kSizedBoxVerticalS,
@@ -55,30 +53,25 @@ class _RegisterFormState extends State<RegisterForm> {
                         placeholder: "Password",
                         type: AuthTextFieldType.password),
                     kSizedBoxVerticalS,
-                    AuthTextField(
-                        textController: _confirmPassword,
-                        placeholder: "Confirm Password",
-                        type: AuthTextFieldType.confirmPassword),
-                    kSizedBoxVerticalS,
                     PrimaryButton(
-                        text: "REGISTER",
+                        text: "SIGN IN",
                         onPressed: () {
                           _formKey.currentState.validate();
                         }),
                     kSizedBoxVerticalS,
                     GestureDetector(
                       onTap: () {
-                        widget.changeModal(AuthType.signin);
+                        widget.changeModal(AuthType.register);
                       },
                       child: RichText(
                         text: TextSpan(children: [
                           TextSpan(
-                              text: "Already have an account ? ",
+                              text: "New here ? ",
                               style: TextStyle(
                                   color: kNeutralWhite,
                                   fontSize: kSizeXS * 1.8)),
                           TextSpan(
-                              text: "Sign In",
+                              text: "Create Account",
                               style: TextStyle(
                                   color: kGold500, fontSize: kSizeXS * 1.8))
                         ]),
