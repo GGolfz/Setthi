@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/modal/authType.dart';
-import 'package:setthi/widgets/auth/authTextField.dart';
-import 'package:setthi/widgets/buttons/primaryButton.dart';
+import '../../config/color.dart';
+import '../../config/constants.dart';
+import '../../config/string.dart';
+import '../../config/style.dart';
+import '../../modal/authType.dart';
+import '../../widgets/auth/authTextField.dart';
+import '../../widgets/buttons/primaryButton.dart';
 
 class SigninForm extends StatefulWidget {
   final Function changeModal;
@@ -36,7 +38,7 @@ class _SigninFormState extends State<SigninForm> {
               kSizedBoxVerticalS,
               Text(
                 "Sign In",
-                style: TextStyle(color: kNeutralWhite, fontSize: kSizeS * 1.5),
+                style: kHeadline2White,
               ),
               kSizedBoxVerticalS,
               Form(
@@ -53,6 +55,16 @@ class _SigninFormState extends State<SigninForm> {
                         placeholder: "Password",
                         type: AuthTextFieldType.password),
                     kSizedBoxVerticalS,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          forgetText,
+                          style: kBody1White,
+                        )
+                      ],
+                    ),
+                    kSizedBoxVerticalS,
                     PrimaryButton(
                         text: "SIGN IN",
                         onPressed: () {
@@ -66,14 +78,9 @@ class _SigninFormState extends State<SigninForm> {
                       child: RichText(
                         text: TextSpan(children: [
                           TextSpan(
-                              text: "New here ? ",
-                              style: TextStyle(
-                                  color: kNeutralWhite,
-                                  fontSize: kSizeXS * 1.8)),
-                          TextSpan(
-                              text: "Create Account",
-                              style: TextStyle(
-                                  color: kGold500, fontSize: kSizeXS * 1.8))
+                              text: suggestRegisterQuestion,
+                              style: kBody1White),
+                          TextSpan(text: suggestRegisterText, style: kBody1Gold)
                         ]),
                       ),
                     ),
