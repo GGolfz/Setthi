@@ -22,6 +22,7 @@ const kGold100 = const Color(0xFFFFF9EE);
 const kGold200 = const Color(0xFFF4DF99);
 const kGold400 = const Color(0xFFE4BF45);
 const kGold500 = const Color(0xFFD3AE36);
+const kRed200 = const Color(0xFFFF5555);
 const kRed400 = const Color(0xFFE02929);
 const kGreen500 = const Color(0xFF229C45);
 const kTitleGradient = const LinearGradient(
@@ -29,3 +30,4 @@ const kTitleGradient = const LinearGradient(
     end: Alignment.centerRight,
     colors: [Color(0xFFA9A5A3), Color(0xFFD4B356)],
     stops: [0.3, 1]);
+const kTransparent = Colors.transparent;

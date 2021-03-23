@@ -12,7 +12,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  static const routeName = '/';
   String _currentTab = TimelineScreen.routeName;
   final screen = {
     TimelineScreen.routeName: TimelineScreen(),
