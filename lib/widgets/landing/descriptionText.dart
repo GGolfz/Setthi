@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:setthi/config/color.dart';
 import 'package:setthi/config/string.dart';
-import '../../config/constants.dart';
+import 'package:setthi/config/style.dart';
 
 class Descriptiontext extends StatelessWidget {
   @override
@@ -10,9 +8,7 @@ class Descriptiontext extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: Text(descriptionText,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.quicksand(
-              fontSize: kSizeXS * 1.6, color: kNeutral800)),
+          textAlign: TextAlign.center, style: kDescriptionText),
     );
   }
 }

@@ -31,7 +31,7 @@ class LandingScreen extends StatelessWidget {
 
   Widget _buildBottomModalContainer(Widget widget, type) {
     return Container(
-      height: type == AuthType.signin ? 350 : 400,
+      height: type == AuthType.signin ? 380 : 400,
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: kSizeS * 1.5, vertical: kSizeS),
       decoration: BoxDecoration(

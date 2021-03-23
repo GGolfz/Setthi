@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
+import 'package:setthi/config/string.dart';
+import 'package:setthi/config/style.dart';
 import 'package:setthi/modal/authType.dart';
 import 'package:setthi/widgets/auth/authTextField.dart';
 import 'package:setthi/widgets/buttons/primaryButton.dart';
@@ -38,7 +40,7 @@ class _RegisterFormState extends State<RegisterForm> {
               kSizedBoxVerticalS,
               Text(
                 "Register",
-                style: TextStyle(color: kNeutralWhite, fontSize: kSizeS * 1.5),
+                style: kHeadline2White,
               ),
               kSizedBoxVerticalS,
               Form(
@@ -73,14 +75,8 @@ class _RegisterFormState extends State<RegisterForm> {
                       child: RichText(
                         text: TextSpan(children: [
                           TextSpan(
-                              text: "Already have an account ? ",
-                              style: TextStyle(
-                                  color: kNeutralWhite,
-                                  fontSize: kSizeXS * 1.8)),
-                          TextSpan(
-                              text: "Sign In",
-                              style: TextStyle(
-                                  color: kGold500, fontSize: kSizeXS * 1.8))
+                              text: suggestSigninQuestion, style: kBody1White),
+                          TextSpan(text: suggestSigninText, style: kBody1Gold)
                         ]),
                       ),
                     ),

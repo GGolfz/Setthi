@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
+import 'package:setthi/config/style.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String text;
@@ -34,10 +34,7 @@ class PrimaryButton extends StatelessWidget {
           vertical: kSizeXS,
           horizontal: kSizeM,
         ),
-        child: Text(text,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.quicksand(
-                fontSize: kSizeS * 1.25, color: kNeutralWhite)),
+        child: Text(text, textAlign: TextAlign.center, style: kHeadline4White),
       ),
     );
   }

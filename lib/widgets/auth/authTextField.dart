@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
+import 'package:setthi/config/style.dart';
 import 'package:setthi/modal/authType.dart';
 
 class AuthTextField extends StatefulWidget {
@@ -41,6 +42,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       validator: (val) {
+        // check email is valid ?
         if (val.isEmpty && !widget.isOptional) {
           return '${widget.placeholder} is Required';
         }
@@ -58,14 +60,14 @@ class _AuthTextFieldState extends State<AuthTextField> {
       },
       controller: widget.textController,
       obscureText: isPassword() && _isHiddenText,
+      style: kBody1Gold,
       decoration: InputDecoration(
           border: OutlineInputBorder(
               borderRadius: kBorderRadiusXS * 1.5, borderSide: BorderSide.none),
           filled: true,
           fillColor: kNeutralWhite,
           hintText: widget.placeholder,
-          hintStyle:
-              Theme.of(context).textTheme.bodyText1.copyWith(color: kGold500),
+          hintStyle: kBody1Gold,
           contentPadding: EdgeInsets.symmetric(
             horizontal: kSizeS * 1.25,
           ),
@@ -79,10 +81,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
                   color: kNeutral450,
                 )
               : null,
-          errorStyle: TextStyle(
-              fontSize: kSizeXS * 1.25,
-              color: kRed200,
-              fontWeight: FontWeight.w500)),
+          errorStyle: kBody1Red),
     );
   }
 }
