@@ -12,10 +12,6 @@ import '../widgets/logo/logoImage.dart';
 import '../widgets/logo/logoText.dart';
 
 class LandingScreen extends StatelessWidget {
-  // Mock changing page
-  final Function login;
-  LandingScreen(this.login);
-
   void _showBottomModal(context, Widget widget, type) {
     showModalBottomSheet(
         context: context,
