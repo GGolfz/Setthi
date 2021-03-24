@@ -19,7 +19,7 @@ class AuthTextField extends StatefulWidget {
       @required this.type,
       this.key,
       this.isOptional = false,
-      this.compareText = ''});
+      this.compareText});
   @override
   _AuthTextFieldState createState() => _AuthTextFieldState();
 }
@@ -38,13 +38,21 @@ class _AuthTextFieldState extends State<AuthTextField> {
         (widget.type == AuthTextFieldType.confirmPassword);
   }
 
+  bool isEmailValid(String val) {
+    return RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(val);
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       validator: (val) {
-        // check email is valid ?
         if (val.isEmpty && !widget.isOptional) {
           return '${widget.placeholder} is Required';
+        }
+        if (widget.type == AuthTextFieldType.email && !isEmailValid(val)) {
+          return 'Email is invalid';
         }
         if (isPassword()) {
           if (val.length < 8) {
@@ -52,6 +60,8 @@ class _AuthTextFieldState extends State<AuthTextField> {
           }
         }
         if (widget.type == AuthTextFieldType.confirmPassword) {
+          print(val);
+          print(widget.compareText);
           if (val != widget.compareText) {
             return 'Password is not match';
           }

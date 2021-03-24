@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
-import './config/string.dart';
-import './screens/LandingScreen.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:setthi/config/color.dart';
+import 'package:setthi/provider/authenicateProvider.dart';
+import './screens/landingScreen.dart';
 import './screens/mainScreen.dart';
 
 void main() {
   runApp(SetthiApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 }
 
-class SetthiApp extends StatefulWidget {
-  @override
-  _SetthiAppState createState() => _SetthiAppState();
-}
-
-class _SetthiAppState extends State<SetthiApp> {
-  var auth = false;
-  void login() {
-    setState(() {
-      auth = true;
-    });
-  }
-
+class SetthiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: appName,
-      home: auth ? MainScreen() : LandingScreen(login),
+    final navigatorKey = GlobalKey<NavigatorState>();
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (ctx) => AuthenticateProvider())
+      ],
+      child: Consumer<AuthenticateProvider>(
+        builder: (ctx, auth, _) => MaterialApp(
+          navigatorKey: navigatorKey,
+          title: 'Setthi',
+          home: auth.isAuth ? MainScreen() : LandingScreen(),
+        ),
+      ),
     );
   }
 }
