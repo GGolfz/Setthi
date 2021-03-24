@@ -4,17 +4,19 @@ import 'package:google_fonts/google_fonts.dart';
 import '../config/constants.dart';
 import 'package:setthi/widgets/budget/budgetForm.dart';
 import '../widgets/budget/BudgetItem.dart';
+import '../widgets/budget/models/Budget.dart';
 
 class BudgetScreen extends StatefulWidget {
   static final routeName = '/budget';
+  
 
   @override
   _BudgetScreenState createState() => _BudgetScreenState();
 }
-
+final List<Budget> _budget = [];
 Widget _bottomModalContainer(Widget widget) {
- return Container(
-    height: 380,
+  return Container(
+    height: 450,
     width: double.infinity,
     padding: EdgeInsets.symmetric(horizontal: kSizeS * 1.5, vertical: kSizeS),
     decoration: BoxDecoration(
@@ -28,6 +30,13 @@ Widget _bottomModalContainer(Widget widget) {
   );
 }
 
+void _addNewBudget(String title, int maxBudget) {
+  final newBudget = Budget(
+    title: title,
+    maxBudget: maxBudget,
+  );
+}
+
 void _settingModalBottomSheet(context) {
   showModalBottomSheet(
       context: context,
@@ -38,7 +47,7 @@ void _settingModalBottomSheet(context) {
         return Wrap(
           children: [
             _bottomModalContainer(
-              BudgetForm(),
+              BudgetForm(addBudget: _addNewBudget),
             ),
           ],
         );
