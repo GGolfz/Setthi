@@ -60,6 +60,7 @@ class _RegisterFormState extends State<RegisterForm> {
     });
     return Scaffold(
       backgroundColor: kNeutral450,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

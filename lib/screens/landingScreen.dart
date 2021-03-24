@@ -60,13 +60,16 @@ class LandingScreen extends StatelessWidget {
 
     return Scaffold(
         backgroundColor: kGold100,
+        resizeToAvoidBottomInset: false,
         body: Container(
           padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeM),
           width: double.infinity,
           height: double.infinity,
-          child: Column(
+          child: SingleChildScrollView(
+              child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              kSizedBoxVerticalXL,
               LogoImage(),
               LogoText(),
               kSizedBoxVerticalXXS,
@@ -88,7 +91,7 @@ class LandingScreen extends StatelessWidget {
                         AuthType.register);
                   }),
             ],
-          ),
+          )),
         ));
   }
 }
