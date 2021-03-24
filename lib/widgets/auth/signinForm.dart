@@ -54,6 +54,7 @@ class _SigninFormState extends State<SigninForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: kNeutral450,
       body: SafeArea(
         child: SingleChildScrollView(
