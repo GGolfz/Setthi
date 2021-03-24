@@ -47,14 +47,25 @@ class BudgetScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Container(
-                    width: MediaQuery.of(context).size.width,
-                    color:kNeutral150,
-                    child: Row(children:[SizedBox(
-                      child: Container(width: 50,height:double.infinity,color: kGold500,),
-                      height: 50,
-                      width: 50,
-                    )])
-                  ),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: kNeutral150,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(children: [
+                        SizedBox(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: kGold500,
+                            ),
+                            width: 50,
+                            height: double.infinity,
+                          ),
+                          height: 50,
+                          width: 50,
+                        )
+                      ])),
                   SizedBox(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
