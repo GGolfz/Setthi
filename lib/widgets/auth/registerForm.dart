@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:setthi/provider/authenicateProvider.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
 import '../../config/string.dart';
@@ -29,10 +31,36 @@ class _RegisterFormState extends State<RegisterForm> {
     super.dispose();
   }
 
+  Future<void> register() async {
+    var email = _email.text;
+    var password = _password.text;
+    setState(() {
+      _isLoading = true;
+    });
+    if (validate()) {
+      try {
+        await Provider.of<AuthenticateProvider>(context, listen: false)
+            .login(email, password);
+        setState(() {
+          _isLoading = false;
+        });
+        Navigator.of(context).pop();
+      } catch (error) {}
+    }
+  }
+
+  bool validate() {
+    return _formKey.currentState.validate();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _password.addListener(() {
+      setState(() {});
+    });
     return Scaffold(
       backgroundColor: kNeutral450,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -58,15 +86,13 @@ class _RegisterFormState extends State<RegisterForm> {
                         type: AuthTextFieldType.password),
                     kSizedBoxVerticalS,
                     AuthTextField(
-                        textController: _confirmPassword,
-                        placeholder: "Confirm Password",
-                        type: AuthTextFieldType.confirmPassword),
+                      textController: _confirmPassword,
+                      placeholder: "Confirm Password",
+                      type: AuthTextFieldType.confirmPassword,
+                      compareText: _password.text,
+                    ),
                     kSizedBoxVerticalS,
-                    PrimaryButton(
-                        text: "REGISTER",
-                        onPressed: () {
-                          _formKey.currentState.validate();
-                        }),
+                    PrimaryButton(text: "REGISTER", onPressed: register),
                     kSizedBoxVerticalS,
                     GestureDetector(
                       onTap: () {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:setthi/provider/authenicateProvider.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
 import '../../config/string.dart';
@@ -27,9 +29,32 @@ class _SigninFormState extends State<SigninForm> {
     super.dispose();
   }
 
+  Future<void> login() async {
+    var email = _email.text;
+    var password = _password.text;
+    setState(() {
+      _isLoading = true;
+    });
+    if (validate()) {
+      try {
+        await Provider.of<AuthenticateProvider>(context, listen: false)
+            .login(email, password);
+        setState(() {
+          _isLoading = false;
+        });
+        Navigator.of(context).pop();
+      } catch (error) {}
+    }
+  }
+
+  bool validate() {
+    return _formKey.currentState.validate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: kNeutral450,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -65,11 +90,7 @@ class _SigninFormState extends State<SigninForm> {
                       ],
                     ),
                     kSizedBoxVerticalS,
-                    PrimaryButton(
-                        text: "SIGN IN",
-                        onPressed: () {
-                          _formKey.currentState.validate();
-                        }),
+                    PrimaryButton(text: "SIGN IN", onPressed: login),
                     kSizedBoxVerticalS,
                     GestureDetector(
                       onTap: () {
