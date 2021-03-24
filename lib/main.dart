@@ -13,7 +13,7 @@ class SetthiApp extends StatefulWidget {
 }
 
 class _SetthiAppState extends State<SetthiApp> {
-  var auth = true;
+  var auth = false;
   void login() {
     setState(() {
       auth = true;
