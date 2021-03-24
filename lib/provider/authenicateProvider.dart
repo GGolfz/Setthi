@@ -17,7 +17,7 @@ class AuthenticateProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> logout() {
+  Future<void> logout() async {
     _token = null;
     notifyListeners();
   }

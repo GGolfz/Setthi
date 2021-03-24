@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/config/color.dart';
 import 'package:setthi/provider/authenicateProvider.dart';
 import './screens/landingScreen.dart';
 import './screens/mainScreen.dart';
