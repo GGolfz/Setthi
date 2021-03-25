@@ -72,7 +72,7 @@ void _settingModalBottomSheet(context, Function addNewBudget) {
 
 class _BudgetScreenState extends State<BudgetScreen> {
   void _addNewBudget(
-      String title, int maxBudget, DateTime startDay, DateTime lastDay) {
+      String title, double maxBudget, DateTime startDay, DateTime lastDay) {
     final newBudget = Budget(
         title: title,
         maxBudget: maxBudget,

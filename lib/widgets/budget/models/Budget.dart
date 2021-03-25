@@ -1,8 +1,14 @@
 import 'package:flutter/foundation.dart';
-class Budget{
+
+class Budget {
   final String title;
-  final int maxBudget;
+  final double maxBudget;
   final String startDay;
   final String endDay;
-  Budget({@required this.title,@required this.maxBudget,@required this.startDay,@required this.endDay});
+  Budget({
+    @required this.title,
+    @required this.maxBudget,
+    @required this.startDay,
+    @required this.endDay,
+  });
 }
