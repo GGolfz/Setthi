@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:setthi/config/color.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:setthi/config/string.dart';
 import 'package:setthi/config/style.dart';
 import '../config/constants.dart';
 import 'package:setthi/widgets/budget/budgetForm.dart';
-import '../widgets/budget/BudgetItem.dart';
+import '../widgets/budget/budgetItem.dart';
 import '../widgets/budget/models/Budget.dart';
 
 class BudgetScreen extends StatefulWidget {
@@ -29,8 +31,7 @@ Widget _buildButtonCreate(BuildContext context, Function _addNewBudget) {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         ),
-        child: Text("Create a new budget",
-            style: GoogleFonts.quicksand(fontSize: 15)),
+        child: Text("Create a new budget", style: kBody1White),
       ),
     ),
   );
@@ -71,45 +72,58 @@ void _settingModalBottomSheet(context, Function addNewBudget) {
 
 class _BudgetScreenState extends State<BudgetScreen> {
   void _addNewBudget(
-      String title, int maxBudget, String startday, String lastDay) {
+      String title, int maxBudget, DateTime startDay, DateTime lastDay) {
     final newBudget = Budget(
         title: title,
         maxBudget: maxBudget,
-        startDay: startday,
-        endDay: lastDay);
+        startDay: DateFormat.yMMMd().format(startDay),
+        endDay: DateFormat.yMMMd().format(lastDay));
     setState(() {
       _budget.add(newBudget);
-      print(_budget.length);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Budget',
-          style: GoogleFonts.quicksand(color: kNeutralBlack, fontSize: 25),
+        appBar: AppBar(
+          title: Text(
+            'Budget',
+            style: GoogleFonts.quicksand(color: kNeutralBlack, fontSize: 25),
+          ),
+          backgroundColor: kGold200,
         ),
-        backgroundColor: kGold200,
-      ),
-      body: _budget.isEmpty
-          ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text('Please add new budget', style: kHeadline1Black),
-              kSizedBoxVerticalM,
-              _buildButtonCreate(context, _addNewBudget)
-            ])
-          : ListView(
-              children: [
-                ..._budget
-                    .map(
-                      (budget) => BudgetItem(budget.title, budget.maxBudget,
-                          budget.startDay.toString(), budget.endDay.toString()),
-                    )
-                    .toList(),
-                _buildButtonCreate(context, _addNewBudget)
-              ],
-            ),
-    );
+        body: Container(
+          padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeS),
+          child: _budget.isEmpty
+              ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [Image.asset("assets/images/empty-item.png")],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(noBudgetText, style: kSubtitle2Black),
+                    ],
+                  ),
+                  kSizedBoxVerticalM,
+                  _buildButtonCreate(context, _addNewBudget)
+                ])
+              : ListView(
+                  children: [
+                    ..._budget
+                        .map(
+                          (budget) => BudgetItem(
+                              budget.title,
+                              budget.maxBudget,
+                              budget.startDay.toString(),
+                              budget.endDay.toString()),
+                        )
+                        .toList(),
+                    _buildButtonCreate(context, _addNewBudget)
+                  ],
+                ),
+        ));
   }
 }

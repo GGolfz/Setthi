@@ -8,3 +8,4 @@ const suggestSigninQuestion = "Already have an account ? ";
 const suggestSigninText = "Sign In";
 const createWalletText = "Create a new wallet";
 const createBudgetText = "Create a new budget";
+const noBudgetText = "No budget now :(";
