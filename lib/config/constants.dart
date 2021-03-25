@@ -41,7 +41,7 @@ const kSizedBoxL = const SizedBox(height: kSizeL, width: kSizeL);
 const kSizedBoxXL = const SizedBox(height: kSizeXL, width: kSizeXL);
 const kSizedBoxXXL = const SizedBox(height: kSizeXXL, width: kSizeXXL);
 
-const kFontSizeHeadline1 = 40.0;
+const kFontSizeHeadline1 = 36.0;
 const kFontSizeHeadline2 = 30.0;
 const kFontSizeHeadline3 = 22.0;
 const kFontSizeHeadline4 = 20.0;
