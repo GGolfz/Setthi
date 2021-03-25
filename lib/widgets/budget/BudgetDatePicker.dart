@@ -4,50 +4,51 @@ import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/config/style.dart';
 
-class BudgetDatePicker extends StatefulWidget {
+class BudgetDatePicker extends StatelessWidget {
   final String title;
-  Function getDateTime;
+  final Function getDateTime;
+  final DateTime dateTime;
+  BudgetDatePicker(
+      {@required this.title,
+      @required this.getDateTime,
+      @required this.dateTime});
 
-  BudgetDatePicker({@required this.title, @required this.getDateTime});
-  @override
-  _BudgetDatePickerState createState() => _BudgetDatePickerState();
-}
-
-class _BudgetDatePickerState extends State<BudgetDatePicker> {
-  String _dateTime;
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      style: kBody1Gold,
-      decoration: InputDecoration(
-        icon: IconButton(
-          color: kGold400,
-          onPressed: () {
-            showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2001),
-                    lastDate: DateTime(2022))
-                .then((date) {
-              setState(() {
-                final formatDate = DateFormat.yMMMd().format(date);
-                _dateTime = formatDate.toString();
-                widget.getDateTime(_dateTime);
-              });
-            });
-          },
-          icon: Icon(Icons.calendar_today),
-        ),
-        border: OutlineInputBorder(
-            borderRadius: kBorderRadiusXS * 1.5, borderSide: BorderSide.none),
-        filled: true,
-        fillColor: kNeutralWhite,
-        hintText: _dateTime == null ? widget.title : _dateTime.toString(),
-        hintStyle: kBody1Gold,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: kSizeS * 1.25,
+    return GestureDetector(
+      child: TextFormField(
+        style: kBody1Gold,
+        decoration: InputDecoration(
+          icon: Icon(
+            Icons.calendar_today,
+            color: kGold400,
+          ),
+          border: OutlineInputBorder(
+              borderRadius: kBorderRadiusXS * 1.5, borderSide: BorderSide.none),
+          filled: true,
+          fillColor: kNeutralWhite,
+          enabled: false,
+          hintText:
+              dateTime == null ? title : DateFormat.yMMMd().format(dateTime),
+          hintStyle: kBody1Gold,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: kSizeS * 1.25,
+          ),
         ),
       ),
+      onTap: () {
+        showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2001),
+                lastDate: DateTime(2022))
+            .then((date) {
+          if (date == null) {
+            return;
+          }
+          getDateTime(date);
+        });
+      },
     );
   }
 }
