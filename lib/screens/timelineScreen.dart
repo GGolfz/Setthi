@@ -55,7 +55,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                   EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeM),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [BalanceBox(balance: 145786, currency: "THB")],
+                children: [BalanceBox(balance: 1457800, currency: "THB")],
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
