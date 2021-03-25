@@ -5,7 +5,7 @@ import './constants.dart';
 
 final kHeadline1Black = GoogleFonts.quicksand(
     fontSize: kFontSizeHeadline1,
-    color: kNeutralBlack,
+    color: kNeutral550,
     fontWeight: FontWeight.bold);
 
 final kHeadline1White = GoogleFonts.quicksand(
@@ -15,8 +15,8 @@ final kHeadline1White = GoogleFonts.quicksand(
 
 final kHeadline2Black = GoogleFonts.quicksand(
     fontSize: kFontSizeHeadline2,
-    color: kNeutralBlack,
-    fontWeight: FontWeight.normal);
+    color: kNeutral500,
+    fontWeight: FontWeight.bold);
 
 final kHeadline2White = GoogleFonts.quicksand(
     fontSize: kFontSizeHeadline2,
@@ -25,8 +25,8 @@ final kHeadline2White = GoogleFonts.quicksand(
 
 final kHeadline3Black = GoogleFonts.quicksand(
     fontSize: kFontSizeHeadline3,
-    color: kNeutralBlack,
-    fontWeight: FontWeight.normal);
+    color: kNeutral500,
+    fontWeight: FontWeight.bold);
 
 final kHeadline3White = GoogleFonts.quicksand(
     fontSize: kFontSizeHeadline3,
@@ -60,7 +60,7 @@ final kHeadline4Gold = GoogleFonts.quicksand(
 
 final kSubtitle1Black = GoogleFonts.quicksand(
     fontSize: kFontSizeSubtitle1,
-    color: kNeutralBlack,
+    color: kNeutral500,
     fontWeight: FontWeight.normal);
 
 final kSubtitle1White = GoogleFonts.quicksand(
@@ -85,7 +85,7 @@ final kSubtitle1Green = GoogleFonts.quicksand(
 
 final kSubtitle2Black = GoogleFonts.quicksand(
     fontSize: kFontSizeSubtitle2,
-    color: kNeutralBlack,
+    color: kNeutral400,
     fontWeight: FontWeight.normal);
 
 final kSubtitle2White = GoogleFonts.quicksand(
@@ -100,8 +100,8 @@ final kSubtitle2Gold = GoogleFonts.quicksand(
 
 final kBody1Black = GoogleFonts.quicksand(
     fontSize: kFontSizeBody1,
-    color: kNeutralBlack,
-    fontWeight: FontWeight.bold);
+    color: kNeutral400,
+    fontWeight: FontWeight.normal);
 
 final kBody1White = GoogleFonts.quicksand(
     fontSize: kFontSizeBody1,
