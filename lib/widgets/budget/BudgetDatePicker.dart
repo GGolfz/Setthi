@@ -5,13 +5,15 @@ import 'package:setthi/config/style.dart';
 
 class BudgetDatePicker extends StatefulWidget {
   final String title;
-  BudgetDatePicker({@required this.title});
+  Function getDateTime;
+
+  BudgetDatePicker({@required this.title, @required this.getDateTime});
   @override
   _BudgetDatePickerState createState() => _BudgetDatePickerState();
 }
 
 class _BudgetDatePickerState extends State<BudgetDatePicker> {
-  DateTime _dateTime;
+  String _dateTime;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -27,7 +29,8 @@ class _BudgetDatePickerState extends State<BudgetDatePicker> {
                     lastDate: DateTime(2022))
                 .then((date) {
               setState(() {
-                _dateTime = date;
+                _dateTime = date.toString();
+                widget.getDateTime(_dateTime);
               });
             });
           },

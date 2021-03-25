@@ -16,9 +16,25 @@ class BudgetForm extends StatefulWidget {
 class _BudgetFormState extends State<BudgetForm> {
   final _title = TextEditingController();
   final _maxBudget = TextEditingController();
-  void submitData(){
-    widget.addBudget(_title,_maxBudget);
+  String startDay;
+  String lastDay;
+  void submitData() {
+    widget.addBudget(_title.text, int.tryParse(_maxBudget.text),startDay,lastDay);
+    Navigator.pop(context);
   }
+
+  void getStartDateTime(String date) {
+    setState(() {
+      startDay = date;
+    });
+  }
+
+  void getLastDateTime(String date) {
+    setState(() {
+      lastDay = date;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,15 +60,19 @@ class _BudgetFormState extends State<BudgetForm> {
             kSizedBoxVerticalS,
             BudgetDatePicker(
               title: 'Pick Start Date',
+              getDateTime: getStartDateTime,
             ),
             kSizedBoxVerticalS,
             BudgetDatePicker(
               title: 'Pick End Date',
+              getDateTime: getLastDateTime,
             ),
             kSizedBoxVerticalM,
-            PrimaryButton(text: "Submit", onPressed: (){
-              submitData();
-            }),
+            PrimaryButton(
+                text: "Submit",
+                onPressed: () {
+                  submitData();
+                }),
           ]),
         ),
       ),
