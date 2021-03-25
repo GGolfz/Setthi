@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:setthi/config/style.dart';
 import '../config/constants.dart';
 import 'package:setthi/widgets/budget/budgetForm.dart';
 import '../widgets/budget/BudgetItem.dart';
@@ -93,8 +94,9 @@ class _BudgetScreenState extends State<BudgetScreen> {
         backgroundColor: kGold200,
       ),
       body: _budget.isEmpty
-          ? Column(children: [
-              Text('Please add new budget'),
+          ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text('Please add new budget', style: kHeadline1Black),
+              kSizedBoxVerticalM,
               _buildButtonCreate(context, _addNewBudget)
             ])
           : ListView(

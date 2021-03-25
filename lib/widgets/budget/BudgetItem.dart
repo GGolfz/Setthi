@@ -30,7 +30,7 @@ class _BudgetItemState extends State<BudgetItem> {
           Row(
             children: [
               Text(
-                'THB 600',
+                'THB 0',
                 style: GoogleFonts.quicksand(fontSize: 20, color: kGreen500),
               ),
               SizedBox(width: 15),
@@ -54,11 +54,9 @@ class _BudgetItemState extends State<BudgetItem> {
                       borderRadius: BorderRadius.circular(20),
                       color: kGold500,
                     ),
-                    width: 50,
                     height: double.infinity,
                   ),
                   height: 50,
-                  width: 50,
                 )
               ])),
           SizedBox(height: 5),

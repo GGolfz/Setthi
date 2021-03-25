@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/config/style.dart';
@@ -29,7 +30,8 @@ class _BudgetDatePickerState extends State<BudgetDatePicker> {
                     lastDate: DateTime(2022))
                 .then((date) {
               setState(() {
-                _dateTime = date.toString();
+                final formatDate = DateFormat.yMMMd().format(date);
+                _dateTime = formatDate.toString();
                 widget.getDateTime(_dateTime);
               });
             });
