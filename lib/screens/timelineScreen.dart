@@ -42,7 +42,6 @@ class _TimelineScreenState extends State<TimelineScreen> {
         shrinkWrap: true,
         controller: _scrollController,
         children: _items.map((Item item) {
-          print(item);
           return TransactionItem(item: item);
         }).toList());
     return Scaffold(

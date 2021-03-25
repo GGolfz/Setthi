@@ -60,8 +60,6 @@ class _AuthTextFieldState extends State<AuthTextField> {
           }
         }
         if (widget.type == AuthTextFieldType.confirmPassword) {
-          print(val);
-          print(widget.compareText);
           if (val != widget.compareText) {
             return 'Password is not match';
           }
