@@ -21,7 +21,7 @@ class _BudgetFormState extends State<BudgetForm> {
   DateTime lastDay;
   void submitData() {
     widget.addBudget(
-        _title.text, int.tryParse(_maxBudget.text), startDay, lastDay);
+        _title.text, double.tryParse(_maxBudget.text), startDay, lastDay);
     Navigator.pop(context);
   }
 
@@ -50,40 +50,43 @@ class _BudgetFormState extends State<BudgetForm> {
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Form(
-          child: Column(children: [
-            Text(
-              'Create New Budget',
-              style: kHeadline2White,
-            ),
-            kSizedBoxVerticalM,
-            BudgetTextField(
-              title: 'Title',
-              textEditingController: _title,
-            ),
-            kSizedBoxVerticalS,
-            BudgetTextField(
-              title: 'MaxBudget',
-              textEditingController: _maxBudget,
-            ),
-            kSizedBoxVerticalS,
-            BudgetDatePicker(
-              title: 'Pick Start Date',
-              getDateTime: getStartDateTime,
-              dateTime: startDay,
-            ),
-            kSizedBoxVerticalS,
-            BudgetDatePicker(
-              title: 'Pick End Date',
-              getDateTime: getLastDateTime,
-              dateTime: lastDay,
-            ),
-            kSizedBoxVerticalM,
-            PrimaryButton(
+          child: Column(
+            children: [
+              Text(
+                'Create New Budget',
+                style: kHeadline2White,
+              ),
+              kSizedBoxVerticalM,
+              BudgetTextField(
+                title: 'Title',
+                textEditingController: _title,
+              ),
+              kSizedBoxVerticalS,
+              BudgetTextField(
+                title: 'MaxBudget',
+                textEditingController: _maxBudget,
+              ),
+              kSizedBoxVerticalS,
+              BudgetDatePicker(
+                title: 'Pick Start Date',
+                getDateTime: getStartDateTime,
+                dateTime: startDay,
+              ),
+              kSizedBoxVerticalS,
+              BudgetDatePicker(
+                title: 'Pick End Date',
+                getDateTime: getLastDateTime,
+                dateTime: lastDay,
+              ),
+              kSizedBoxVerticalM,
+              PrimaryButton(
                 text: "Submit",
                 onPressed: () {
                   submitData();
-                }),
-          ]),
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
