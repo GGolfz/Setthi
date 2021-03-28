@@ -38,11 +38,15 @@ class BudgetDatePicker extends StatelessWidget {
       ),
       onTap: () {
         showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2001),
-                lastDate: DateTime(2022))
-            .then((date) {
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2001),
+            lastDate: DateTime(2022),
+            errorFormatText: 'Enter valid date',
+            errorInvalidText: 'Enter date in valid range',
+            fieldHintText: 'Month/Date/Year',
+            fieldLabelText: 'Booking date',
+            ).then((date) {
           if (date == null) {
             return;
           }
