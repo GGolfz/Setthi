@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:setthi/screens/transactionScreen.dart';
 import '../config/color.dart';
 import '../config/constants.dart';
 import '../config/style.dart';
@@ -72,7 +73,13 @@ class _TimelineScreenState extends State<TimelineScreen> {
                   Text('Transactions', style: kHeadline3Black),
                   Padding(
                     padding: const EdgeInsets.only(top: 6.0),
-                    child: Text('View All', style: kSubtitle1Black),
+                    child: GestureDetector(
+                      child: Text('View All', style: kSubtitle1Black),
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed(TransactionScreen.routeName);
+                      },
+                    ),
                   )
                 ],
               ),

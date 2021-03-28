@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:setthi/config/color.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:setthi/config/string.dart';
-import 'package:setthi/config/style.dart';
+import '../config/color.dart';
 import '../config/constants.dart';
-import 'package:setthi/widgets/budget/budgetForm.dart';
+import '../config/string.dart';
+import '../config/style.dart';
+import '../widgets/layout/appBar.dart';
+import '../widgets/budget/budgetForm.dart';
 import '../widgets/budget/budgetItem.dart';
 import '../widgets/budget/models/Budget.dart';
 
@@ -86,12 +86,8 @@ class _SavingScreenState extends State<SavingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Budget',
-            style: GoogleFonts.quicksand(color: kNeutralBlack, fontSize: 25),
-          ),
-          backgroundColor: kGold200,
+        appBar: SetthiAppBar(
+          title: "Saving Goal",
         ),
         body: Container(
           padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeS),
