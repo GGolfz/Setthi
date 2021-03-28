@@ -27,7 +27,7 @@ class SetthiApp extends StatelessWidget {
         builder: (ctx, auth, _) => MaterialApp(
           navigatorKey: navigatorKey,
           theme: ThemeData(
-              primaryColor: kGold500,
+              primaryColor: kGold200,
               colorScheme: ColorScheme.light().copyWith(primary: kGold500)),
           title: 'Setthi',
           home: !auth.isAuth ? MainScreen() : LandingScreen(),
