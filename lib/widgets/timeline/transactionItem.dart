@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/config/style.dart';
-import 'package:setthi/modal/item.dart';
+import '../../config/color.dart';
+import '../../config/constants.dart';
+import '../../config/style.dart';
+import '../../model/item.dart';
 
 class TransactionItem extends StatelessWidget {
   final Item item;

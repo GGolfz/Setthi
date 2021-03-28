@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../config/color.dart';
 import '../config/constants.dart';
-import '../modal/authType.dart';
+import '../model/authType.dart';
 import '../widgets/auth/registerForm.dart';
 import '../widgets/auth/signinForm.dart';
 import '../widgets/buttons/primaryButton.dart';

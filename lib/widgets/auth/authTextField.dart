@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
 import '../../config/style.dart';
-import '../../modal/authType.dart';
+import '../../model/authType.dart';
 
 class AuthTextField extends StatefulWidget {
   @override
