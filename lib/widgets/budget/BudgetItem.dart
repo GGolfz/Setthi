@@ -37,7 +37,7 @@ class _BudgetItemState extends State<BudgetItem> {
               ),
               SizedBox(width: 15),
               Text(
-                'of THB ${displayDecimal(value: widget.maxBudget)}',
+                'of THB ${formatCurrencyString(widget.maxBudget)}',
                 style: GoogleFonts.quicksand(fontSize: 15, color: kNeutral300),
               ),
             ],

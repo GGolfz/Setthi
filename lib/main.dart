@@ -27,7 +27,7 @@ class SetthiApp extends StatelessWidget {
               primaryColor: kGold500,
               colorScheme: ColorScheme.light().copyWith(primary: kGold500)),
           title: 'Setthi',
-          home: auth.isAuth ? MainScreen() : LandingScreen(),
+          home: !auth.isAuth ? MainScreen() : LandingScreen(),
         ),
       ),
     );
