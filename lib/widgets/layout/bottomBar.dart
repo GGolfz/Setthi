@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../screens/budgetScreen.dart';
-import '../../screens/moreScreen.dart';
+import '../../screens/savingScreen.dart';
+import '../../screens/settingScreen.dart';
 import '../../screens/timelineScreen.dart';
 import '../../screens/walletScreen.dart';
 import '../../widgets/layout/bottomBarItem.dart';
