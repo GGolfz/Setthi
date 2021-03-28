@@ -7,7 +7,7 @@ class CategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SetthiAppBar(
-        title: 'All Transactions',
+        title: 'Category',
         leading: BackButton(),
       ),
       body: Center(

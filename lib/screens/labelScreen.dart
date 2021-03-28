@@ -7,7 +7,7 @@ class LabelScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SetthiAppBar(
-        title: 'All Transactions',
+        title: 'Label',
         leading: BackButton(),
       ),
       body: Center(
