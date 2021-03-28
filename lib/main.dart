@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/provider/authenicateProvider.dart';
+import '../config/color.dart';
+import '../provider/authenicateProvider.dart';
+import '../screens/categoryScreen.dart';
+import '../screens/labelScreen.dart';
+import '../screens/transactionScreen.dart';
 import './screens/landingScreen.dart';
 import './screens/mainScreen.dart';
 
@@ -28,6 +31,11 @@ class SetthiApp extends StatelessWidget {
               colorScheme: ColorScheme.light().copyWith(primary: kGold500)),
           title: 'Setthi',
           home: !auth.isAuth ? MainScreen() : LandingScreen(),
+          routes: {
+            CategoryScreen.routeName: (ctx) => CategoryScreen(),
+            LabelScreen.routeName: (ctx) => LabelScreen(),
+            TransactionScreen.routeName: (ctx) => TransactionScreen(),
+          },
         ),
       ),
     );

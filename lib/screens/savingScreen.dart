@@ -9,11 +9,11 @@ import 'package:setthi/widgets/budget/budgetForm.dart';
 import '../widgets/budget/budgetItem.dart';
 import '../widgets/budget/models/Budget.dart';
 
-class BudgetScreen extends StatefulWidget {
-  static final routeName = '/budget';
+class SavingScreen extends StatefulWidget {
+  static final routeName = '/saving';
 
   @override
-  _BudgetScreenState createState() => _BudgetScreenState();
+  _SavingScreenState createState() => _SavingScreenState();
 }
 
 final List<Budget> _budget = [];
@@ -70,7 +70,7 @@ void _settingModalBottomSheet(context, Function addNewBudget) {
       });
 }
 
-class _BudgetScreenState extends State<BudgetScreen> {
+class _SavingScreenState extends State<SavingScreen> {
   void _addNewBudget(
       String title, double maxBudget, DateTime startDay, DateTime lastDay) {
     final newBudget = Budget(

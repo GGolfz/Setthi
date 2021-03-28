@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './budgetScreen.dart';
-import './moreScreen.dart';
+import 'savingScreen.dart';
+import 'settingScreen.dart';
 import './timelineScreen.dart';
 import './walletScreen.dart';
 import '../widgets/buttons/addButton.dart';
@@ -15,9 +15,9 @@ class _MainScreenState extends State<MainScreen> {
   String _currentTab = TimelineScreen.routeName;
   final screen = {
     TimelineScreen.routeName: TimelineScreen(),
-    BudgetScreen.routeName: BudgetScreen(),
+    SavingScreen.routeName: SavingScreen(),
     WalletScreen.routeName: WalletScreen(),
-    MoreScreen.routeName: MoreScreen(),
+    SettingScreen.routeName: SettingScreen(),
   };
 
   void _changeTab(String tab) {
