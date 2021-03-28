@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class MoreScreen extends StatelessWidget {
-  static final routeName = '/more';
+class SettingScreen extends StatelessWidget {
+  static final routeName = '/setting';
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("More"),
+      child: Text("Setting"),
     );
   }
 }

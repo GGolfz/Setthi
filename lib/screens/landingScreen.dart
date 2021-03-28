@@ -19,8 +19,9 @@ class LandingScreen extends StatelessWidget {
         isScrollControlled: true,
         backgroundColor: kTransparent,
         builder: (ctx) {
-          return Wrap(
-            children: [_buildBottomModalContainer(widget, type)],
+          return Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: _buildBottomModalContainer(widget, type),
           );
         });
   }

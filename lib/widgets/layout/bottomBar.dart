@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../screens/budgetScreen.dart';
-import '../../screens/moreScreen.dart';
+import '../../screens/savingScreen.dart';
+import '../../screens/settingScreen.dart';
 import '../../screens/timelineScreen.dart';
 import '../../screens/walletScreen.dart';
 import '../../widgets/layout/bottomBarItem.dart';
@@ -21,10 +21,10 @@ class BottomBar extends StatelessWidget {
     {'blank': true},
     {
       'icon': Icons.monetization_on,
-      'tab': BudgetScreen.routeName,
+      'tab': SavingScreen.routeName,
       'blank': false
     },
-    {'icon': Icons.more_horiz, 'tab': MoreScreen.routeName, 'blank': false}
+    {'icon': Icons.more_horiz, 'tab': SettingScreen.routeName, 'blank': false}
   ];
   @override
   Widget build(BuildContext context) {

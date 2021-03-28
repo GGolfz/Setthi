@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../utils/format.dart';
 
 class BudgetItem extends StatefulWidget {
   final String title;
-  final int maxBudget;
+  final double maxBudget;
   final String startDay;
   final String finalDay;
   BudgetItem(this.title, this.maxBudget, this.startDay, this.finalDay);
@@ -13,12 +14,13 @@ class BudgetItem extends StatefulWidget {
 }
 
 class _BudgetItemState extends State<BudgetItem> {
+  String getDisplayMaxBudget() {}
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10),
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.height * 0.2,
+      // width: MediaQuery.of(context).size.width * 0.9,
+      // height: MediaQuery.of(context).size.height * 0.2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -35,7 +37,7 @@ class _BudgetItemState extends State<BudgetItem> {
               ),
               SizedBox(width: 15),
               Text(
-                'of THB ${widget.maxBudget}',
+                'of THB ${formatCurrencyString(widget.maxBudget)}',
                 style: GoogleFonts.quicksand(fontSize: 15, color: kNeutral300),
               ),
             ],
