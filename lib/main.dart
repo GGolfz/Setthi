@@ -32,7 +32,7 @@ class SetthiApp extends StatelessWidget {
               colorScheme: ColorScheme.light().copyWith(primary: kGold500)),
           title: 'Setthi',
           home: SplashScreen(
-              nextScreen: !auth.isAuth ? MainScreen() : LandingScreen()),
+              nextScreen: auth.isAuth ? MainScreen() : LandingScreen()),
           routes: {
             CategoryScreen.routeName: (ctx) => CategoryScreen(),
             LabelScreen.routeName: (ctx) => LabelScreen(),

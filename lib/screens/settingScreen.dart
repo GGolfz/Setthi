@@ -67,7 +67,7 @@ class SettingScreen extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.all(kSizeS),
                   child: ActionButton(
-                    text: "Log Out",
+                    text: "Sign Out",
                     onPressed: () {
                       Provider.of<AuthenticateProvider>(context, listen: false)
                           .logout();
