@@ -3,11 +3,14 @@ import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 
 class CustomDivider extends StatelessWidget {
+  final Color color;
+  final double height;
+  CustomDivider({this.color = kNeutral200, this.height = kSizeXS});
   @override
   Widget build(BuildContext context) {
     return Divider(
-      color: kNeutral200,
-      height: kSizeXS,
+      color: color,
+      height: height,
     );
   }
 }

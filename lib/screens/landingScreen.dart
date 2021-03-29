@@ -8,7 +8,7 @@ import '../widgets/auth/signinForm.dart';
 import '../widgets/buttons/primaryButton.dart';
 import '../widgets/buttons/secondaryButton.dart';
 import '../widgets/landing/descriptionText.dart';
-import '../widgets/layout/customDivider.dart';
+import '../widgets/layout/divider.dart';
 import '../widgets/logo/logoImage.dart';
 import '../widgets/logo/logoText.dart';
 
@@ -87,7 +87,7 @@ class LandingScreen extends StatelessWidget {
                     _showBottomModal(context,
                         SigninForm(changeModal: _changeModal), AuthType.signin);
                   }),
-              CustomDivider(),
+              CustomDivider(color: kNeutral300, height: kSizeM),
               SecondaryButton(
                 text: "REGISTER",
                 onPressed: () {
