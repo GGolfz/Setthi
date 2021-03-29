@@ -1,0 +1,1 @@
+enum CategoryStatus { Income, Expense }
