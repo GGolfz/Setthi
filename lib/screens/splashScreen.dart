@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController1 =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
     _animationController2 =
-        AnimationController(vsync: this, duration: Duration(seconds: 5));
+        AnimationController(vsync: this, duration: Duration(seconds: 4));
     _animationController1.forward();
     _animationController2.forward();
   }
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController2.dispose();
   }
 
-  void animatedUp() {
+  void animatedUp() async {
     Timer(Duration(seconds: 1, milliseconds: 500), () {
       setState(() {
         _height = kSizeL;
@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen>
     });
   }
 
-  void showText() {
+  void showText() async {
     Timer(Duration(seconds: 3, milliseconds: 250), () {
       setState(() {
         _renderText = true;
@@ -55,8 +55,8 @@ class _SplashScreenState extends State<SplashScreen>
     });
   }
 
-  void launchScreen() {
-    Timer(Duration(seconds: 5), () {
+  void launchScreen() async {
+    Timer(Duration(seconds: 4), () {
       setState(() {
         _isLaunch = true;
       });
