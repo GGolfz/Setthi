@@ -5,7 +5,7 @@ import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/category/categoryItem.dart';
 import 'package:setthi/widgets/category/categoryTypeSelect.dart';
 import 'package:setthi/widgets/layout/appBar.dart';
-import 'package:setthi/widgets/layout/customDivider.dart';
+import 'package:setthi/widgets/layout/divider.dart';
 
 class CategoryScreen extends StatefulWidget {
   static const routeName = '/category';

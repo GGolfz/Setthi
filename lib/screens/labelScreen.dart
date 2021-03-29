@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/constants.dart';
-import 'package:setthi/config/style.dart';
 import 'package:setthi/model/labelStatus.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/label/labelItem.dart';
