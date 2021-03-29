@@ -68,7 +68,6 @@ class LandingScreen extends StatelessWidget {
           height: double.infinity,
           child: SingleChildScrollView(
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               kSizedBoxVerticalXL,
               LogoImage(),
