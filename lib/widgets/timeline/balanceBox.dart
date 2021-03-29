@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/config/style.dart';
-import 'package:setthi/utils/format.dart';
+import '../../config/constants.dart';
+import '../../config/style.dart';
+import '../../utils/format.dart';
 
 class BalanceBox extends StatelessWidget {
   final double balance;

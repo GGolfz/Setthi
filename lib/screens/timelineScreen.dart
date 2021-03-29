@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/config/style.dart';
-import 'package:setthi/modal/item.dart';
-import 'package:setthi/widgets/timeline/balanceBox.dart';
-import 'package:setthi/widgets/timeline/transactionItem.dart';
+import 'package:setthi/screens/transactionScreen.dart';
 import '../config/color.dart';
+import '../config/constants.dart';
+import '../config/style.dart';
+import '../model/item.dart';
+import '../widgets/timeline/balanceBox.dart';
+import '../widgets/timeline/transactionItem.dart';
 
 class TimelineScreen extends StatefulWidget {
   static final routeName = '/timeline';
@@ -72,7 +73,13 @@ class _TimelineScreenState extends State<TimelineScreen> {
                   Text('Transactions', style: kHeadline3Black),
                   Padding(
                     padding: const EdgeInsets.only(top: 6.0),
-                    child: Text('View All', style: kSubtitle1Black),
+                    child: GestureDetector(
+                      child: Text('View All', style: kSubtitle1Black),
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed(TransactionScreen.routeName);
+                      },
+                    ),
                   )
                 ],
               ),

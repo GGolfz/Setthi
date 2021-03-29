@@ -8,11 +8,13 @@ class SecondaryButton extends StatelessWidget {
   final Function onPressed;
   final bool isLoading;
   final bool isDisabled;
+  final bool isDark;
   SecondaryButton(
       {@required this.text,
       @required this.onPressed,
       this.isLoading,
-      this.isDisabled = false});
+      this.isDisabled = false,
+      this.isDark = true});
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -35,14 +37,16 @@ class SecondaryButton extends StatelessWidget {
           vertical: kSizeXS,
           horizontal: kSizeM,
         ),
-        child: Text(text, textAlign: TextAlign.center, style: kHeadline4Gold),
+        child: Text(text,
+            textAlign: TextAlign.center,
+            style: isDark ? kHeadline4White : kHeadline4Black),
       ),
     );
   }
 
   BoxDecoration _buildBoxDecoration(BuildContext context) {
     return BoxDecoration(
-      color: kNeutralWhite,
+      color: kTransparent,
       border: Border.all(color: kGold500),
       borderRadius: kBorderRadiusM,
     );

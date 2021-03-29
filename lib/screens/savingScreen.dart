@@ -1,40 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:setthi/config/color.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:setthi/config/string.dart';
-import 'package:setthi/config/style.dart';
+import 'package:setthi/widgets/buttons/actionButton.dart';
+import 'package:setthi/widgets/layout/customDialog.dart';
+import '../config/color.dart';
 import '../config/constants.dart';
-import 'package:setthi/widgets/budget/budgetForm.dart';
+import '../widgets/layout/appBar.dart';
+import '../widgets/budget/budgetForm.dart';
 import '../widgets/budget/budgetItem.dart';
 import '../widgets/budget/models/Budget.dart';
 
-class BudgetScreen extends StatefulWidget {
-  static final routeName = '/budget';
+class SavingScreen extends StatefulWidget {
+  static final routeName = '/saving';
 
   @override
-  _BudgetScreenState createState() => _BudgetScreenState();
+  _SavingScreenState createState() => _SavingScreenState();
 }
 
 final List<Budget> _budget = [];
 Widget _buildButtonCreate(BuildContext context, Function _addNewBudget) {
   return Center(
-    child: Container(
-      margin: EdgeInsets.all(5),
-      height: 50.0,
-      child: ElevatedButton(
-        onPressed: () {
-          _settingModalBottomSheet(context, _addNewBudget);
-        },
-        style: ElevatedButton.styleFrom(
-          primary: kNeutral450,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        ),
-        child: Text("Create a new budget", style: kBody1White),
-      ),
-    ),
-  );
+      child: Container(
+          margin:
+              EdgeInsets.symmetric(horizontal: kSizeM * 1.8, vertical: kSizeS),
+          child: ActionButton(
+            text: "Create a new saving",
+            onPressed: () {
+              showCustomDialog(context: context);
+              // _settingModalBottomSheet(context, _addNewBudget);
+            },
+          )));
 }
 
 Widget _bottomModalContainer(Widget widget) {
@@ -70,7 +64,7 @@ void _settingModalBottomSheet(context, Function addNewBudget) {
       });
 }
 
-class _BudgetScreenState extends State<BudgetScreen> {
+class _SavingScreenState extends State<SavingScreen> {
   void _addNewBudget(
       String title, double maxBudget, DateTime startDay, DateTime lastDay) {
     final newBudget = Budget(
@@ -86,12 +80,8 @@ class _BudgetScreenState extends State<BudgetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Budget',
-            style: GoogleFonts.quicksand(color: kNeutralBlack, fontSize: 25),
-          ),
-          backgroundColor: kGold200,
+        appBar: SetthiAppBar(
+          title: "Saving Goal",
         ),
         body: Container(
           padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeS),
@@ -100,12 +90,6 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [Image.asset("assets/images/empty-item.png")],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(noBudgetText, style: kSubtitle2Black),
-                    ],
                   ),
                   kSizedBoxVerticalM,
                   _buildButtonCreate(context, _addNewBudget)

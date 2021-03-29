@@ -5,7 +5,7 @@ import '../../config/color.dart';
 import '../../config/constants.dart';
 import '../../config/string.dart';
 import '../../config/style.dart';
-import '../../modal/authType.dart';
+import '../../model/authType.dart';
 import '../../widgets/auth/authTextField.dart';
 import '../../widgets/buttons/primaryButton.dart';
 
@@ -83,9 +83,14 @@ class _SigninFormState extends State<SigninForm> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          forgetText,
-                          style: kBody1White,
+                        GestureDetector(
+                          child: Text(
+                            forgetText,
+                            style: kBody1White,
+                          ),
+                          onTap: () {
+                            widget.changeModal(AuthType.forget);
+                          },
                         )
                       ],
                     ),
