@@ -18,6 +18,7 @@ const kNeutral700 = const Color(0xFF292929);
 const kNeutral800 = const Color(0xFF1E1E1E);
 const kNeutral900 = const Color(0xFF0F0F0F);
 const kNeutralBlack = const Color(0xFF000000);
+const kNeutralWhiteFade = const Color(0x33FFFFFF);
 const kGold100 = const Color(0xFFFFF9EE);
 const kGold200 = const Color(0xFFF4DF99);
 const kGold300 = const Color(0xFFFFDF76);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:setthi/widgets/buttons/actionButton.dart';
+import 'package:setthi/widgets/layout/customDialog.dart';
 import '../config/color.dart';
 import '../config/constants.dart';
-import '../config/string.dart';
-import '../config/style.dart';
 import '../widgets/layout/appBar.dart';
 import '../widgets/budget/budgetForm.dart';
 import '../widgets/budget/budgetItem.dart';
@@ -19,22 +19,16 @@ class SavingScreen extends StatefulWidget {
 final List<Budget> _budget = [];
 Widget _buildButtonCreate(BuildContext context, Function _addNewBudget) {
   return Center(
-    child: Container(
-      margin: EdgeInsets.all(5),
-      height: 50.0,
-      child: ElevatedButton(
-        onPressed: () {
-          _settingModalBottomSheet(context, _addNewBudget);
-        },
-        style: ElevatedButton.styleFrom(
-          primary: kNeutral450,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        ),
-        child: Text("Create a new budget", style: kBody1White),
-      ),
-    ),
-  );
+      child: Container(
+          margin:
+              EdgeInsets.symmetric(horizontal: kSizeM * 1.8, vertical: kSizeS),
+          child: ActionButton(
+            text: "Create a new saving",
+            onPressed: () {
+              showCustomDialog(context: context);
+              // _settingModalBottomSheet(context, _addNewBudget);
+            },
+          )));
 }
 
 Widget _bottomModalContainer(Widget widget) {
@@ -96,12 +90,6 @@ class _SavingScreenState extends State<SavingScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [Image.asset("assets/images/empty-item.png")],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(noBudgetText, style: kSubtitle2Black),
-                    ],
                   ),
                   kSizedBoxVerticalM,
                   _buildButtonCreate(context, _addNewBudget)
