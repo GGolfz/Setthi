@@ -69,7 +69,7 @@ class LandingScreen extends StatelessWidget {
           child: SingleChildScrollView(
               child: Column(
             children: [
-              kSizedBoxVerticalXL,
+              kSizedBoxVerticalL,
               LogoImage(),
               LogoText(),
               kSizedBoxVerticalXXS,

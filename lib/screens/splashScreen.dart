@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   var _isLaunch = false;
   var _renderText = false;
-  var _height = kSizeXL + kSizeL;
+  var _height = kSizeXL;
   AnimationController _animationController1;
   AnimationController _animationController2;
   @override
@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen>
   void animatedUp() {
     Timer(Duration(seconds: 1, milliseconds: 500), () {
       setState(() {
-        _height = kSizeXL;
+        _height = kSizeL;
       });
     });
   }
@@ -86,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen>
       height: _height,
       child: Container(
         color: Colors.transparent,
-        height: kSizeXL + kSizeL,
+        height: kSizeXL,
         width: double.infinity,
       ),
     );
