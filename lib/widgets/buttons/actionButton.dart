@@ -13,10 +13,10 @@ class ActionButton extends StatelessWidget {
   final bool isFullWidth;
   ActionButton(
       {this.text,
-      this.color,
       this.onPressed,
+      this.color = kNeutral450,
       this.isOutlined = false,
-      this.isFullWidth = false});
+      this.isFullWidth = true});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,7 +24,6 @@ class ActionButton extends StatelessWidget {
       child: Container(
         height: kSizeM * 1.5,
         width: isFullWidth ? double.infinity : null,
-        padding: EdgeInsets.symmetric(horizontal: kSizeS),
         decoration: BoxDecoration(
             borderRadius: kBorderRadiusS,
             border: isOutlined
@@ -35,7 +34,7 @@ class ActionButton extends StatelessWidget {
             child: Text(
           text,
           textAlign: TextAlign.center,
-          style: kHeadline3Black.copyWith(
+          style: kSubtitle1Black.copyWith(
               color: isOutlined ? color : kNeutralWhite,
               fontWeight: FontWeight.w600),
         )),
