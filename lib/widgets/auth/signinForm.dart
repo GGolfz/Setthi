@@ -83,9 +83,14 @@ class _SigninFormState extends State<SigninForm> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          forgetText,
-                          style: kBody1White,
+                        GestureDetector(
+                          child: Text(
+                            forgetText,
+                            style: kBody1White,
+                          ),
+                          onTap: () {
+                            widget.changeModal(AuthType.forget);
+                          },
                         )
                       ],
                     ),
