@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
+import 'package:setthi/widgets/layout/customDialog.dart';
 import '../config/color.dart';
 import '../config/constants.dart';
-import '../config/string.dart';
-import '../config/style.dart';
 import '../widgets/layout/appBar.dart';
 import '../widgets/budget/budgetForm.dart';
 import '../widgets/budget/budgetItem.dart';
@@ -26,7 +25,8 @@ Widget _buildButtonCreate(BuildContext context, Function _addNewBudget) {
           child: ActionButton(
             text: "Create a new saving",
             onPressed: () {
-              _settingModalBottomSheet(context, _addNewBudget);
+              showCustomDialog(context: context);
+              // _settingModalBottomSheet(context, _addNewBudget);
             },
           )));
 }
