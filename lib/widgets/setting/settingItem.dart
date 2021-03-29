@@ -12,12 +12,11 @@ class SettingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Padding(
-          padding: EdgeInsets.all(kSizeXS),
-          child: Icon(
-            icon,
-            color: kGold400,
-          )),
+      contentPadding: EdgeInsets.zero,
+      leading: Icon(
+        icon,
+        color: kGold400,
+      ),
       title: Text(
         text,
         style: kHeadline4Black,
