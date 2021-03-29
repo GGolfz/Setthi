@@ -26,11 +26,13 @@ class SettingScreen extends StatelessWidget {
                   SettingItem(
                     icon: Icons.label,
                     text: "Labels",
+                    amount: 8,
                     routeName: LabelScreen.routeName,
                   ),
                   SettingItem(
                     icon: Icons.category,
                     text: "Categories",
+                    amount: 22,
                     routeName: CategoryScreen.routeName,
                   ),
                 ],
