@@ -80,6 +80,18 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 
+  Widget moveUpAnimator() {
+    return AnimatedContainer(
+      duration: Duration(seconds: 1, milliseconds: 500),
+      height: _height,
+      child: Container(
+        color: Colors.transparent,
+        height: kSizeXL + kSizeL,
+        width: double.infinity,
+      ),
+    );
+  }
+
   Widget splashWidget(animation1, animation2) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeM),
@@ -87,15 +99,7 @@ class _SplashScreenState extends State<SplashScreen>
       height: double.infinity,
       color: kGold100,
       child: Column(children: [
-        AnimatedContainer(
-          duration: Duration(seconds: 1, milliseconds: 500),
-          height: _height,
-          child: Container(
-            color: Colors.transparent,
-            height: kSizeXL + kSizeL,
-            width: double.infinity,
-          ),
-        ),
+        moveUpAnimator(),
         fadeWidget(animation1, LogoImage()),
         _renderText ? fadeWidget(animation1, LogoText()) : kSizedBoxXXS,
       ]),
