@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:setthi/widgets/auth/forgetForm.dart';
 import '../config/color.dart';
 import '../config/constants.dart';
 import '../model/authType.dart';
@@ -28,7 +29,7 @@ class LandingScreen extends StatelessWidget {
 
   Widget _buildBottomModalContainer(Widget widget, type) {
     return Container(
-      height: type == AuthType.signin ? 380 : 400,
+      height: type == AuthType.register ? 400 : 380,
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: kSizeS * 1.5, vertical: kSizeS),
       decoration: BoxDecoration(
@@ -54,6 +55,11 @@ class LandingScreen extends StatelessWidget {
           _showBottomModal(context, RegisterForm(changeModal: _changeModal),
               AuthType.register);
           break;
+        case AuthType.forget:
+          Navigator.of(context).pop();
+          _showBottomModal(
+              context, ForgetForm(changeModal: _changeModal), AuthType.forget);
+          break;
         default:
           Navigator.of(context).pop();
       }
@@ -68,9 +74,8 @@ class LandingScreen extends StatelessWidget {
           height: double.infinity,
           child: SingleChildScrollView(
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              kSizedBoxVerticalXL,
+              kSizedBoxVerticalL,
               LogoImage(),
               LogoText(),
               kSizedBoxVerticalXXS,
@@ -84,13 +89,15 @@ class LandingScreen extends StatelessWidget {
                   }),
               CustomDivider(),
               SecondaryButton(
-                  text: "REGISTER",
-                  onPressed: () {
-                    _showBottomModal(
-                        context,
-                        RegisterForm(changeModal: _changeModal),
-                        AuthType.register);
-                  }),
+                text: "REGISTER",
+                onPressed: () {
+                  _showBottomModal(
+                      context,
+                      RegisterForm(changeModal: _changeModal),
+                      AuthType.register);
+                },
+                isDark: false,
+              ),
             ],
           )),
         ));

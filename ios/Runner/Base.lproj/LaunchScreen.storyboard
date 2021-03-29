@@ -18,16 +18,6 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="LaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="dAn-VV-ZY8">
-                                <rect key="frame" x="100" y="299" width="191" height="142"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="LaunchLogo" translatesAutoresizingMaskIntoConstraints="NO" id="XOY-TH-E6g">
-                                <rect key="frame" x="133" y="449" width="125" height="49"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="0.97647058823529409" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                 </viewController>
@@ -36,8 +26,4 @@
             <point key="canvasLocation" x="76.811594202898561" y="251.11607142857142"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="LaunchImage" width="76.333335876464844" height="57.333332061767578"/>
-        <image name="LaunchLogo" width="50.666667938232422" height="20"/>
-    </resources>
 </document>
