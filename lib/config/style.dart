@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import './color.dart';
 import './constants.dart';
 
@@ -165,8 +164,6 @@ final kBody2Red = TextStyle(
     color: kRed200,
     fontWeight: FontWeight.normal);
 
-final kTitleText =
-    GoogleFonts.cinzel(fontSize: kSizeL, fontWeight: FontWeight.bold);
 final kDescriptionText = TextStyle(
     fontFamily: 'Quicksand',
     fontSize: kFontSizeBody2,

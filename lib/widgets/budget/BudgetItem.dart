@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:setthi/config/style.dart';
 import '../../utils/format.dart';
 
 class BudgetItem extends StatefulWidget {
@@ -26,19 +26,19 @@ class _BudgetItemState extends State<BudgetItem> {
         children: [
           Text(
             widget.title,
-            style: GoogleFonts.quicksand(fontSize: 20),
+            style: kHeadline4Black,
           ),
           SizedBox(height: 10),
           Row(
             children: [
               Text(
                 'THB 0',
-                style: GoogleFonts.quicksand(fontSize: 20, color: kGreen500),
+                style: kHeadline4Green,
               ),
               SizedBox(width: 15),
               Text(
                 'of THB ${formatCurrencyString(widget.maxBudget)}',
-                style: GoogleFonts.quicksand(fontSize: 15, color: kNeutral300),
+                style: kBody1Black.copyWith(color: kNeutral300),
               ),
             ],
           ),
@@ -67,11 +67,11 @@ class _BudgetItemState extends State<BudgetItem> {
             children: [
               Text(
                 widget.startDay,
-                style: GoogleFonts.quicksand(color: kNeutral300),
+                style: kBody1Black.copyWith(color: kNeutral300),
               ),
               Text(
                 widget.finalDay,
-                style: GoogleFonts.quicksand(color: kNeutral300),
+                style: kBody1Black.copyWith(color: kNeutral300),
               ),
             ],
           ),
