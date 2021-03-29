@@ -3,136 +3,172 @@ import 'package:google_fonts/google_fonts.dart';
 import './color.dart';
 import './constants.dart';
 
-final kHeadline1Black = GoogleFonts.quicksand(
+final kHeadline1Black = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeHeadline1,
     color: kNeutral550,
     fontWeight: FontWeight.bold);
 
-final kHeadline1White = GoogleFonts.quicksand(
+final kHeadline1White = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeHeadline1,
     color: kNeutralWhite,
     fontWeight: FontWeight.bold);
 
-final kHeadline2Black = GoogleFonts.quicksand(
+final kHeadline2Black = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeHeadline2,
     color: kNeutral500,
     fontWeight: FontWeight.bold);
 
-final kHeadline2White = GoogleFonts.quicksand(
+final kHeadline2White = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeHeadline2,
     color: kNeutralWhite,
     fontWeight: FontWeight.normal);
 
-final kHeadline3Black = GoogleFonts.quicksand(
+final kHeadline3Black = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeHeadline3,
     color: kNeutral500,
     fontWeight: FontWeight.bold);
 
-final kHeadline3White = GoogleFonts.quicksand(
+final kHeadline3White = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeHeadline3,
     color: kNeutralWhite,
     fontWeight: FontWeight.normal);
 
-final kHeadline4Black = GoogleFonts.quicksand(
+final kHeadline4Black = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeHeadline4,
     color: kNeutralBlack,
     fontWeight: FontWeight.normal);
 
-final kHeadline4White = GoogleFonts.quicksand(
+final kHeadline4White = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeHeadline4,
     color: kNeutralWhite,
     fontWeight: FontWeight.normal);
 
-final kHeadline4Red = GoogleFonts.quicksand(
+final kHeadline4Red = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeHeadline4,
     color: kRed400,
     fontWeight: FontWeight.normal);
 
-final kHeadline4Green = GoogleFonts.quicksand(
+final kHeadline4Green = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeHeadline4,
     color: kGreen500,
     fontWeight: FontWeight.normal);
 
-final kHeadline4Gold = GoogleFonts.quicksand(
+final kHeadline4Gold = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeHeadline4,
     color: kGold500,
     fontWeight: FontWeight.normal);
 
-final kSubtitle1Black = GoogleFonts.quicksand(
+final kSubtitle1Black = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeSubtitle1,
     color: kNeutral500,
     fontWeight: FontWeight.normal);
 
-final kSubtitle1White = GoogleFonts.quicksand(
+final kSubtitle1White = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeSubtitle1,
     color: kNeutralWhite,
     fontWeight: FontWeight.normal);
 
-final kSubtitle1Gold = GoogleFonts.quicksand(
+final kSubtitle1Gold = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeSubtitle1,
     color: kGold500,
     fontWeight: FontWeight.normal);
 
-final kSubtitle1Red = GoogleFonts.quicksand(
+final kSubtitle1Red = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeSubtitle1,
     color: kRed400,
     fontWeight: FontWeight.normal);
 
-final kSubtitle1Green = GoogleFonts.quicksand(
+final kSubtitle1Green = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeSubtitle1,
     color: kGreen500,
     fontWeight: FontWeight.normal);
 
-final kSubtitle2Black = GoogleFonts.quicksand(
+final kSubtitle2Black = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeSubtitle2,
     color: kNeutral400,
     fontWeight: FontWeight.normal);
 
-final kSubtitle2White = GoogleFonts.quicksand(
+final kSubtitle2White = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeSubtitle2,
     color: kNeutralBlack,
     fontWeight: FontWeight.normal);
 
-final kSubtitle2Gold = GoogleFonts.quicksand(
+final kSubtitle2Gold = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeSubtitle2,
     color: kGold500,
     fontWeight: FontWeight.normal);
 
-final kBody1Black = GoogleFonts.quicksand(
+final kBody1Black = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeBody1,
     color: kNeutral400,
     fontWeight: FontWeight.normal);
 
-final kBody1White = GoogleFonts.quicksand(
+final kBody1White = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeBody1,
     color: kNeutralWhite,
     fontWeight: FontWeight.bold);
 
-final kBody1Gold = GoogleFonts.quicksand(
-    fontSize: kFontSizeBody1, color: kGold500, fontWeight: FontWeight.bold);
+final kBody1Gold = TextStyle(
+    fontFamily: 'Quicksand',
+    fontSize: kFontSizeBody1,
+    color: kGold500,
+    fontWeight: FontWeight.bold);
 
-final kBody1Red = GoogleFonts.quicksand(
-    fontSize: kFontSizeBody1, color: kRed200, fontWeight: FontWeight.bold);
+final kBody1Red = TextStyle(
+    fontFamily: 'Quicksand',
+    fontSize: kFontSizeBody1,
+    color: kRed200,
+    fontWeight: FontWeight.bold);
 
-final kBody2Black = GoogleFonts.quicksand(
+final kBody2Black = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeBody2,
     color: kNeutralBlack,
     fontWeight: FontWeight.normal);
 
-final kBody2White = GoogleFonts.quicksand(
+final kBody2White = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeBody2,
     color: kNeutralWhite,
     fontWeight: FontWeight.normal);
 
-final kBody2Gold = GoogleFonts.quicksand(
-    fontSize: kFontSizeBody2, color: kGold500, fontWeight: FontWeight.normal);
+final kBody2Gold = TextStyle(
+    fontFamily: 'Quicksand',
+    fontSize: kFontSizeBody2,
+    color: kGold500,
+    fontWeight: FontWeight.normal);
 
-final kBody2Red = GoogleFonts.quicksand(
-    fontSize: kFontSizeBody2, color: kRed200, fontWeight: FontWeight.normal);
+final kBody2Red = TextStyle(
+    fontFamily: 'Quicksand',
+    fontSize: kFontSizeBody2,
+    color: kRed200,
+    fontWeight: FontWeight.normal);
 
 final kTitleText =
     GoogleFonts.cinzel(fontSize: kSizeL, fontWeight: FontWeight.bold);
-final kDescriptionText = GoogleFonts.quicksand(
+final kDescriptionText = TextStyle(
+    fontFamily: 'Quicksand',
     fontSize: kFontSizeBody2,
     color: kNeutral800,
     fontWeight: FontWeight.normal);

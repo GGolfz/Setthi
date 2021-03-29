@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/screens/splashScreen.dart';
-import '../config/color.dart';
-import '../provider/authenicateProvider.dart';
-import '../screens/categoryScreen.dart';
-import '../screens/labelScreen.dart';
-import '../screens/transactionScreen.dart';
+import './config/color.dart';
+import './provider/authenicateProvider.dart';
+import './screens/categoryScreen.dart';
+import './screens/labelScreen.dart';
+import './screens/splashScreen.dart';
+import './screens/transactionScreen.dart';
 import './screens/landingScreen.dart';
 import './screens/mainScreen.dart';
 
