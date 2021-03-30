@@ -17,17 +17,17 @@ class TimelineScreen extends StatefulWidget {
 
 class _TimelineScreenState extends State<TimelineScreen> {
   List<Item> _items = [
-    Item("Food & Drink", "Today, 10.34 AM", 320),
-    Item("Food & Drink", "Today, 10.34 AM", 320),
-    Item("Food & Drink", "Today, 10.34 AM", 320),
-    Item("Food & Drink", "Today, 10.34 AM", 320),
-    Item("Food & Drink", "Today, 10.34 AM", 320),
-    Item("Food & Drink", "Today, 10.34 AM", 320),
-    Item("Food & Drink", "Today, 10.34 AM", 320),
-    Item("Food & Drink", "Today, 10.34 AM", 320),
-    Item("Food & Drink", "Today, 10.34 AM", 320),
-    Item("Food & Drink", "Today, 10.34 AM", 320),
-    Item("Food & Drink", "Today, 10.34 AM", 320)
+    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
+    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
+    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
+    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
+    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
+    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
+    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
+    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
+    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
+    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
+    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320)
   ];
   ScrollController _scrollController;
   @override
