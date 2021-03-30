@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/widgets/buttons/primaryButton.dart';
-import 'budgetTextField.dart';
-import 'budgetDatePicker.dart';
+import 'package:setthi/widgets/form/customDatePicker.dart';
+import 'package:setthi/widgets/form/customFormTitle.dart';
+import 'package:setthi/widgets/form/customTextField.dart';
 
 class SavingForm extends StatefulWidget {
   final Function addBudget;
@@ -62,38 +63,28 @@ class _SavingFormState extends State<SavingForm> {
       width: 400,
       child: Form(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(
-                'Create New Budget',
-                style: TextStyle(color: kGold500, fontSize: 20),
-                textAlign: TextAlign.center,
-              )
-            ]),
+            CustomFormTitle(title: 'Create New Budget'),
             kSizedBoxVerticalS,
-            BudgetTextField(
+            CustomTextField(
               title: 'Title',
               textEditingController: _title,
             ),
             kSizedBoxVerticalS,
-            BudgetTextField(
+            CustomTextField(
               title: 'Target Amount',
               textEditingController: _maxBudget,
+              keyboardType: TextInputType.number,
             ),
             kSizedBoxVerticalS,
-            _buildContainerText('Start Date'),
-            kSizedBoxVerticalXXS,
-            BudgetDatePicker(
-              title: 'Pick Start Date',
+            CustomDatePicker(
+              title: 'Start Date',
               getDateTime: getStartDateTime,
               dateTime: startDay,
             ),
             kSizedBoxVerticalS,
-            _buildContainerText('End Date'),
-            kSizedBoxVerticalXXS,
-            BudgetDatePicker(
-              title: 'Pick End Date',
+            CustomDatePicker(
+              title: 'End Date',
               getDateTime: getLastDateTime,
               dateTime: lastDay,
             ),
