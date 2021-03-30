@@ -5,7 +5,7 @@ import 'package:setthi/widgets/layout/customDialog.dart';
 import '../config/color.dart';
 import '../config/constants.dart';
 import '../widgets/layout/appBar.dart';
-import '../widgets/budget/budgetForm.dart';
+import '../widgets/budget/savingForm.dart';
 import '../widgets/budget/budgetItem.dart';
 import '../widgets/budget/models/Budget.dart';
 
@@ -25,44 +25,44 @@ Widget _buildButtonCreate(BuildContext context, Function _addNewBudget) {
           child: ActionButton(
             text: "Create a new saving",
             onPressed: () {
-              showCustomDialog(context: context);
+              showCustomDialog(context: context,content: SavingForm(addBudget: _addNewBudget,));
               // _settingModalBottomSheet(context, _addNewBudget);
             },
           )));
 }
 
-Widget _bottomModalContainer(Widget widget) {
-  return Container(
-    height: 450,
-    width: double.infinity,
-    padding: EdgeInsets.symmetric(horizontal: kSizeS * 1.5, vertical: kSizeS),
-    decoration: BoxDecoration(
-      color: kNeutral450,
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(kSizeM),
-        topRight: Radius.circular(kSizeM),
-      ),
-    ),
-    child: widget,
-  );
-}
+// Widget _bottomModalContainer(Widget widget) {
+//   return Container(
+//     height: 450,
+//     width: double.infinity,
+//     padding: EdgeInsets.symmetric(horizontal: kSizeS * 1.5, vertical: kSizeS),
+//     decoration: BoxDecoration(
+//       color: kNeutral450,
+//       borderRadius: BorderRadius.only(
+//         topLeft: Radius.circular(kSizeM),
+//         topRight: Radius.circular(kSizeM),
+//       ),
+//     ),
+//     child: widget,
+//   );
+// }
 
-void _settingModalBottomSheet(context, Function addNewBudget) {
-  showModalBottomSheet(
-      context: context,
-      barrierColor: kTransparent,
-      isScrollControlled: true,
-      backgroundColor: kTransparent,
-      builder: (ctx) {
-        return Wrap(
-          children: [
-            _bottomModalContainer(
-              BudgetForm(addBudget: addNewBudget),
-            ),
-          ],
-        );
-      });
-}
+// void _settingModalBottomSheet(context, Function addNewBudget) {
+//   showModalBottomSheet(
+//       context: context,
+//       barrierColor: kTransparent,
+//       isScrollControlled: true,
+//       backgroundColor: kTransparent,
+//       builder: (ctx) {
+//         return Wrap(
+//           children: [
+//             _bottomModalContainer(
+//               BudgetForm(addBudget: addNewBudget),
+//             ),
+//           ],
+//         );
+//       });
+// }
 
 class _SavingScreenState extends State<SavingScreen> {
   void _addNewBudget(
