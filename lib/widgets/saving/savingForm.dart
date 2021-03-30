@@ -29,15 +29,6 @@ class _SavingFormState extends State<SavingForm> {
     }
   }
 
-  Widget _buildContainerText(String text) {
-    return Container(
-      child: Text(
-        text,
-        style: TextStyle(color: kNeutral400),
-      ),
-    );
-  }
-
   void getStartDateTime(DateTime date) {
     if (lastDay != null && date.isAfter(lastDay)) {
       return;
