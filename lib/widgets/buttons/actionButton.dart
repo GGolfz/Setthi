@@ -16,7 +16,7 @@ class ActionButton extends StatelessWidget {
       this.onPressed,
       this.color = kNeutral450,
       this.isOutlined = false,
-      this.isFullWidth = true});
+      this.isFullWidth = false});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -25,10 +25,8 @@ class ActionButton extends StatelessWidget {
         height: kSizeM * 1.5,
         width: isFullWidth ? double.infinity : null,
         decoration: BoxDecoration(
-            borderRadius: kBorderRadiusS,
-            border: isOutlined
-                ? Border.all(color: color, width: 2)
-                : Border.all(width: 0),
+            borderRadius: isFullWidth ? kBorderRadiusS : kBorderRadiusXS,
+            border: isOutlined ? Border.all(color: color, width: 2) : null,
             color: isOutlined ? kTransparent : color),
         child: Center(
             child: Text(
