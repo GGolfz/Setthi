@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
-import 'package:setthi/widgets/buttons/primaryButton.dart';
+import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/form/customDatePicker.dart';
 import 'package:setthi/widgets/form/customFormTitle.dart';
 import 'package:setthi/widgets/form/customTextField.dart';
@@ -89,8 +89,9 @@ class _SavingFormState extends State<SavingForm> {
               dateTime: lastDay,
             ),
             kSizedBoxVerticalM,
-            PrimaryButton(
+            ActionButton(
               text: "Submit",
+              color: kGold300,
               onPressed: () {
                 submitData();
               },
