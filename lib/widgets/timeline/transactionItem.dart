@@ -23,9 +23,9 @@ class TransactionItem extends StatelessWidget {
             width: kSizeM * 1.6,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(kSizeM * 0.8),
+                  Radius.circular(kSizeXS * 1.4),
                 ),
-                color: Colors.white),
+                color: kRed100),
           ),
           title: Text(item.displayName, style: kSubtitle1Black),
           subtitle: Text(item.category.toString(), style: kSubtitle2Black),
