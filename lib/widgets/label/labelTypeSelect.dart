@@ -15,7 +15,9 @@ class LabelTypeSelect extends StatelessWidget {
         child: Text(
           text,
           textAlign: TextAlign.center,
-          style: current == type ? kHeadline3Black : kHeadline4Black,
+          style: current == type
+              ? kHeadline3Black.copyWith(fontSize: 18)
+              : kHeadline4Black.copyWith(fontSize: 16),
         ),
         onTap: () => changeStatus(type),
       ),

@@ -38,12 +38,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 child: Row(
                   children: [
                     CategoryTypeSelect(
-                        text: "Income Label",
+                        text: "Income Category",
                         type: CategoryStatus.Income,
                         changeStatus: _changeStatus,
                         current: _status),
                     CategoryTypeSelect(
-                        text: "Expense Label",
+                        text: "Expense Category",
                         type: CategoryStatus.Expense,
                         changeStatus: _changeStatus,
                         current: _status),
