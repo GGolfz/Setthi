@@ -5,10 +5,10 @@ import '../../utils/format.dart';
 
 class BudgetItem extends StatefulWidget {
   final String title;
-  final double maxBudget;
+  final double saving;
   final String startDay;
   final String finalDay;
-  BudgetItem(this.title, this.maxBudget, this.startDay, this.finalDay);
+  BudgetItem(this.title, this.saving, this.startDay, this.finalDay);
   @override
   _BudgetItemState createState() => _BudgetItemState();
 }
@@ -37,7 +37,7 @@ class _BudgetItemState extends State<BudgetItem> {
               ),
               SizedBox(width: 15),
               Text(
-                'of THB ${formatCurrencyString(widget.maxBudget)}',
+                'of THB ${formatCurrencyString(widget.saving)}',
                 style: kBody1Black.copyWith(color: kNeutral300),
               ),
             ],

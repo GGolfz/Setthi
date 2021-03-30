@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
-import 'package:setthi/config/style.dart';
 import 'package:setthi/widgets/buttons/primaryButton.dart';
 import 'budgetTextField.dart';
 import 'budgetDatePicker.dart';
@@ -19,9 +18,14 @@ class _SavingFormState extends State<SavingForm> {
   DateTime startDay;
   DateTime lastDay;
   void submitData() {
-    widget.addBudget(
-        _title.text, double.tryParse(_maxBudget.text), startDay, lastDay);
-    Navigator.pop(context);
+    if (_title.text != null &&
+        _maxBudget.text != null &&
+        startDay != null &&
+        lastDay != null) {
+      widget.addBudget(
+          _title.text, double.tryParse(_maxBudget.text), startDay, lastDay);
+      Navigator.pop(context);
+    }
   }
 
   Widget _buildContainerText(String text) {
@@ -30,7 +34,6 @@ class _SavingFormState extends State<SavingForm> {
         text,
         style: TextStyle(color: kNeutral400),
       ),
-      
     );
   }
 
@@ -61,14 +64,13 @@ class _SavingFormState extends State<SavingForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-            Text(
-              'Create New Budget',
-              style: TextStyle(color: kGold500, fontSize: 20),
-              textAlign: TextAlign.center,
-            )]),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(
+                'Create New Budget',
+                style: TextStyle(color: kGold500, fontSize: 20),
+                textAlign: TextAlign.center,
+              )
+            ]),
             kSizedBoxVerticalS,
             BudgetTextField(
               title: 'Title',
