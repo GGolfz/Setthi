@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
+import 'package:setthi/config/style.dart';
 
 class CustomTextField extends StatelessWidget {
   final String title;
@@ -13,14 +14,12 @@ class CustomTextField extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: textEditingController,
-      keyboardType: keyboardType,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: kNeutralWhite,
-        hintText: title,
-        contentPadding: EdgeInsets.zero,
-      ),
-    );
+        controller: textEditingController,
+        keyboardType: keyboardType,
+        style: kSubtitle2Black.copyWith(fontWeight: FontWeight.w600),
+        decoration: InputDecoration(
+          hintText: title,
+          labelStyle: kSubtitle2Black.copyWith(fontWeight: FontWeight.w600),
+        ));
   }
 }

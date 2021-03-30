@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
+import 'package:setthi/config/style.dart';
 
 class CustomFormTitle extends StatelessWidget {
   final String title;
@@ -8,7 +9,7 @@ class CustomFormTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(color: kGold500, fontSize: 20),
+      style: kHeadline4Gold.copyWith(fontWeight: FontWeight.w600),
       textAlign: TextAlign.center,
     );
   }

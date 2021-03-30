@@ -18,7 +18,7 @@ class CustomDatePicker extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
         title,
-        style: TextStyle(color: kNeutral400),
+        style: kSubtitle2Black.copyWith(fontWeight: FontWeight.w600),
       ),
       kSizedBoxVerticalXXS,
       GestureDetector(
@@ -32,10 +32,10 @@ class CustomDatePicker extends StatelessWidget {
             filled: true,
             fillColor: kNeutral100,
             enabled: false,
+            labelStyle: kBody2Black,
             hintText:
                 dateTime == null ? title : DateFormat.yMMMd().format(dateTime),
-            contentPadding: EdgeInsets.symmetric(
-                horizontal: kSizeS * 1.25, vertical: kSizeS),
+            contentPadding: EdgeInsets.all(kSizeS),
           ),
         ),
         onTap: () {
