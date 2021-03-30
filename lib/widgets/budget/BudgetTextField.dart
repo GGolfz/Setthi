@@ -19,15 +19,14 @@ class _BudgetTextFieldState extends State<BudgetTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       controller: widget.textEditingController,
       keyboardType: widget.title == 'Title'? TextInputType.text : TextInputType.number,
       decoration: InputDecoration(
         filled: true,
         fillColor: kNeutralWhite,
         hintText: widget.title,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: kSizeS * 1.25,
-        ),
+        contentPadding: EdgeInsets.zero,
       ),
     );
   }

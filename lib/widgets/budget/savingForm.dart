@@ -26,7 +26,6 @@ class _SavingFormState extends State<SavingForm> {
 
   Widget _buildContainerText(String text) {
     return Container(
-      margin: EdgeInsets.only(right: kSizeL * 3),
       child: Text(
         text,
         style: TextStyle(color: kNeutral400),
@@ -56,16 +55,21 @@ class _SavingFormState extends State<SavingForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450,
+      height: 410,
       width: 400,
       child: Form(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
             Text(
               'Create New Budget',
               style: TextStyle(color: kGold500, fontSize: 20),
-            ),
-            kSizedBoxVerticalM,
+              textAlign: TextAlign.center,
+            )]),
+            kSizedBoxVerticalS,
             BudgetTextField(
               title: 'Title',
               textEditingController: _title,
