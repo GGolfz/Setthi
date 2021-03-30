@@ -4,7 +4,8 @@ import 'package:setthi/config/style.dart';
 class LabelItem extends StatelessWidget {
   final String labelText;
   final String labelKey;
-  LabelItem({this.labelKey, this.labelText});
+  final Function onTap;
+  LabelItem({this.labelKey, this.labelText, this.onTap});
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -13,7 +14,7 @@ class LabelItem extends StatelessWidget {
         style: kSubtitle1Black,
       ),
       trailing: Icon(Icons.edit),
-      onTap: () {},
+      onTap: onTap,
     );
   }
 }

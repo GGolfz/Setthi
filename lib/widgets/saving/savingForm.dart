@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
-import 'package:setthi/config/style.dart';
-import 'package:setthi/widgets/buttons/primaryButton.dart';
-import 'budgetTextField.dart';
-import 'budgetDatePicker.dart';
+import 'package:setthi/widgets/buttons/actionButton.dart';
+import 'package:setthi/widgets/form/customDatePicker.dart';
+import 'package:setthi/widgets/form/customFormTitle.dart';
+import 'package:setthi/widgets/form/customTextField.dart';
 
 class SavingForm extends StatefulWidget {
   final Function addBudget;
@@ -19,19 +19,14 @@ class _SavingFormState extends State<SavingForm> {
   DateTime startDay;
   DateTime lastDay;
   void submitData() {
-    widget.addBudget(
-        _title.text, double.tryParse(_maxBudget.text), startDay, lastDay);
-    Navigator.pop(context);
-  }
-
-  Widget _buildContainerText(String text) {
-    return Container(
-      child: Text(
-        text,
-        style: TextStyle(color: kNeutral400),
-      ),
-      
-    );
+    if (_title.text != null &&
+        _maxBudget.text != null &&
+        startDay != null &&
+        lastDay != null) {
+      widget.addBudget(
+          _title.text, double.tryParse(_maxBudget.text), startDay, lastDay);
+      Navigator.pop(context);
+    }
   }
 
   void getStartDateTime(DateTime date) {
@@ -55,49 +50,39 @@ class _SavingFormState extends State<SavingForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 410,
+      height: 415,
       width: 400,
       child: Form(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-            Text(
-              'Create New Budget',
-              style: TextStyle(color: kGold500, fontSize: 20),
-              textAlign: TextAlign.center,
-            )]),
+            CustomFormTitle(title: 'Create New Budget'),
             kSizedBoxVerticalS,
-            BudgetTextField(
+            CustomTextField(
               title: 'Title',
               textEditingController: _title,
             ),
             kSizedBoxVerticalS,
-            BudgetTextField(
+            CustomTextField(
               title: 'Target Amount',
               textEditingController: _maxBudget,
+              keyboardType: TextInputType.number,
             ),
             kSizedBoxVerticalS,
-            _buildContainerText('Start Date'),
-            kSizedBoxVerticalXXS,
-            BudgetDatePicker(
-              title: 'Pick Start Date',
+            CustomDatePicker(
+              title: 'Start Date',
               getDateTime: getStartDateTime,
               dateTime: startDay,
             ),
             kSizedBoxVerticalS,
-            _buildContainerText('End Date'),
-            kSizedBoxVerticalXXS,
-            BudgetDatePicker(
-              title: 'Pick End Date',
+            CustomDatePicker(
+              title: 'End Date',
               getDateTime: getLastDateTime,
               dateTime: lastDay,
             ),
             kSizedBoxVerticalM,
-            PrimaryButton(
+            ActionButton(
               text: "Submit",
+              color: kGold300,
               onPressed: () {
                 submitData();
               },

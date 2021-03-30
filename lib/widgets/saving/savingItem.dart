@@ -3,24 +3,21 @@ import 'package:setthi/config/color.dart';
 import 'package:setthi/config/style.dart';
 import '../../utils/format.dart';
 
-class BudgetItem extends StatefulWidget {
+class SavingItem extends StatefulWidget {
   final String title;
-  final double maxBudget;
+  final double saving;
   final String startDay;
   final String finalDay;
-  BudgetItem(this.title, this.maxBudget, this.startDay, this.finalDay);
+  SavingItem(this.title, this.saving, this.startDay, this.finalDay);
   @override
-  _BudgetItemState createState() => _BudgetItemState();
+  _SavingItemState createState() => _SavingItemState();
 }
 
-class _BudgetItemState extends State<BudgetItem> {
-  String getDisplayMaxBudget() {}
+class _SavingItemState extends State<SavingItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10),
-      // width: MediaQuery.of(context).size.width * 0.9,
-      // height: MediaQuery.of(context).size.height * 0.2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,7 +34,7 @@ class _BudgetItemState extends State<BudgetItem> {
               ),
               SizedBox(width: 15),
               Text(
-                'of THB ${formatCurrencyString(widget.maxBudget)}',
+                'of THB ${formatCurrencyString(widget.saving)}',
                 style: kBody1Black.copyWith(color: kNeutral300),
               ),
             ],

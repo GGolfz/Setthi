@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:setthi/config/color.dart';
 import 'package:setthi/config/style.dart';
 import 'package:setthi/model/categoryStatus.dart';
 
@@ -15,7 +16,9 @@ class CategoryTypeSelect extends StatelessWidget {
         child: Text(
           text,
           textAlign: TextAlign.center,
-          style: current == type ? kHeadline3Black : kHeadline4Black,
+          style: current == type
+              ? kHeadline3Black.copyWith(fontSize: 18, color: kNeutralBlack)
+              : kHeadline4Black.copyWith(fontSize: 16, color: kNeutral450),
         ),
         onTap: () => changeStatus(type),
       ),
