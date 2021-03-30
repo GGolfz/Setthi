@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/config/style.dart';
 
 class CategoryItem extends StatelessWidget {
   final String categoryText;
   final String categoryKey;
-  CategoryItem({this.categoryKey, this.categoryText});
+  final Function onTap;
+  CategoryItem({this.categoryKey, this.categoryText, this.onTap});
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -25,7 +25,7 @@ class CategoryItem extends StatelessWidget {
         style: kSubtitle1Black,
       ),
       trailing: Icon(Icons.edit),
-      onTap: () {},
+      onTap: onTap,
     );
   }
 }

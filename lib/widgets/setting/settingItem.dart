@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
 import 'package:setthi/config/style.dart';
 
 class SettingItem extends StatelessWidget {

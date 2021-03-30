@@ -25,6 +25,7 @@ const kGold300 = const Color(0xFFFFDF76);
 const kGold300Fade = const Color(0x66FFDF76);
 const kGold400 = const Color(0xFFE4BF45);
 const kGold500 = const Color(0xFFD3AE36);
+const kRed100 = const Color(0xFFFFD2D2);
 const kRed200 = const Color(0xFFFF5555);
 const kRed400 = const Color(0xFFE02929);
 const kGreen500 = const Color(0xFF229C45);
