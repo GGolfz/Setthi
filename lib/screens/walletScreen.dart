@@ -6,6 +6,7 @@ import '../widgets/layout/appBar.dart';
 import '../widgets/wallet/emptyWallet.dart';
 import '../widgets/layout/customDialog.dart';
 import '../widgets/buttons/actionButton.dart';
+import '../widgets/wallet/newWalletForm.dart';
 import '../utils/format.dart';
 import '../config/constants.dart';
 import '../config/color.dart';
@@ -21,7 +22,7 @@ class WalletScreen extends StatelessWidget {
         child: ActionButton(
           text: "Create a new wallet",
           onPressed: () {
-            showCustomDialog(context: context);
+            showCustomDialog(context: context, content: NewWalletForm());
           },
         ),
       ),
@@ -37,24 +38,27 @@ class WalletScreen extends StatelessWidget {
         title: 'THB ${formatCurrencyString(wallet.totalAmount)}',
         subtitle: 'Total Wealth',
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: kSizeS, vertical: kSizeXS),
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: Text('This is graph'),
-              height: 150,
-            ),
-            if (wallet.isEmpty()) EmptyWallet(),
-            Container(
-              height: 375,
-              child: ListView.builder(
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: kSizeS, vertical: kSizeXS),
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: Text('This is graph'),
+                height: 150,
+              ),
+              if (wallet.isEmpty()) EmptyWallet(),
+              Container(
+                height: 375,
+                child: ListView.builder(
                   itemBuilder: (ctx, index) =>
                       WalletCard(item: wallet.wallets[index]),
-                  itemCount: wallet.walletCount),
-            ),
-            _buildButtonCreate(context),
-          ],
+                  itemCount: wallet.walletCount,
+                ),
+              ),
+              _buildButtonCreate(context),
+            ],
+          ),
         ),
       ),
     );
