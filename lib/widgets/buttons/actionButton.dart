@@ -26,7 +26,7 @@ class ActionButton extends StatelessWidget {
         width: isFullWidth ? double.infinity : null,
         decoration: BoxDecoration(
             borderRadius: isFullWidth ? kBorderRadiusS : kBorderRadiusXS,
-            border: isOutlined ? Border.all(color: color, width: 2) : null,
+            border: isOutlined ? Border.all(color: color, width: 1) : null,
             color: isOutlined ? kTransparent : color),
         child: Center(
             child: Text(
