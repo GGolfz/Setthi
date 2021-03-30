@@ -93,16 +93,23 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Widget splashWidget(animation1, animation2) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeM),
-      width: double.infinity,
-      height: double.infinity,
-      color: kGold100,
-      child: Column(children: [
-        moveUpAnimator(),
-        fadeWidget(animation1, LogoImage()),
-        _renderText ? fadeWidget(animation1, LogoText()) : kSizedBoxXXS,
-      ]),
+    return GestureDetector(
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeM),
+        width: double.infinity,
+        height: double.infinity,
+        color: kGold100,
+        child: Column(children: [
+          moveUpAnimator(),
+          fadeWidget(animation1, LogoImage()),
+          _renderText ? fadeWidget(animation1, LogoText()) : kSizedBoxXXS,
+        ]),
+      ),
+      onDoubleTap: () {
+        setState(() {
+          _isLaunch = true;
+        });
+      },
     );
   }
 
