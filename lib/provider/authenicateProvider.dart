@@ -37,6 +37,6 @@ class AuthenticateProvider with ChangeNotifier {
     _token = null;
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
-    prefs..clear();
+    prefs.clear();
   }
 }
