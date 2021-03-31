@@ -42,7 +42,7 @@ class _SigninFormState extends State<SigninForm> {
         setState(() {
           _isLoading = false;
         });
-        Navigator.of(context).pop();
+        await widget.changeModal(AuthType.close);
       } catch (error) {}
     }
   }
