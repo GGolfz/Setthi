@@ -40,11 +40,11 @@ class _RegisterFormState extends State<RegisterForm> {
     if (validate()) {
       try {
         await Provider.of<AuthenticateProvider>(context, listen: false)
-            .login(email, password);
+            .register(email, password);
         setState(() {
           _isLoading = false;
         });
-        Navigator.of(context).pop();
+        await widget.changeModal(AuthType.close);
       } catch (error) {}
     }
   }

@@ -26,39 +26,38 @@ class SetthiApp extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => AuthenticateProvider()),
         ChangeNotifierProvider(create: (ctx) => WalletProvider()),
       ],
-      child: Consumer<AuthenticateProvider>(
-        builder: (ctx, auth, _) => MaterialApp(
-          navigatorKey: navigatorKey,
-          theme: ThemeData(
-              primaryColor: kGold200,
-              colorScheme: ColorScheme.light().copyWith(primary: kGold500)),
-          title: 'Setthi',
-          home: SplashScreen(
-              nextScreen: auth.isAuth
-                  ? MainScreen()
-                  : FutureBuilder(
-                      future: Future<bool>.sync(() async {
-                        try {
-                          await auth.tryAutoLogin();
-                          return true;
-                        } catch (error) {
-                          return false;
-                        }
-                      }),
-                      builder: (ctx, authResultSnapshot) =>
-                          authResultSnapshot.connectionState ==
-                                  ConnectionState.waiting
-                              ? Scaffold(
-                                  backgroundColor: kGold100,
-                                  body: Container(),
-                                )
-                              : LandingScreen())),
-          routes: {
-            CategoryScreen.routeName: (ctx) => CategoryScreen(),
-            LabelScreen.routeName: (ctx) => LabelScreen(),
-            TransactionScreen.routeName: (ctx) => TransactionScreen(),
-          },
-        ),
+      child: MaterialApp(
+        navigatorKey: navigatorKey,
+        theme: ThemeData(
+            primaryColor: kGold200,
+            colorScheme: ColorScheme.light().copyWith(primary: kGold500)),
+        title: 'Setthi',
+        home: Consumer<AuthenticateProvider>(
+            builder: (ctx, auth, _) => SplashScreen(
+                nextScreen: auth.isAuth
+                    ? MainScreen()
+                    : FutureBuilder(
+                        future: Future<bool>.sync(() async {
+                          try {
+                            await auth.tryAutoLogin();
+                            return true;
+                          } catch (error) {
+                            return false;
+                          }
+                        }),
+                        builder: (ctx, authResultSnapshot) =>
+                            authResultSnapshot.connectionState ==
+                                    ConnectionState.waiting
+                                ? Scaffold(
+                                    backgroundColor: kGold100,
+                                    body: Container(),
+                                  )
+                                : LandingScreen()))),
+        routes: {
+          CategoryScreen.routeName: (ctx) => CategoryScreen(),
+          LabelScreen.routeName: (ctx) => LabelScreen(),
+          TransactionScreen.routeName: (ctx) => TransactionScreen(),
+        },
       ),
     );
   }
