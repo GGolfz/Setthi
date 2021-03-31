@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/constants.dart';
+import 'package:setthi/model/formType.dart';
 import 'package:setthi/model/labelStatus.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
+import 'package:setthi/widgets/label/labelForm.dart';
 import 'package:setthi/widgets/label/labelItem.dart';
 import 'package:setthi/widgets/label/labelTypeSelect.dart';
 import 'package:setthi/widgets/layout/appBar.dart';
+import 'package:setthi/widgets/layout/customDialog.dart';
 import 'package:setthi/widgets/layout/divider.dart';
 
 class LabelScreen extends StatefulWidget {
@@ -22,6 +25,26 @@ class _LabelScreenState extends State<LabelScreen> {
     });
   }
 
+  Widget _buildSelection() {
+    return Container(
+      height: 40,
+      child: Row(
+        children: [
+          LabelTypeSelect(
+              text: "Income Label",
+              type: LabelStatus.Income,
+              changeStatus: _changeStatus,
+              current: _status),
+          LabelTypeSelect(
+              text: "Expense Label",
+              type: LabelStatus.Expense,
+              changeStatus: _changeStatus,
+              current: _status),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,23 +56,7 @@ class _LabelScreenState extends State<LabelScreen> {
           padding: EdgeInsets.symmetric(horizontal: kSizeS, vertical: kSizeXS),
           child: Column(
             children: [
-              Container(
-                height: 40,
-                child: Row(
-                  children: [
-                    LabelTypeSelect(
-                        text: "Income Label",
-                        type: LabelStatus.Income,
-                        changeStatus: _changeStatus,
-                        current: _status),
-                    LabelTypeSelect(
-                        text: "Expense Label",
-                        type: LabelStatus.Expense,
-                        changeStatus: _changeStatus,
-                        current: _status),
-                  ],
-                ),
-              ),
+              _buildSelection(),
               kSizedBoxVerticalS,
               Container(
                 height: 560,
@@ -57,6 +64,14 @@ class _LabelScreenState extends State<LabelScreen> {
                     itemBuilder: (ctx, index) => LabelItem(
                           labelText:
                               "${_status == LabelStatus.Income ? "Income" : "Expense"} Label Text $index",
+                          onTap: () {
+                            showCustomDialog(
+                                context: context,
+                                content: LabelForm(
+                                  type: FormType.Edit,
+                                  labelKey: index.toString(),
+                                ));
+                          },
                         ),
                     separatorBuilder: (ctx, index) => CustomDivider(),
                     itemCount: 10),
@@ -66,7 +81,11 @@ class _LabelScreenState extends State<LabelScreen> {
                   width: 220,
                   child: ActionButton(
                     text: "Create a new label",
-                    onPressed: () {},
+                    onPressed: () {
+                      showCustomDialog(
+                          context: context,
+                          content: LabelForm(type: FormType.Create));
+                    },
                   ))
             ],
           ),

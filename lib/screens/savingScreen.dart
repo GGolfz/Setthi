@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:setthi/model/saving.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/layout/customDialog.dart';
-import '../config/color.dart';
+import 'package:setthi/widgets/saving/savingItem.dart';
 import '../config/constants.dart';
 import '../widgets/layout/appBar.dart';
-import '../widgets/budget/savingForm.dart';
-import '../widgets/budget/budgetItem.dart';
-import '../widgets/budget/models/Budget.dart';
+import '../widgets/saving/savingForm.dart';
+import '../widgets/saving/savingItem.dart';
 
 class SavingScreen extends StatefulWidget {
   static final routeName = '/saving';
@@ -16,7 +16,7 @@ class SavingScreen extends StatefulWidget {
   _SavingScreenState createState() => _SavingScreenState();
 }
 
-final List<Budget> _budget = [];
+final List<Saving> _saving = [];
 Widget _buildButtonCreate(BuildContext context, Function _addNewBudget) {
   return Center(
       child: Container(
@@ -25,55 +25,25 @@ Widget _buildButtonCreate(BuildContext context, Function _addNewBudget) {
           child: ActionButton(
             text: "Create a new saving",
             onPressed: () {
-              showCustomDialog(context: context,content: SavingForm(addBudget: _addNewBudget,));
-              // _settingModalBottomSheet(context, _addNewBudget);
+              showCustomDialog(
+                  context: context,
+                  content: SavingForm(
+                    addBudget: _addNewBudget,
+                  ));
             },
           )));
 }
 
-// Widget _bottomModalContainer(Widget widget) {
-//   return Container(
-//     height: 450,
-//     width: double.infinity,
-//     padding: EdgeInsets.symmetric(horizontal: kSizeS * 1.5, vertical: kSizeS),
-//     decoration: BoxDecoration(
-//       color: kNeutral450,
-//       borderRadius: BorderRadius.only(
-//         topLeft: Radius.circular(kSizeM),
-//         topRight: Radius.circular(kSizeM),
-//       ),
-//     ),
-//     child: widget,
-//   );
-// }
-
-// void _settingModalBottomSheet(context, Function addNewBudget) {
-//   showModalBottomSheet(
-//       context: context,
-//       barrierColor: kTransparent,
-//       isScrollControlled: true,
-//       backgroundColor: kTransparent,
-//       builder: (ctx) {
-//         return Wrap(
-//           children: [
-//             _bottomModalContainer(
-//               BudgetForm(addBudget: addNewBudget),
-//             ),
-//           ],
-//         );
-//       });
-// }
-
 class _SavingScreenState extends State<SavingScreen> {
   void _addNewBudget(
-      String title, double maxBudget, DateTime startDay, DateTime lastDay) {
-    final newBudget = Budget(
+      String title, double savingGoal, DateTime startDay, DateTime lastDay) {
+    final newBudget = Saving(
         title: title,
-        maxBudget: maxBudget,
+        savingGoal: savingGoal,
         startDay: DateFormat.yMMMd().format(startDay),
         endDay: DateFormat.yMMMd().format(lastDay));
     setState(() {
-      _budget.add(newBudget);
+      _saving.add(newBudget);
     });
   }
 
@@ -85,7 +55,7 @@ class _SavingScreenState extends State<SavingScreen> {
         ),
         body: Container(
           padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeS),
-          child: _budget.isEmpty
+          child: _saving.isEmpty
               ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -96,13 +66,13 @@ class _SavingScreenState extends State<SavingScreen> {
                 ])
               : ListView(
                   children: [
-                    ..._budget
+                    ..._saving
                         .map(
-                          (budget) => BudgetItem(
-                              budget.title,
-                              budget.maxBudget,
-                              budget.startDay.toString(),
-                              budget.endDay.toString()),
+                          (saving) => SavingItem(
+                              saving.title,
+                              saving.savingGoal,
+                              saving.startDay.toString(),
+                              saving.endDay.toString()),
                         )
                         .toList(),
                     _buildButtonCreate(context, _addNewBudget)

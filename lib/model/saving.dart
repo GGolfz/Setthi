@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 
-class Budget {
+class Saving {
   final String title;
-  final double maxBudget;
+  final double savingGoal;
   final String startDay;
   final String endDay;
-  Budget({
+  Saving({
     @required this.title,
-    @required this.maxBudget,
+    @required this.savingGoal,
     @required this.startDay,
     @required this.endDay,
   });

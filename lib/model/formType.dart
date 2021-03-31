@@ -1,0 +1,1 @@
+enum FormType { Create, Edit }

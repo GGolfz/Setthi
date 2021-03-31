@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/model/categoryStatus.dart';
+import 'package:setthi/model/formType.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
+import 'package:setthi/widgets/category/categoryForm.dart';
 import 'package:setthi/widgets/category/categoryItem.dart';
 import 'package:setthi/widgets/category/categoryTypeSelect.dart';
 import 'package:setthi/widgets/layout/appBar.dart';
+import 'package:setthi/widgets/layout/customDialog.dart';
 import 'package:setthi/widgets/layout/divider.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -38,12 +41,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 child: Row(
                   children: [
                     CategoryTypeSelect(
-                        text: "Income Label",
+                        text: "Income Category",
                         type: CategoryStatus.Income,
                         changeStatus: _changeStatus,
                         current: _status),
                     CategoryTypeSelect(
-                        text: "Expense Label",
+                        text: "Expense Category",
                         type: CategoryStatus.Expense,
                         changeStatus: _changeStatus,
                         current: _status),
@@ -57,6 +60,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     itemBuilder: (ctx, index) => CategoryItem(
                           categoryText:
                               "${_status == CategoryStatus.Income ? "Income" : "Expense"} Category Text $index",
+                          onTap: () {
+                            showCustomDialog(
+                                context: context,
+                                content: CategoryForm(
+                                  type: FormType.Edit,
+                                  labelKey: index.toString(),
+                                ));
+                          },
                         ),
                     separatorBuilder: (ctx, index) => CustomDivider(),
                     itemCount: 10),
@@ -66,7 +77,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   width: 220,
                   child: ActionButton(
                     text: "Create a new category",
-                    onPressed: () {},
+                    onPressed: () {
+                      showCustomDialog(
+                          context: context,
+                          content: CategoryForm(
+                            type: FormType.Create,
+                          ));
+                    },
                   ))
             ],
           ),
