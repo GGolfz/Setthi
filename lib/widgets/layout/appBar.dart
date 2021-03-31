@@ -5,7 +5,8 @@ import 'package:setthi/config/style.dart';
 class SetthiAppBar extends StatelessWidget implements PreferredSizeWidget {
   final leading;
   final title;
-  SetthiAppBar({@required this.title, this.leading});
+  final subtitle;
+  SetthiAppBar({@required this.title, this.leading, this.subtitle});
   @override
   Size get preferredSize => Size.fromHeight(kSizeL);
 
@@ -13,9 +14,16 @@ class SetthiAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: leading,
-      title: Text(
-        title,
-        style: kHeadline3Black,
+      title: Container(
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: kHeadline3Black,
+            ),
+            if (subtitle != null) Text(subtitle)
+          ],
+        ),
       ),
     );
   }

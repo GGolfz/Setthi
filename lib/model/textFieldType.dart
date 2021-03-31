@@ -1,0 +1,4 @@
+enum TextFieldType {
+  text,
+  number,
+}
