@@ -29,6 +29,7 @@ class SetthiApp extends StatelessWidget {
       child: MaterialApp(
         navigatorKey: navigatorKey,
         theme: ThemeData(
+            fontFamily: 'Quicksand',
             primaryColor: kGold200,
             colorScheme: ColorScheme.light().copyWith(primary: kGold500)),
         title: 'Setthi',
