@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../provider/walletProvider.dart';
-import '../buttons/primaryButton.dart';
+import '../buttons/actionButton.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
 
 class NewWalletForm extends StatefulWidget {
-  final Function addWallet;
-  NewWalletForm({this.addWallet});
   @override
   _NewWalletFormState createState() => _NewWalletFormState();
 }
@@ -29,7 +27,7 @@ class _NewWalletFormState extends State<NewWalletForm> {
     final wallet = Provider.of<WalletProvider>(context);
     return Container(
       width: 400,
-      height: 200,
+      height: 220,
       child: Form(
         key: _formKey,
         child: Column(
@@ -67,8 +65,9 @@ class _NewWalletFormState extends State<NewWalletForm> {
             kSizedBoxVerticalS,
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: PrimaryButton(
+              child: ActionButton(
                 text: "Submit",
+                color: kGold300,
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
