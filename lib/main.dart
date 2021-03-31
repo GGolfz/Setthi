@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/screens/walletScreen.dart';
 import './config/color.dart';
 import './provider/authenicateProvider.dart';
 import './provider/walletProvider.dart';
@@ -35,7 +34,7 @@ class SetthiApp extends StatelessWidget {
               colorScheme: ColorScheme.light().copyWith(primary: kGold500)),
           title: 'Setthi',
           home: SplashScreen(
-              nextScreen: !auth.isAuth ? MainScreen() : LandingScreen()),
+              nextScreen: auth.isAuth ? MainScreen() : LandingScreen()),
           routes: {
             CategoryScreen.routeName: (ctx) => CategoryScreen(),
             LabelScreen.routeName: (ctx) => LabelScreen(),

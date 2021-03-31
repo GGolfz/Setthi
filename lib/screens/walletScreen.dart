@@ -10,7 +10,6 @@ import '../widgets/wallet/newWalletForm.dart';
 import '../utils/format.dart';
 import '../config/constants.dart';
 import '../config/color.dart';
-import '../config/color.dart';
 
 class WalletScreen extends StatelessWidget {
   static final routeName = '/wallet';
