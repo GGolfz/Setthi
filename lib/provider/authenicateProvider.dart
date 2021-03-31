@@ -19,9 +19,7 @@ class AuthenticateProvider with ChangeNotifier {
 
   Future<void> register(String email, String password) async {
     _token = "THIS IS MOCKUP TOKEN";
-    Timer(Duration(milliseconds: 500), () {
-      notifyListeners();
-    });
+    notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('userToken', _token);
   }
