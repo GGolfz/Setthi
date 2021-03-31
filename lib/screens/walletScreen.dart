@@ -7,6 +7,7 @@ import '../widgets/wallet/emptyWallet.dart';
 import '../widgets/layout/customDialog.dart';
 import '../widgets/buttons/actionButton.dart';
 import '../widgets/wallet/newWalletForm.dart';
+import '../widgets/wallet/editWalletForm.dart';
 import '../utils/format.dart';
 import '../config/constants.dart';
 import '../config/color.dart';
@@ -25,6 +26,13 @@ class WalletScreen extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+
+  onClickEdit(BuildContext context, WalletItem selectedWallet) {
+    showCustomDialog(
+      context: context,
+      content: EditWalletForm(selectedWallet: selectedWallet),
     );
   }
 
@@ -50,8 +58,10 @@ class WalletScreen extends StatelessWidget {
               Container(
                 height: 375,
                 child: ListView.builder(
-                  itemBuilder: (ctx, index) =>
-                      WalletCard(item: wallet.wallets[index]),
+                  itemBuilder: (ctx, index) => WalletCard(
+                    item: wallet.wallets[index],
+                    onTap: () => onClickEdit(context, wallet.wallets[index]),
+                  ),
                   itemCount: wallet.walletCount,
                 ),
               ),

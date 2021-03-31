@@ -43,16 +43,21 @@ class WalletProvider with ChangeNotifier {
   }
 
   Future<void> addWallet(String id, String title, double amount) async {
+    //mockup add new wallet
     _wallets.add(WalletItem(id: id, title: title, amount: amount));
     notifyListeners();
   }
 
   Future<void> removeWallet(String id) async {
-    _wallets.remove((el) => id == el.id);
+    //mockup remove wallet
+    _wallets.removeWhere((el) => id == el.id);
     notifyListeners();
   }
 
-  Future<void> editWallet(String id, String tital, double amount) async {
+  Future<void> editWallet(String id, String title, double amount) async {
+    //mockup edit wallet
+    int index = _wallets.indexWhere((el) => el.id == id);
+    _wallets[index] = new WalletItem(id: id, title: title, amount: amount);
     notifyListeners();
   }
 }

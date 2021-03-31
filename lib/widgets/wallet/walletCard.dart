@@ -7,7 +7,8 @@ import '../../utils/format.dart';
 
 class WalletCard extends StatelessWidget {
   final WalletItem item;
-  WalletCard({@required this.item});
+  final Function onTap;
+  WalletCard({@required this.item, @required this.onTap});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,6 +28,8 @@ class WalletCard extends StatelessWidget {
         title: Text(item.title, style: kSubtitle1Black),
         subtitle: Text('THB ${formatCurrencyString(item.amount)}',
             style: kHeadline3Black),
+        trailing: Icon(Icons.edit),
+        onTap: onTap,
       ),
     );
   }
