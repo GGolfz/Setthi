@@ -1,1 +1,1 @@
-const apiEndpoint = "https://setthi.cscms.me/";
+const apiEndpoint = "https://setthi.cscms.me/api";
