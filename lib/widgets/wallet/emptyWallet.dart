@@ -8,14 +8,12 @@ class EmptyWallet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [Image.asset("assets/images/empty-wallet.png")],
         ),
         Text('Empty wallet'),
-        kSizedBoxVerticalM,
       ],
     );
   }

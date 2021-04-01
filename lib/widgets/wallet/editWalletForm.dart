@@ -28,7 +28,7 @@ class _EditWalletFormState extends State<EditWalletForm> {
         new TextEditingController(text: widget.selectedWallet.title);
     return Container(
       width: 400,
-      height: 150,
+      height: 160,
       child: Form(
         key: _formKey,
         child: Column(
