@@ -32,6 +32,7 @@ class _MainScreenState extends State<MainScreen> {
         body: Center(
           child: screen[_currentTab],
         ),
+        resizeToAvoidBottomInset: false,
         floatingActionButton: AddButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomBar(
