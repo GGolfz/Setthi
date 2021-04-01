@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
-import 'package:setthi/config/constants.dart';
 import 'package:setthi/provider/walletProvider.dart';
 import 'package:setthi/widgets/transaction/walletListItem.dart';
 
