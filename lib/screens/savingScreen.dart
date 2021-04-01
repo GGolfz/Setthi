@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:setthi/model/saving.dart';
+import 'package:provider/provider.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/layout/customDialog.dart';
 import 'package:setthi/widgets/saving/savingItem.dart';
@@ -8,6 +7,7 @@ import '../config/constants.dart';
 import '../widgets/layout/appBar.dart';
 import '../widgets/saving/savingForm.dart';
 import '../widgets/saving/savingItem.dart';
+import '../provider/savingProvider.dart';
 
 class SavingScreen extends StatefulWidget {
   static final routeName = '/saving';
@@ -16,8 +16,7 @@ class SavingScreen extends StatefulWidget {
   _SavingScreenState createState() => _SavingScreenState();
 }
 
-final List<Saving> _saving = [];
-Widget _buildButtonCreate(BuildContext context, Function _addNewBudget) {
+Widget _buildButtonCreate(BuildContext context) {
   return Center(
       child: Container(
           margin:
@@ -25,57 +24,42 @@ Widget _buildButtonCreate(BuildContext context, Function _addNewBudget) {
           child: ActionButton(
             text: "Create a new saving",
             onPressed: () {
-              showCustomDialog(
-                  context: context,
-                  content: SavingForm(
-                    addBudget: _addNewBudget,
-                  ));
+              showCustomDialog(context: context, content: SavingForm());
             },
           )));
 }
 
 class _SavingScreenState extends State<SavingScreen> {
-  void _addNewBudget(
-      String title, double savingGoal, DateTime startDay, DateTime lastDay) {
-    final newBudget = Saving(
-        title: title,
-        savingGoal: savingGoal,
-        startDay: DateFormat.yMMMd().format(startDay),
-        endDay: DateFormat.yMMMd().format(lastDay));
-    setState(() {
-      _saving.add(newBudget);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final savingProvider = Provider.of<SavingProvider>(context);
     return Scaffold(
         appBar: SetthiAppBar(
           title: "Saving Goal",
         ),
         body: Container(
           padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeS),
-          child: _saving.isEmpty
-              ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          child: savingProvider.saving.isEmpty
+              ? SingleChildScrollView(
+                  child: Column(children: [
+                  kSizedBoxVerticalXL,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [Image.asset("assets/images/empty-item.png")],
                   ),
                   kSizedBoxVerticalM,
-                  _buildButtonCreate(context, _addNewBudget)
-                ])
+                  _buildButtonCreate(context),
+                ]))
               : ListView(
                   children: [
-                    ..._saving
+                    ...savingProvider.saving
                         .map(
                           (saving) => SavingItem(
-                              saving.title,
-                              saving.savingGoal,
-                              saving.startDay.toString(),
-                              saving.endDay.toString()),
+                            item: saving,
+                          ),
                         )
                         .toList(),
-                    _buildButtonCreate(context, _addNewBudget)
+                    _buildButtonCreate(context)
                   ],
                 ),
         ));

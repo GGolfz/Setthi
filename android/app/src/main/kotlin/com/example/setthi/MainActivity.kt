@@ -1,4 +1,4 @@
-package com.example.setthi
+package com.setthi.setthi
 
 import io.flutter.embedding.android.FlutterActivity
 

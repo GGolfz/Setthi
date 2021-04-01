@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController1 =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
     _animationController2 =
-        AnimationController(vsync: this, duration: Duration(seconds: 4));
+        AnimationController(vsync: this, duration: Duration(seconds: 3));
     _animationController1.forward();
     _animationController2.forward();
   }
@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void launchScreen() async {
-    Timer(Duration(seconds: 4), () {
+    Timer(Duration(seconds: 5), () {
       setState(() {
         _isLaunch = true;
       });
