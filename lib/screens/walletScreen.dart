@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../widgets/wallet/emptyWallet.dart';
-import '../widgets/wallet/emptyWallet.dart';
 import '../widgets/wallet/walletCard.dart';
 import '../provider/walletProvider.dart';
 import '../widgets/layout/appBar.dart';
