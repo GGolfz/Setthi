@@ -68,6 +68,8 @@ class _AuthTextFieldState extends State<AuthTextField> {
       },
       controller: widget.textController,
       obscureText: isPassword() && _isHiddenText,
+      keyboardType:
+          !isPassword() ? TextInputType.emailAddress : TextInputType.text,
       style: kBody1Gold,
       decoration: InputDecoration(
           border: OutlineInputBorder(
