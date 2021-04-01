@@ -52,6 +52,7 @@ class _LabelScreenState extends State<LabelScreen> {
           title: 'Label',
           leading: BackButton(),
         ),
+        resizeToAvoidBottomInset: false,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: kSizeS, vertical: kSizeXS),
           child: Column(

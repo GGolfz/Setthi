@@ -14,7 +14,7 @@ class WalletListItem extends StatelessWidget {
       margin: EdgeInsets.all(kSizeXS),
       padding: EdgeInsets.all(kSizeXXS),
       width: 120,
-      height: 70,
+      height: 50,
       decoration: BoxDecoration(
           color: isSelect ? kGold300Fade : kNeutral100,
           border: isSelect ? Border.all(color: kGold300, width: 2) : null),
