@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../config/style.dart';
 import '../widgets/wallet/emptyWallet.dart';
 import '../widgets/wallet/walletCard.dart';
 import '../provider/walletProvider.dart';
@@ -51,15 +52,21 @@ class WalletScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: kSizeS, vertical: kSizeXS),
           child: Column(
             children: <Widget>[
-              Container(
-                child: LineChartSample2(),
-                height: 180,
+              Column(
+                children: [
+                  Text('Your expense', style: kHeadline3Black),
+                  kSizedBoxVerticalXXS,
+                  Container(
+                    child: LineChartSample2(),
+                    height: 170,
+                  )
+                ],
               ),
               kSizedBoxVerticalS,
               wallet.isEmpty()
                   ? EmptyWallet()
                   : Container(
-                      height: 330,
+                      height: 320,
                       child: ListView.builder(
                         itemBuilder: (ctx, index) => WalletCard(
                           item: wallet.wallets[index],
