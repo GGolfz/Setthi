@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.setthi">
+    package="com.setthi.setthi">
    <application
         android:label="setthi"
         android:icon="@mipmap/app_icon">
