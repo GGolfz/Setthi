@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../widgets/wallet/emptyWallet.dart';
+import '../widgets/wallet/emptyWallet.dart';
+import '../widgets/wallet/emptyWallet.dart';
+import '../widgets/wallet/emptyWallet.dart';
 import '../widgets/wallet/walletCard.dart';
 import '../provider/walletProvider.dart';
 import '../widgets/layout/appBar.dart';
@@ -54,17 +58,19 @@ class WalletScreen extends StatelessWidget {
                 child: Text('This is graph'),
                 height: 150,
               ),
-              if (wallet.isEmpty()) EmptyWallet(),
-              Container(
-                height: 375,
-                child: ListView.builder(
-                  itemBuilder: (ctx, index) => WalletCard(
-                    item: wallet.wallets[index],
-                    onTap: () => onClickEdit(context, wallet.wallets[index]),
-                  ),
-                  itemCount: wallet.walletCount,
-                ),
-              ),
+              wallet.isEmpty()
+                  ? EmptyWallet()
+                  : Container(
+                      height: 375,
+                      child: ListView.builder(
+                        itemBuilder: (ctx, index) => WalletCard(
+                          item: wallet.wallets[index],
+                          onTap: () =>
+                              onClickEdit(context, wallet.wallets[index]),
+                        ),
+                        itemCount: wallet.walletCount,
+                      ),
+                    ),
               _buildButtonCreate(context),
             ],
           ),
