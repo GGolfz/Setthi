@@ -25,7 +25,7 @@ class SavingProvider with ChangeNotifier {
     return _saving;
   }
   Future<void> addSaving(String title, String savingGoal,
-      DateTime startDay, DateTime lastDay) {
+      DateTime startDay, DateTime lastDay) async {
     final newBudget = Saving(
         id: savingCount.toString(),
         title: title,
@@ -37,7 +37,7 @@ class SavingProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> removeSaving(String id) {
+  Future<void> removeSaving(String id) async {
     _saving.removeWhere((el) => el.id == id);
     notifyListeners();
   }
