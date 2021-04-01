@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../config/constants.dart';
-
 class EmptyWallet extends StatelessWidget {
   static final routeName = '/wallet';
 

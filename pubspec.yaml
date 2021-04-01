@@ -31,6 +31,7 @@ dependencies:
   package_info: ^2.0.0
   flutter_colorpicker: ^0.4.0
   scroll_snap_list: ^0.7.0
+  fl_chart: ^0.30.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
