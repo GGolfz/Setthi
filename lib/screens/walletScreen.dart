@@ -8,6 +8,7 @@ import '../widgets/layout/customDialog.dart';
 import '../widgets/buttons/actionButton.dart';
 import '../widgets/wallet/newWalletForm.dart';
 import '../widgets/wallet/editWalletForm.dart';
+import '../widgets/wallet/expenseChart.dart';
 import '../utils/format.dart';
 import '../config/constants.dart';
 import '../config/color.dart';
@@ -51,13 +52,14 @@ class WalletScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                child: Text('This is graph'),
-                height: 150,
+                child: LineChartSample2(),
+                height: 180,
               ),
+              kSizedBoxVerticalS,
               wallet.isEmpty()
                   ? EmptyWallet()
                   : Container(
-                      height: 375,
+                      height: 330,
                       child: ListView.builder(
                         itemBuilder: (ctx, index) => WalletCard(
                           item: wallet.wallets[index],
