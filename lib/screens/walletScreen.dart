@@ -66,7 +66,7 @@ class WalletScreen extends StatelessWidget {
               wallet.isEmpty()
                   ? EmptyWallet()
                   : Container(
-                      height: 320,
+                      height: 310,
                       child: ListView.builder(
                         itemBuilder: (ctx, index) => WalletCard(
                           item: wallet.wallets[index],
