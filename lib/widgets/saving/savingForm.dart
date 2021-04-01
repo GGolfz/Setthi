@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/form/customDatePicker.dart';
 import 'package:setthi/widgets/form/customFormTitle.dart';
 import 'package:setthi/widgets/form/customTextField.dart';
+import '../../provider/savingProvider.dart';
 
 class SavingForm extends StatefulWidget {
-  final Function addBudget;
-  SavingForm({@required this.addBudget});
   @override
   _SavingFormState createState() => _SavingFormState();
 }
@@ -18,13 +18,12 @@ class _SavingFormState extends State<SavingForm> {
   final _maxBudget = TextEditingController();
   DateTime startDay;
   DateTime lastDay;
-  void submitData() {
+  void submitData( Function addSaving) {
     if (_title.text != null &&
         _maxBudget.text != null &&
         startDay != null &&
         lastDay != null) {
-      widget.addBudget(
-          _title.text, double.tryParse(_maxBudget.text), startDay, lastDay);
+      addSaving(_title.text,_maxBudget.text,startDay,lastDay);
       Navigator.pop(context);
     }
   }
@@ -49,6 +48,7 @@ class _SavingFormState extends State<SavingForm> {
 
   @override
   Widget build(BuildContext context) {
+    final savingProvider = Provider.of<SavingProvider>(context);
     return Container(
       height: 415,
       width: 400,
@@ -84,7 +84,7 @@ class _SavingFormState extends State<SavingForm> {
               text: "Submit",
               color: kGold300,
               onPressed: () {
-                submitData();
+                submitData(savingProvider.addSaving);
               },
             ),
           ],
