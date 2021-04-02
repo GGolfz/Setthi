@@ -1,1 +1,0 @@
-enum LabelStatus { Income, Expense }
