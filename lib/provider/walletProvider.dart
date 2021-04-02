@@ -25,7 +25,7 @@ class WalletProvider with ChangeNotifier {
   // ];
 
   List<WalletItem> get wallets {
-    return _wallets;
+    return _wallets ?? [];
   }
 
   double get totalAmount {
