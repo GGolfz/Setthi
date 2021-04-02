@@ -10,6 +10,10 @@ class AuthenticateProvider with ChangeNotifier {
     return _token != null;
   }
 
+  String get token {
+    return _token;
+  }
+
   Future<void> login(String email, String password) async {
     _token = "THIS IS MOCKUP TOKEN";
     Timer(Duration(milliseconds: 500), () => notifyListeners());

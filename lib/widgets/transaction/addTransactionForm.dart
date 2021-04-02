@@ -30,8 +30,9 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   }
 
   void _fetchFirstWallet() {
-    if (WalletProvider().walletCount > 0) {
-      selectedWallet = WalletProvider().wallets[0];
+    var wallet = Provider.of<WalletProvider>(context);
+    if (!wallet.isEmpty()) {
+      selectedWallet = wallet.wallets[0];
     }
   }
 
