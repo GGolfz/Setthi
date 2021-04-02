@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/constants.dart';
-import 'package:setthi/model/categoryStatus.dart';
+import 'package:setthi/model/CategoryType.dart';
 import 'package:setthi/model/formType.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/category/categoryForm.dart';
@@ -18,8 +18,8 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  var _status = CategoryStatus.Income;
-  void _changeStatus(CategoryStatus status) {
+  var _status = CategoryType.Income;
+  void _changeStatus(CategoryType status) {
     setState(() {
       _status = status;
     });
@@ -43,12 +43,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   children: [
                     CategoryTypeSelect(
                         text: "Income Category",
-                        type: CategoryStatus.Income,
+                        type: CategoryType.Income,
                         changeStatus: _changeStatus,
                         current: _status),
                     CategoryTypeSelect(
                         text: "Expense Category",
-                        type: CategoryStatus.Expense,
+                        type: CategoryType.Expense,
                         changeStatus: _changeStatus,
                         current: _status),
                   ],
@@ -60,7 +60,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 child: ListView.separated(
                     itemBuilder: (ctx, index) => CategoryItem(
                           categoryText:
-                              "${_status == CategoryStatus.Income ? "Income" : "Expense"} Category Text $index",
+                              "${_status == CategoryType.Income ? "Income" : "Expense"} Category Text $index",
                           onTap: () {
                             showCustomDialog(
                                 context: context,
