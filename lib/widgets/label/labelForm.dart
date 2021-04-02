@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/model/formType.dart';
+import 'package:setthi/provider/labelProvider.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/form/customDropDown.dart';
 import 'package:setthi/widgets/form/customFormTitle.dart';
@@ -9,15 +11,19 @@ import 'package:setthi/widgets/form/customTextField.dart';
 
 class LabelForm extends StatefulWidget {
   final FormType type;
-  final String labelKey;
-  LabelForm({@required this.type, this.labelKey});
+  final String labelText;
+  final String labelType;
+  final int labelKey;
+  LabelForm(
+      {@required this.type, this.labelKey, this.labelText, this.labelType});
   @override
   _LabelFormState createState() => _LabelFormState();
 }
 
 class _LabelFormState extends State<LabelForm> {
-  final TextEditingController _label = TextEditingController();
-  var _labelType = "Income";
+  TextEditingController _label;
+  var _labelType;
+
   String _getFormTitle() {
     if (widget.type == FormType.Create) {
       return "Create New Label";
@@ -33,7 +39,11 @@ class _LabelFormState extends State<LabelForm> {
       return ActionButton(
         text: "Submit",
         color: kGold300,
-        onPressed: () {},
+        onPressed: () async {
+          await Provider.of<LabelProvider>(context, listen: false)
+              .createLabel(_label.text, _labelType);
+          Navigator.of(context).pop();
+        },
       );
     }
     if (widget.type == FormType.Edit) {
@@ -44,19 +54,34 @@ class _LabelFormState extends State<LabelForm> {
             text: "Delete",
             color: kRed400,
             isOutlined: true,
-            onPressed: () {},
+            onPressed: () async {
+              await Provider.of<LabelProvider>(context, listen: false)
+                  .deleteLabel(widget.labelKey);
+              Navigator.of(context).pop();
+            },
           )),
           kSizedBoxHorizontalS,
           Expanded(
               child: ActionButton(
             text: "Submit",
             color: kGold300,
-            onPressed: () {},
+            onPressed: () async {
+              await Provider.of<LabelProvider>(context, listen: false)
+                  .editLabel(widget.labelKey, _label.text, _labelType);
+              Navigator.of(context).pop();
+            },
           ))
         ],
       );
     }
     return Container();
+  }
+
+  @override
+  void initState() {
+    _label = TextEditingController(text: widget.labelText ?? "");
+    _labelType = widget.labelType ?? "Income";
+    super.initState();
   }
 
   @override

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:provider/provider.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/model/formType.dart';
+import 'package:setthi/provider/categoryProvider.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/form/customDropDown.dart';
 import 'package:setthi/widgets/form/customFormTitle.dart';
@@ -10,17 +12,35 @@ import 'package:setthi/widgets/form/customTextField.dart';
 
 class CategoryForm extends StatefulWidget {
   final FormType type;
-  final String labelKey;
-  CategoryForm({@required this.type, this.labelKey});
+  final int labelKey;
+  final String name;
+  final String categoryType;
+  final Color color;
+  CategoryForm(
+      {@required this.type,
+      this.labelKey,
+      this.name,
+      this.categoryType,
+      this.color});
   @override
   _CategoryFormState createState() => _CategoryFormState();
 }
 
 class _CategoryFormState extends State<CategoryForm> {
-  final TextEditingController _category = TextEditingController();
-  var _categoryType = "Income";
-  Color pickerColor = kRed100;
-  Color currentColor = kRed100;
+  TextEditingController _category;
+  var _categoryType;
+  Color pickerColor;
+  Color currentColor;
+
+  @override
+  void initState() {
+    _category = TextEditingController(text: widget.name ?? '');
+    _categoryType = widget.categoryType ?? "Income";
+    currentColor = widget.color ?? kRed100;
+    pickerColor = currentColor;
+    super.initState();
+  }
+
   String _getFormTitle() {
     if (widget.type == FormType.Create) {
       return "Create New Category";
@@ -40,7 +60,11 @@ class _CategoryFormState extends State<CategoryForm> {
       return ActionButton(
         text: "Submit",
         color: kGold300,
-        onPressed: () {},
+        onPressed: () async {
+          await Provider.of<CategoryProvider>(context, listen: false)
+              .createCategory(_category.text, _categoryType, currentColor);
+          Navigator.of(context).pop();
+        },
       );
     }
     if (widget.type == FormType.Edit) {
@@ -51,14 +75,23 @@ class _CategoryFormState extends State<CategoryForm> {
             text: "Delete",
             color: kRed400,
             isOutlined: true,
-            onPressed: () {},
+            onPressed: () async {
+              await Provider.of<CategoryProvider>(context, listen: false)
+                  .deleteCategory(widget.labelKey);
+              Navigator.of(context).pop();
+            },
           )),
           kSizedBoxHorizontalS,
           Expanded(
               child: ActionButton(
             text: "Submit",
             color: kGold300,
-            onPressed: () {},
+            onPressed: () async {
+              await Provider.of<CategoryProvider>(context, listen: false)
+                  .editCategory(widget.labelKey, _category.text, _categoryType,
+                      currentColor);
+              Navigator.of(context).pop();
+            },
           ))
         ],
       );

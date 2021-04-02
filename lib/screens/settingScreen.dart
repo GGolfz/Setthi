@@ -5,6 +5,8 @@ import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/config/style.dart';
 import 'package:setthi/provider/authenicateProvider.dart';
+import 'package:setthi/provider/categoryProvider.dart';
+import 'package:setthi/provider/labelProvider.dart';
 import 'package:setthi/screens/categoryScreen.dart';
 import 'package:setthi/screens/labelScreen.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
@@ -12,13 +14,26 @@ import 'package:setthi/widgets/layout/appBar.dart';
 import 'package:setthi/widgets/layout/divider.dart';
 import 'package:setthi/widgets/setting/settingItem.dart';
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends StatefulWidget {
   static final routeName = '/setting';
+
+  @override
+  _SettingScreenState createState() => _SettingScreenState();
+}
+
+class _SettingScreenState extends State<SettingScreen> {
   Future<String> getVersionNumber() async {
     final packageInfo = await PackageInfo.fromPlatform();
     final version = packageInfo.version;
     final buildNumber = packageInfo.buildNumber;
     return '$version ($buildNumber)';
+  }
+
+  @override
+  void initState() {
+    Provider.of<CategoryProvider>(context, listen: false).fetchCategories();
+    Provider.of<LabelProvider>(context, listen: false).fetchLabels();
+    super.initState();
   }
 
   @override
@@ -34,19 +49,21 @@ class SettingScreen extends StatelessWidget {
                   height: 500,
                   child: ListView(
                     children: [
-                      SettingItem(
-                        icon: Icons.label,
-                        text: "Labels",
-                        amount: 8,
-                        routeName: LabelScreen.routeName,
-                      ),
+                      Consumer<LabelProvider>(
+                          builder: (ctx, label, _) => SettingItem(
+                                icon: Icons.label,
+                                text: "Labels",
+                                amount: label.labelCount,
+                                routeName: LabelScreen.routeName,
+                              )),
                       CustomDivider(),
-                      SettingItem(
-                        icon: Icons.category,
-                        text: "Categories",
-                        amount: 22,
-                        routeName: CategoryScreen.routeName,
-                      ),
+                      Consumer<CategoryProvider>(
+                          builder: (ctx, category, _) => SettingItem(
+                                icon: Icons.category,
+                                text: "Categories",
+                                amount: category.categoryCount,
+                                routeName: CategoryScreen.routeName,
+                              )),
                       CustomDivider(),
                       kSizedBoxVerticalXXS,
                       FutureBuilder<String>(

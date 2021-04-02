@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/provider/categoryProvider.dart';
+import 'package:setthi/provider/labelProvider.dart';
 import './config/color.dart';
 import './provider/authenicateProvider.dart';
 import './provider/walletProvider.dart';
@@ -35,6 +37,14 @@ class SetthiApp extends StatelessWidget {
           update: (ctx, auth, prev) =>
               SavingProvider(auth.token, prev == null ? [] : prev.saving),
         ),
+        ChangeNotifierProxyProvider<AuthenticateProvider, CategoryProvider>(
+            create: (ctx) => CategoryProvider(null, []),
+            update: (ctx, auth, prev) => CategoryProvider(
+                auth.token, prev == null ? [] : prev.categories)),
+        ChangeNotifierProxyProvider<AuthenticateProvider, LabelProvider>(
+            create: (ctx) => LabelProvider(null, []),
+            update: (ctx, auth, prev) =>
+                LabelProvider(auth.token, prev == null ? [] : prev.labels))
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,

@@ -1,0 +1,1 @@
+enum CategoryType { Income, Expense }
