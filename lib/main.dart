@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import './config/color.dart';
 import './provider/authenicateProvider.dart';
 import './provider/walletProvider.dart';
-import'./provider/savingProvider.dart';
+import './provider/savingProvider.dart';
 import './screens/categoryScreen.dart';
 import './screens/labelScreen.dart';
 import './screens/splashScreen.dart';
@@ -49,13 +49,7 @@ class SetthiApp extends StatelessWidget {
                           }
                         }),
                         builder: (ctx, authResultSnapshot) =>
-                            authResultSnapshot.connectionState ==
-                                    ConnectionState.waiting
-                                ? Scaffold(
-                                    backgroundColor: kGold100,
-                                    body: Container(),
-                                  )
-                                : LandingScreen()))),
+                            LandingScreen()))),
         routes: {
           CategoryScreen.routeName: (ctx) => CategoryScreen(),
           LabelScreen.routeName: (ctx) => LabelScreen(),

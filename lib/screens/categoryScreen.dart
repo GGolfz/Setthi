@@ -32,6 +32,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           title: 'Category',
           leading: BackButton(),
         ),
+        resizeToAvoidBottomInset: false,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: kSizeS, vertical: kSizeXS),
           child: Column(

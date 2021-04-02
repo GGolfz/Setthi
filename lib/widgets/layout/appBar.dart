@@ -13,6 +13,7 @@ class SetthiAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      centerTitle: true,
       leading: leading,
       title: Container(
         child: Column(

@@ -7,7 +7,7 @@ import 'package:setthi/widgets/transaction/transactionTypeItem.dart';
 class SelectTypeBar extends StatelessWidget {
   final TransactionType current;
   final Function onChange;
-  var types = [
+  final types = [
     {"label": "Income", "type": TransactionType.Income},
     {"label": "Expense", "type": TransactionType.Expense},
     {"label": "Saving", "type": TransactionType.Saving}

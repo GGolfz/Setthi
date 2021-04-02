@@ -13,9 +13,9 @@ class CustomerEdit extends StatefulWidget {
 }
 
 class _CustomerEditState extends State<CustomerEdit> {
-  @override
   String title = "";
   String amount = "";
+  @override
   void initState() {
     super.initState();
   }
