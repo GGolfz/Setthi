@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:setthi/config/constants.dart';
-import 'package:setthi/model/CategoryType.dart';
+import 'package:setthi/model/categoryType.dart';
 import 'package:setthi/model/formType.dart';
+import 'package:setthi/provider/categoryProvider.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/category/categoryForm.dart';
 import 'package:setthi/widgets/category/categoryItem.dart';
@@ -57,21 +59,30 @@ class _CategoryScreenState extends State<CategoryScreen> {
               kSizedBoxVerticalS,
               Container(
                 height: 560,
-                child: ListView.separated(
-                    itemBuilder: (ctx, index) => CategoryItem(
-                          categoryText:
-                              "${_status == CategoryType.Income ? "Income" : "Expense"} Category Text $index",
-                          onTap: () {
-                            showCustomDialog(
-                                context: context,
-                                content: CategoryForm(
-                                  type: FormType.Edit,
-                                  labelKey: index.toString(),
-                                ));
-                          },
-                        ),
-                    separatorBuilder: (ctx, index) => CustomDivider(),
-                    itemCount: 10),
+                child:
+                    Consumer<CategoryProvider>(builder: (ctx, categories, _) {
+                  final categoriesList =
+                      categories.getCategoriesByType(_status);
+                  return ListView.separated(
+                      itemBuilder: (ctx, index) => CategoryItem(
+                            categoryText: categoriesList[index].name,
+                            categoryColor: categoriesList[index].color,
+                            onTap: () {
+                              showCustomDialog(
+                                  context: context,
+                                  content: CategoryForm(
+                                    type: FormType.Edit,
+                                    labelKey: categoriesList[index].id,
+                                    name: categoriesList[index].name,
+                                    color: categoriesList[index].color,
+                                    categoryType:
+                                        categoriesList[index].stringType,
+                                  ));
+                            },
+                          ),
+                      separatorBuilder: (ctx, index) => CustomDivider(),
+                      itemCount: categoriesList.length);
+                }),
               ),
               kSizedBoxVerticalS,
               Container(
