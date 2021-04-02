@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/style.dart';
-import 'package:setthi/model/categoryStatus.dart';
+import 'package:setthi/model/CategoryType.dart';
 
 class CategoryTypeSelect extends StatelessWidget {
   final String text;
-  final CategoryStatus type;
-  final CategoryStatus current;
+  final CategoryType type;
+  final CategoryType current;
   final Function changeStatus;
   CategoryTypeSelect({this.text, this.type, this.current, this.changeStatus});
   @override
