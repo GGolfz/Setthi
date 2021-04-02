@@ -12,18 +12,20 @@ class WalletItem {
 }
 
 class WalletProvider with ChangeNotifier {
-  WalletProvider();
+  final String _token;
+  final List<WalletItem> _wallets;
+  WalletProvider(this._token, this._wallets);
   // List<WalletItem> _walltes = [];
-  List<WalletItem> _wallets = [
-    WalletItem(id: '1', title: 'wallet 1', amount: 5000),
-    WalletItem(id: '2', title: 'wallet 2', amount: 300),
-    WalletItem(id: '3', title: 'wallet 3', amount: 2900),
-    WalletItem(id: '4', title: 'wallet 4', amount: 1000),
-    WalletItem(id: '5', title: 'wallet 5', amount: 500)
-  ];
+  // List<WalletItem> _wallets = [
+  //   WalletItem(id: '1', title: 'wallet 1', amount: 5000),
+  //   WalletItem(id: '2', title: 'wallet 2', amount: 300),
+  //   WalletItem(id: '3', title: 'wallet 3', amount: 2900),
+  //   WalletItem(id: '4', title: 'wallet 4', amount: 1000),
+  //   WalletItem(id: '5', title: 'wallet 5', amount: 500)
+  // ];
 
   List<WalletItem> get wallets {
-    return _wallets;
+    return _wallets ?? [];
   }
 
   double get totalAmount {

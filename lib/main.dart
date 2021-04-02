@@ -25,8 +25,16 @@ class SetthiApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (ctx) => AuthenticateProvider()),
-        ChangeNotifierProvider(create: (ctx) => WalletProvider()),
-        ChangeNotifierProvider(create: (ctx) => SavingProvider()),
+        ChangeNotifierProxyProvider<AuthenticateProvider, WalletProvider>(
+          create: (ctx) => WalletProvider(null, []),
+          update: (ctx, auth, prev) =>
+              WalletProvider(auth.token, prev == null ? [] : prev.wallets),
+        ),
+        ChangeNotifierProxyProvider<AuthenticateProvider, SavingProvider>(
+          create: (ctx) => SavingProvider(null, []),
+          update: (ctx, auth, prev) =>
+              SavingProvider(auth.token, prev == null ? [] : prev.saving),
+        ),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,

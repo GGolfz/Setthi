@@ -17,19 +17,23 @@ class Saving {
 }
 
 class SavingProvider with ChangeNotifier {
-  final List<Saving> _saving = [];
+  final String _token;
+  final List<Saving> _saving;
+  SavingProvider(this._token, this._saving);
   int get savingCount {
     return _saving.length;
   }
-    List<Saving> get saving {
+
+  List<Saving> get saving {
     return _saving;
   }
-  Future<void> addSaving(String title, String savingGoal,
-      DateTime startDay, DateTime lastDay) async {
+
+  Future<void> addSaving(String title, String savingGoal, DateTime startDay,
+      DateTime lastDay) async {
     final newBudget = Saving(
         id: savingCount.toString(),
         title: title,
-        savingGoal:  double.tryParse(savingGoal),
+        savingGoal: double.tryParse(savingGoal),
         startDay: DateFormat.yMMMd().format(startDay),
         endDay: DateFormat.yMMMd().format(lastDay));
 
@@ -45,7 +49,12 @@ class SavingProvider with ChangeNotifier {
   Future<void> editingSaving(String id, String title, String savingGoal) async {
     //mockup edit wallet
     int index = _saving.indexWhere((el) => el.id == id);
-    _saving[index] = new Saving(id: id, title: title, savingGoal: double.tryParse(savingGoal),startDay:_saving[index].startDay,endDay:_saving[index].endDay );
+    _saving[index] = new Saving(
+        id: id,
+        title: title,
+        savingGoal: double.tryParse(savingGoal),
+        startDay: _saving[index].startDay,
+        endDay: _saving[index].endDay);
     notifyListeners();
   }
 }
