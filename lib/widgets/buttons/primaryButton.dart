@@ -11,7 +11,7 @@ class PrimaryButton extends StatelessWidget {
   PrimaryButton(
       {@required this.text,
       @required this.onPressed,
-      this.isLoading,
+      this.isLoading = false,
       this.isDisabled = false});
   @override
   Widget build(BuildContext context) {
@@ -28,13 +28,22 @@ class PrimaryButton extends StatelessWidget {
   Widget _buildContent(BuildContext context) {
     return InkWell(
       borderRadius: kBorderRadiusM,
-      onTap: !isDisabled ? onPressed : null,
+      onTap: isDisabled || isLoading ? null : onPressed,
       child: Padding(
         padding: EdgeInsets.symmetric(
           vertical: kSizeXS,
           horizontal: kSizeM,
         ),
-        child: Text(text, textAlign: TextAlign.center, style: kHeadline4White),
+        child: isLoading
+            ? SizedBox(
+                height: 25,
+                child: FittedBox(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+              )
+            : Text(text, textAlign: TextAlign.center, style: kHeadline4White),
       ),
     );
   }
