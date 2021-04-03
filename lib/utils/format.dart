@@ -5,5 +5,5 @@ String formatCurrencyString(double money) {
 }
 
 String formatDate(DateTime date) {
-  return "1/2/64";
+  return DateFormat.yMMMMd().format(date);
 }
