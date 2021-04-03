@@ -1,24 +1,33 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
+import 'package:setthi/config/api.dart';
 
 class Saving {
-  final String id;
+  final int id;
   final String title;
-  final double savingGoal;
-  final String startDay;
-  final String endDay;
+  final double currentAmount;
+  final double targetAmount;
+  final DateTime startDay;
+  final DateTime endDay;
   Saving({
     @required this.id,
     @required this.title,
-    @required this.savingGoal,
+    @required this.currentAmount,
+    @required this.targetAmount,
     this.startDay,
     this.endDay,
   });
+  double get currentPercent {
+    return this.currentAmount / this.targetAmount;
+  }
 }
 
 class SavingProvider with ChangeNotifier {
-  final String _token;
-  final List<Saving> _saving;
+  String _token;
+  List<Saving> _saving;
   SavingProvider(this._token, this._saving);
   int get savingCount {
     return _saving.length;
@@ -28,33 +37,80 @@ class SavingProvider with ChangeNotifier {
     return _saving;
   }
 
-  Future<void> addSaving(String title, String savingGoal, DateTime startDay,
+  Future<void> fetchSaving() async {
+    try {
+      final response = await Dio().get(apiEndpoint + '/savings',
+          options: Options(headers: {"Authorization": "Bearer " + _token}));
+      _saving = modifyResponse(response.data.toList());
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  Future<void> addSaving(String title, String targetAmount, DateTime startDay,
       DateTime lastDay) async {
-    final newBudget = Saving(
-        id: savingCount.toString(),
-        title: title,
-        savingGoal: double.tryParse(savingGoal),
-        startDay: DateFormat.yMMMd().format(startDay),
-        endDay: DateFormat.yMMMd().format(lastDay));
-
-    _saving.add(newBudget);
-    notifyListeners();
+    try {
+      final response = await Dio().post(apiEndpoint + '/saving',
+          data: {
+            "title": title,
+            "target_amount": double.parse(targetAmount),
+            "start_date": dateTimetoDate(startDay),
+            "end_date": dateTimetoDate(lastDay)
+          },
+          options: Options(headers: {"Authorization": "Bearer " + _token}));
+      _saving = modifyResponse(response.data.toList());
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
   }
 
-  Future<void> removeSaving(String id) async {
-    _saving.removeWhere((el) => el.id == id);
-    notifyListeners();
+  Future<void> editSaving(int id, String title, String targetAmount) async {
+    try {
+      final response = await Dio().patch(apiEndpoint + '/saving/$id',
+          data: {
+            "title": title,
+            "target_amount": double.parse(targetAmount),
+          },
+          options: Options(headers: {"Authorization": "Bearer " + _token}));
+      _saving = modifyResponse(response.data.toList());
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
   }
 
-  Future<void> editingSaving(String id, String title, String savingGoal) async {
-    //mockup edit wallet
-    int index = _saving.indexWhere((el) => el.id == id);
-    _saving[index] = new Saving(
-        id: id,
-        title: title,
-        savingGoal: double.tryParse(savingGoal),
-        startDay: _saving[index].startDay,
-        endDay: _saving[index].endDay);
-    notifyListeners();
+  Future<void> deleteSaving(int id) async {
+    try {
+      final response = await Dio().delete(apiEndpoint + '/saving/$id',
+          options: Options(headers: {"Authorization": "Bearer " + _token}));
+      _saving = modifyResponse(response.data.toList());
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  List<Saving> modifyResponse(List<dynamic> data) {
+    List<Saving> wallets = [];
+    data.forEach((el) => wallets.add(Saving(
+        id: el["id"],
+        title: el["title"],
+        startDay: stringToDateTime(el["start_date"]),
+        endDay: stringToDateTime(el["end_date"]),
+        currentAmount: double.parse(el["current_amount"]),
+        targetAmount: double.parse(el["target_amount"]))));
+    return wallets;
+  }
+
+  String dateTimetoDate(DateTime dateTime) {
+    return dateTime.toString().split(' ')[0];
+  }
+
+  DateTime stringToDateTime(String date) {
+    var extractedDate =
+        date.split('T')[0].split('-').map((e) => int.parse(e)).toList();
+    return DateTime(extractedDate[0], extractedDate[1], extractedDate[2]);
   }
 }

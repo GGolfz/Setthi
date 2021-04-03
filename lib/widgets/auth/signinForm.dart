@@ -95,7 +95,11 @@ class _SigninFormState extends State<SigninForm> {
                       ],
                     ),
                     kSizedBoxVerticalS,
-                    PrimaryButton(text: "SIGN IN", onPressed: login),
+                    PrimaryButton(
+                      text: "SIGN IN",
+                      onPressed: login,
+                      isLoading: _isLoading,
+                    ),
                     kSizedBoxVerticalS,
                     GestureDetector(
                       onTap: () {

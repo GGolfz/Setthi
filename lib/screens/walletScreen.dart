@@ -14,8 +14,14 @@ import '../utils/format.dart';
 import '../config/constants.dart';
 import '../config/color.dart';
 
-class WalletScreen extends StatelessWidget {
+class WalletScreen extends StatefulWidget {
   static final routeName = '/wallet';
+
+  @override
+  _WalletScreenState createState() => _WalletScreenState();
+}
+
+class _WalletScreenState extends State<WalletScreen> {
   Widget _buildButtonCreate(BuildContext context) {
     return Center(
       child: Container(
@@ -31,7 +37,7 @@ class WalletScreen extends StatelessWidget {
     );
   }
 
-  onClickEdit(BuildContext context, WalletItem selectedWallet) {
+  void onClickEdit(BuildContext context, WalletItem selectedWallet) {
     showCustomDialog(
       context: context,
       content: EditWalletForm(selectedWallet: selectedWallet),
@@ -39,48 +45,55 @@ class WalletScreen extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    Provider.of<WalletProvider>(context, listen: false).fetchWallet();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final wallet = Provider.of<WalletProvider>(context);
-    return Scaffold(
-      backgroundColor: kGold100,
-      appBar: SetthiAppBar(
-        title: 'THB ${formatCurrencyString(wallet.totalAmount)}',
-        subtitle: 'Total Wealth',
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: kSizeS, vertical: kSizeXS),
-          child: Column(
-            children: <Widget>[
-              Column(
-                children: [
-                  Text('Your expense', style: kHeadline3Black),
-                  kSizedBoxVerticalXXS,
-                  Container(
-                    child: LineChartSample2(),
-                    height: 170,
-                  )
-                ],
+    return Consumer<WalletProvider>(
+        builder: (ctx, wallet, _) => Scaffold(
+              backgroundColor: kGold100,
+              appBar: SetthiAppBar(
+                title: 'THB ${formatCurrencyString(wallet.totalAmount)}',
+                subtitle: 'Total Wealth',
               ),
-              kSizedBoxVerticalS,
-              wallet.isEmpty()
-                  ? EmptyWallet()
-                  : Container(
-                      height: 310,
-                      child: ListView.builder(
-                        itemBuilder: (ctx, index) => WalletCard(
-                          item: wallet.wallets[index],
-                          onTap: () =>
-                              onClickEdit(context, wallet.wallets[index]),
-                        ),
-                        itemCount: wallet.walletCount,
+              body: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: kSizeS, vertical: kSizeXS),
+                  child: Column(
+                    children: <Widget>[
+                      Column(
+                        children: [
+                          Text('Your expense', style: kHeadline3Black),
+                          kSizedBoxVerticalXXS,
+                          Container(
+                            child: LineChartSample2(),
+                            height: 170,
+                          )
+                        ],
                       ),
-                    ),
-              _buildButtonCreate(context),
-            ],
-          ),
-        ),
-      ),
-    );
+                      kSizedBoxVerticalS,
+                      wallet.isEmpty()
+                          ? EmptyWallet()
+                          : Container(
+                              height: 310,
+                              child: ListView.builder(
+                                itemBuilder: (ctx, index) => WalletCard(
+                                  item: wallet.wallets[index],
+                                  onTap: () => onClickEdit(
+                                      context, wallet.wallets[index]),
+                                ),
+                                itemCount: wallet.walletCount,
+                              ),
+                            ),
+                      _buildButtonCreate(context),
+                    ],
+                  ),
+                ),
+              ),
+            ));
   }
 }

@@ -24,7 +24,6 @@ class _NewWalletFormState extends State<NewWalletForm> {
   }
 
   Widget build(BuildContext context) {
-    final wallet = Provider.of<WalletProvider>(context);
     return Wrap(
       children: [
         Padding(
@@ -72,8 +71,8 @@ class _NewWalletFormState extends State<NewWalletForm> {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
-                        wallet.addWallet((wallet.walletCount + 1).toString(),
-                            _title, _amount);
+                        Provider.of<WalletProvider>(context, listen: false)
+                            .addWallet(_title, _amount);
                         Navigator.pop(context);
                       }
                     },

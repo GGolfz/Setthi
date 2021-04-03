@@ -13,19 +13,16 @@ class EditWalletForm extends StatefulWidget {
 }
 
 class _EditWalletFormState extends State<EditWalletForm> {
-  String _title = "";
+  TextEditingController _title;
   @override
   void initState() {
-    _title = widget.selectedWallet.title;
+    _title = TextEditingController(text: widget.selectedWallet.title);
     super.initState();
   }
 
   final _formKey = GlobalKey<FormState>();
 
   Widget build(BuildContext context) {
-    final wallet = Provider.of<WalletProvider>(context);
-    TextEditingController _controller =
-        new TextEditingController(text: widget.selectedWallet.title);
     return Wrap(
       children: [
         Padding(
@@ -53,11 +50,10 @@ class _EditWalletFormState extends State<EditWalletForm> {
                   ),
                   keyboardType: TextInputType.text,
                   validator: (value) {
-                    if (_controller.text.isEmpty)
-                      return 'Title cannot be empty';
+                    if (_title.text.isEmpty) return 'Title cannot be empty';
                     return null;
                   },
-                  controller: _controller,
+                  controller: _title,
                 ),
                 kSizedBoxVerticalS,
                 Padding(
@@ -70,7 +66,8 @@ class _EditWalletFormState extends State<EditWalletForm> {
                           color: kRed400,
                           isOutlined: true,
                           onPressed: () {
-                            wallet.removeWallet(widget.selectedWallet.id);
+                            Provider.of<WalletProvider>(context, listen: false)
+                                .removeWallet(widget.selectedWallet.id);
                             Navigator.pop(context);
                           },
                         ),
@@ -83,9 +80,11 @@ class _EditWalletFormState extends State<EditWalletForm> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
-                              wallet.editWallet(
+                              Provider.of<WalletProvider>(context,
+                                      listen: false)
+                                  .editWallet(
                                 widget.selectedWallet.id,
-                                _controller.text,
+                                _title.text,
                                 widget.selectedWallet.amount,
                               );
                               Navigator.pop(context);
