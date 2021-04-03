@@ -64,7 +64,11 @@ class CategoryProvider with ChangeNotifier {
   Future<void> createCategory(String name, String type, Color color) async {
     try {
       final response = await Dio().post(apiEndpoint + '/category',
-          data: {"name": name, "type": type, "color": getColorText(color)},
+          data: {
+            "name": name,
+            "type": type.toUpperCase(),
+            "color": getColorText(color)
+          },
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _categories = modifyResponse(response.data.toList());
       notifyListeners();
@@ -77,7 +81,11 @@ class CategoryProvider with ChangeNotifier {
       int id, String name, String type, Color color) async {
     try {
       final response = await Dio().patch(apiEndpoint + '/category/$id',
-          data: {"name": name, "type": type, "color": getColorText(color)},
+          data: {
+            "name": name,
+            "type": type.toUpperCase(),
+            "color": getColorText(color)
+          },
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _categories = modifyResponse(response.data.toList());
       notifyListeners();

@@ -51,7 +51,7 @@ class LabelProvider with ChangeNotifier {
   Future<void> createLabel(String name, String type) async {
     try {
       final response = await Dio().post(apiEndpoint + '/label',
-          data: {"name": name, "type": type},
+          data: {"name": name, "type": type.toUpperCase()},
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _labels = modifyResponse(response.data.toList());
       notifyListeners();
@@ -63,7 +63,7 @@ class LabelProvider with ChangeNotifier {
   Future<void> editLabel(int id, String name, String type) async {
     try {
       final response = await Dio().patch(apiEndpoint + '/label/$id',
-          data: {"name": name, "type": type},
+          data: {"name": name, "type": type.toUpperCase()},
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _labels = modifyResponse(response.data.toList());
       notifyListeners();
