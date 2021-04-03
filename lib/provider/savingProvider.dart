@@ -20,6 +20,9 @@ class Saving {
     this.startDay,
     this.endDay,
   });
+  double get currentPercent {
+    return this.currentAmount / this.targetAmount;
+  }
 }
 
 class SavingProvider with ChangeNotifier {

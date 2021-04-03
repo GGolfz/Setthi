@@ -66,6 +66,8 @@ class _SavingItemState extends State<SavingItem> {
                       color: kGold500,
                     ),
                     height: double.infinity,
+                    width: MediaQuery.of(context).size.width *
+                        widget.item.currentPercent,
                   ),
                   height: 25,
                 )
