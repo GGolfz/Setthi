@@ -38,36 +38,39 @@ class _SavingScreenState extends State<SavingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final savingProvider = Provider.of<SavingProvider>(context);
     return Scaffold(
         appBar: SetthiAppBar(
           title: "Saving Goal",
         ),
-        body: Container(
-          padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeS),
-          child: savingProvider.saving.isEmpty
-              ? SingleChildScrollView(
-                  child: Column(children: [
-                  kSizedBoxVerticalXL,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Image.asset("assets/images/empty-item.png")],
-                  ),
-                  kSizedBoxVerticalM,
-                  _buildButtonCreate(context),
-                ]))
-              : ListView(
-                  children: [
-                    ...savingProvider.saving
-                        .map(
-                          (saving) => SavingItem(
-                            item: saving,
+        body: Consumer<SavingProvider>(
+            builder: (ctx, saving, _) => Container(
+                  padding: EdgeInsets.symmetric(
+                      vertical: kSizeS, horizontal: kSizeS),
+                  child: saving.saving.isEmpty
+                      ? SingleChildScrollView(
+                          child: Column(children: [
+                          kSizedBoxVerticalXL,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset("assets/images/empty-item.png")
+                            ],
                           ),
-                        )
-                        .toList(),
-                    _buildButtonCreate(context)
-                  ],
-                ),
-        ));
+                          kSizedBoxVerticalM,
+                          _buildButtonCreate(context),
+                        ]))
+                      : ListView(
+                          children: [
+                            ...saving.saving
+                                .map(
+                                  (saving) => SavingItem(
+                                    item: saving,
+                                  ),
+                                )
+                                .toList(),
+                            _buildButtonCreate(context)
+                          ],
+                        ),
+                )));
   }
 }

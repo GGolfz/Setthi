@@ -18,12 +18,13 @@ class _SavingFormState extends State<SavingForm> {
   final _maxBudget = TextEditingController();
   DateTime startDay;
   DateTime lastDay;
-  void submitData( Function addSaving) {
+  void submitData() {
     if (_title.text != null &&
         _maxBudget.text != null &&
         startDay != null &&
         lastDay != null) {
-      addSaving(_title.text,_maxBudget.text,startDay,lastDay);
+      Provider.of<SavingProvider>(context, listen: false)
+          .addSaving(_title.text, _maxBudget.text, startDay, lastDay);
       Navigator.pop(context);
     }
   }
@@ -48,7 +49,6 @@ class _SavingFormState extends State<SavingForm> {
 
   @override
   Widget build(BuildContext context) {
-    final savingProvider = Provider.of<SavingProvider>(context);
     return Container(
       height: 415,
       width: 400,
@@ -83,9 +83,7 @@ class _SavingFormState extends State<SavingForm> {
             ActionButton(
               text: "Submit",
               color: kGold300,
-              onPressed: () {
-                submitData(savingProvider.addSaving);
-              },
+              onPressed: submitData,
             ),
           ],
         ),

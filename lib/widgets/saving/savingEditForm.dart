@@ -22,7 +22,6 @@ class _SavingEditFormState extends State<SavingEditForm> {
 
   final _formKey = GlobalKey<FormState>();
   Widget build(BuildContext context) {
-    final saving = Provider.of<SavingProvider>(context);
     TextEditingController _controller =
         new TextEditingController(text: widget.selectedSaving.title);
     TextEditingController _controllerAmount = new TextEditingController(
@@ -85,7 +84,8 @@ class _SavingEditFormState extends State<SavingEditForm> {
                         color: kRed400,
                         isOutlined: true,
                         onPressed: () {
-                          saving.deleteSaving(widget.selectedSaving.id);
+                          Provider.of<SavingProvider>(context, listen: false)
+                              .deleteSaving(widget.selectedSaving.id);
                           Navigator.pop(context);
                         },
                       ),
@@ -96,8 +96,9 @@ class _SavingEditFormState extends State<SavingEditForm> {
                         text: "Submit",
                         color: kGold300,
                         onPressed: () {
-                          saving.editSaving(widget.selectedSaving.id,
-                              _controller.text, _controllerAmount.text);
+                          Provider.of<SavingProvider>(context, listen: false)
+                              .editSaving(widget.selectedSaving.id,
+                                  _controller.text, _controllerAmount.text);
                           Navigator.pop(context);
                         },
                       ),
