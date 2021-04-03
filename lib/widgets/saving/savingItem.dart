@@ -3,7 +3,7 @@ import 'package:setthi/config/color.dart';
 import 'package:setthi/config/style.dart';
 import '../../utils/format.dart';
 import '../layout/customDialog.dart';
-import '../../widgets/form/customerEdit.dart';
+import 'savingEditForm.dart';
 import '../../provider/savingProvider.dart';
 
 class SavingItem extends StatefulWidget {
@@ -30,10 +30,10 @@ class _SavingItemState extends State<SavingItem> {
               icon: Icon(Icons.edit),
               onPressed: () {
                 showCustomDialog(
-                  context: context,
-                    content: CustomerEdit(
-                  selectedSaving: widget.item,
-                ));
+                    context: context,
+                    content: SavingEditForm(
+                      selectedSaving: widget.item,
+                    ));
               },
             )
           ]),
@@ -41,12 +41,12 @@ class _SavingItemState extends State<SavingItem> {
           Row(
             children: [
               Text(
-                'THB 0',
+                'THB ${formatCurrencyString(widget.item.currentAmount)}',
                 style: kHeadline4Green,
               ),
               SizedBox(width: 15),
               Text(
-                'of THB ${formatCurrencyString(widget.item.savingGoal)}',
+                'of THB ${formatCurrencyString(widget.item.targetAmount)}',
                 style: kBody1Black.copyWith(color: kNeutral300),
               ),
             ],
@@ -75,11 +75,11 @@ class _SavingItemState extends State<SavingItem> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                widget.item.startDay,
+                formatDate(widget.item.startDay),
                 style: kBody1Black.copyWith(color: kNeutral300),
               ),
               Text(
-                widget.item.endDay,
+                formatDate(widget.item.endDay),
                 style: kBody1Black.copyWith(color: kNeutral300),
               ),
             ],
