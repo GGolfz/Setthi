@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/model/formType.dart';
-import 'package:setthi/model/labelStatus.dart';
+import 'package:setthi/model/labelType.dart';
+import 'package:setthi/provider/labelProvider.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/label/labelForm.dart';
 import 'package:setthi/widgets/label/labelItem.dart';
@@ -18,8 +20,15 @@ class LabelScreen extends StatefulWidget {
 }
 
 class _LabelScreenState extends State<LabelScreen> {
-  var _status = LabelStatus.Income;
-  void _changeStatus(LabelStatus status) {
+  var _status = LabelType.Income;
+
+  @override
+  void initState() {
+    Provider.of<LabelProvider>(context, listen: false).fetchLabels();
+    super.initState();
+  }
+
+  void _changeStatus(LabelType status) {
     setState(() {
       _status = status;
     });
@@ -32,12 +41,12 @@ class _LabelScreenState extends State<LabelScreen> {
         children: [
           LabelTypeSelect(
               text: "Income Label",
-              type: LabelStatus.Income,
+              type: LabelType.Income,
               changeStatus: _changeStatus,
               current: _status),
           LabelTypeSelect(
               text: "Expense Label",
-              type: LabelStatus.Expense,
+              type: LabelType.Expense,
               changeStatus: _changeStatus,
               current: _status),
         ],
@@ -61,21 +70,25 @@ class _LabelScreenState extends State<LabelScreen> {
               kSizedBoxVerticalS,
               Container(
                 height: 560,
-                child: ListView.separated(
-                    itemBuilder: (ctx, index) => LabelItem(
-                          labelText:
-                              "${_status == LabelStatus.Income ? "Income" : "Expense"} Label Text $index",
-                          onTap: () {
-                            showCustomDialog(
-                                context: context,
-                                content: LabelForm(
-                                  type: FormType.Edit,
-                                  labelKey: index.toString(),
-                                ));
-                          },
-                        ),
-                    separatorBuilder: (ctx, index) => CustomDivider(),
-                    itemCount: 10),
+                child: Consumer<LabelProvider>(builder: (ctx, labels, _) {
+                  final labelList = labels.getLabelByType(_status);
+                  return ListView.separated(
+                      itemBuilder: (ctx, index) => LabelItem(
+                            labelText: labelList[index].name ?? '',
+                            onTap: () {
+                              showCustomDialog(
+                                  context: context,
+                                  content: LabelForm(
+                                    type: FormType.Edit,
+                                    labelKey: labelList[index].id,
+                                    labelText: labelList[index].name,
+                                    labelType: labelList[index].stringType,
+                                  ));
+                            },
+                          ),
+                      separatorBuilder: (ctx, index) => CustomDivider(),
+                      itemCount: labelList.length);
+                }),
               ),
               kSizedBoxVerticalS,
               Container(

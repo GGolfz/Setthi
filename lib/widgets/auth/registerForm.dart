@@ -92,7 +92,11 @@ class _RegisterFormState extends State<RegisterForm> {
                       compareText: _password.text,
                     ),
                     kSizedBoxVerticalS,
-                    PrimaryButton(text: "REGISTER", onPressed: register),
+                    PrimaryButton(
+                      text: "REGISTER",
+                      onPressed: register,
+                      isLoading: _isLoading,
+                    ),
                     kSizedBoxVerticalS,
                     GestureDetector(
                       onTap: () {

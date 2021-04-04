@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:setthi/config/api.dart';
 
 class WalletItem {
-  final String id;
+  final int id;
   final String title;
   final double amount;
   WalletItem({
@@ -12,18 +14,12 @@ class WalletItem {
 }
 
 class WalletProvider with ChangeNotifier {
-  WalletProvider();
-  // List<WalletItem> _walltes = [];
-  List<WalletItem> _wallets = [
-    WalletItem(id: '1', title: 'wallet 1', amount: 5000),
-    WalletItem(id: '2', title: 'wallet 2', amount: 300),
-    WalletItem(id: '3', title: 'wallet 3', amount: 2900),
-    WalletItem(id: '4', title: 'wallet 4', amount: 1000),
-    WalletItem(id: '5', title: 'wallet 5', amount: 500)
-  ];
+  String _token;
+  List<WalletItem> _wallets;
+  WalletProvider(this._token, this._wallets);
 
   List<WalletItem> get wallets {
-    return _wallets;
+    return _wallets ?? [];
   }
 
   double get totalAmount {
@@ -42,22 +38,56 @@ class WalletProvider with ChangeNotifier {
     return _wallets.length;
   }
 
-  Future<void> addWallet(String id, String title, double amount) async {
-    //mockup add new wallet
-    _wallets.add(WalletItem(id: id, title: title, amount: amount));
-    notifyListeners();
+  Future<void> fetchWallet() async {
+    try {
+      final response = await Dio().get(apiEndpoint + '/wallets',
+          options: Options(headers: {"Authorization": "Bearer " + _token}));
+      _wallets = modifyResponse(response.data.toList());
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
   }
 
-  Future<void> removeWallet(String id) async {
-    //mockup remove wallet
-    _wallets.removeWhere((el) => id == el.id);
-    notifyListeners();
+  Future<void> addWallet(String title, double amount) async {
+    try {
+      final response = await Dio().post(apiEndpoint + '/wallet',
+          data: {"name": title, "amount": amount},
+          options: Options(headers: {"Authorization": "Bearer " + _token}));
+      _wallets = modifyResponse(response.data.toList());
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
   }
 
-  Future<void> editWallet(String id, String title, double amount) async {
-    //mockup edit wallet
-    int index = _wallets.indexWhere((el) => el.id == id);
-    _wallets[index] = new WalletItem(id: id, title: title, amount: amount);
-    notifyListeners();
+  Future<void> removeWallet(int id) async {
+    try {
+      final response = await Dio().delete(apiEndpoint + '/wallet/$id',
+          options: Options(headers: {"Authorization": "Bearer " + _token}));
+      _wallets = modifyResponse(response.data.toList());
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  Future<void> editWallet(int id, String title, double amount) async {
+    try {
+      final response = await Dio().patch(apiEndpoint + '/wallet/$id',
+          data: {"name": title, "amount": amount},
+          options: Options(headers: {"Authorization": "Bearer " + _token}));
+      _wallets = modifyResponse(response.data.toList());
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  List<WalletItem> modifyResponse(List<dynamic> data) {
+    List<WalletItem> wallets = [];
+    data.forEach((el) => wallets.add(WalletItem(
+        id: el["id"], title: el["name"], amount: double.parse(el["amount"]))));
+    return wallets;
   }
 }

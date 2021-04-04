@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/style.dart';
-import 'package:setthi/model/labelStatus.dart';
+import 'package:setthi/model/labelType.dart';
 
 class LabelTypeSelect extends StatelessWidget {
   final String text;
-  final LabelStatus type;
-  final LabelStatus current;
+  final LabelType type;
+  final LabelType current;
   final Function changeStatus;
   LabelTypeSelect({this.text, this.type, this.current, this.changeStatus});
   @override

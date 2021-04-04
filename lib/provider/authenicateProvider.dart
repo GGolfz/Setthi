@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:setthi/config/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticateProvider with ChangeNotifier {
@@ -10,18 +12,38 @@ class AuthenticateProvider with ChangeNotifier {
     return _token != null;
   }
 
+  String get token {
+    return _token;
+  }
+
   Future<void> login(String email, String password) async {
-    _token = "THIS IS MOCKUP TOKEN";
-    Timer(Duration(milliseconds: 500), () => notifyListeners());
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('userToken', _token);
+    try {
+      final response = await Dio().post(apiEndpoint + '/auth/signin',
+          data: {"email": email, "password": password});
+      final token = response.data["token"];
+      _token = token;
+      Timer(Duration(milliseconds: 500), () => notifyListeners());
+      prefs.setString('userToken', _token);
+    } catch (error) {
+      prefs.clear();
+      // Should throw exception to warn user
+    }
   }
 
   Future<void> register(String email, String password) async {
-    _token = "THIS IS MOCKUP TOKEN";
-    Timer(Duration(milliseconds: 500), () => notifyListeners());
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('userToken', _token);
+    try {
+      final response = await Dio().post(apiEndpoint + '/auth/regis',
+          data: {"email": email, "password": password});
+      final token = response.data["token"];
+      _token = token;
+      Timer(Duration(milliseconds: 500), () => notifyListeners());
+      prefs.setString('userToken', _token);
+    } catch (error) {
+      prefs.clear();
+      // Should to exception to warn user
+    }
   }
 
   Future<void> tryAutoLogin() async {
@@ -30,6 +52,12 @@ class AuthenticateProvider with ChangeNotifier {
     final token = prefs.getString('userToken');
     _token = token;
     notifyListeners();
+    try {
+      await Dio().get(apiEndpoint + '/auth/user',
+          options: Options(headers: {"Authorization": "Bearer " + token}));
+    } catch (error) {
+      prefs.clear();
+    }
     // Call api again to check
   }
 

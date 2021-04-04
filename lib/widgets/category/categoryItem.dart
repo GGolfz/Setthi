@@ -5,8 +5,9 @@ import 'package:setthi/config/style.dart';
 class CategoryItem extends StatelessWidget {
   final String categoryText;
   final String categoryKey;
+  final Color categoryColor;
   final Function onTap;
-  CategoryItem({this.categoryKey, this.categoryText, this.onTap});
+  CategoryItem({this.categoryKey,this.categoryColor, this.categoryText, this.onTap});
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -19,7 +20,7 @@ class CategoryItem extends StatelessWidget {
               borderRadius: BorderRadius.all(
                 Radius.circular(kSizeXXS),
               ),
-              color: Colors.green)),
+              color: categoryColor)),
       title: Text(
         categoryText,
         style: kSubtitle1Black,

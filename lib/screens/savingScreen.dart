@@ -16,52 +16,61 @@ class SavingScreen extends StatefulWidget {
   _SavingScreenState createState() => _SavingScreenState();
 }
 
-Widget _buildButtonCreate(BuildContext context) {
-  return Center(
-      child: Container(
-          margin:
-              EdgeInsets.symmetric(horizontal: kSizeM * 1.8, vertical: kSizeS),
-          child: ActionButton(
-            text: "Create a new saving",
-            onPressed: () {
-              showCustomDialog(context: context, content: SavingForm());
-            },
-          )));
-}
-
 class _SavingScreenState extends State<SavingScreen> {
+  Widget _buildButtonCreate(BuildContext context) {
+    return Center(
+        child: Container(
+            margin: EdgeInsets.symmetric(
+                horizontal: kSizeM * 1.8, vertical: kSizeS),
+            child: ActionButton(
+              text: "Create a new saving",
+              onPressed: () {
+                showCustomDialog(context: context, content: SavingForm());
+              },
+            )));
+  }
+
+  @override
+  void initState() {
+    Provider.of<SavingProvider>(context, listen: false).fetchSaving();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final savingProvider = Provider.of<SavingProvider>(context);
     return Scaffold(
         appBar: SetthiAppBar(
           title: "Saving Goal",
         ),
-        body: Container(
-          padding: EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeS),
-          child: savingProvider.saving.isEmpty
-              ? SingleChildScrollView(
-                  child: Column(children: [
-                  kSizedBoxVerticalXL,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Image.asset("assets/images/empty-item.png")],
-                  ),
-                  kSizedBoxVerticalM,
-                  _buildButtonCreate(context),
-                ]))
-              : ListView(
-                  children: [
-                    ...savingProvider.saving
-                        .map(
-                          (saving) => SavingItem(
-                            item: saving,
+        body: Consumer<SavingProvider>(
+            builder: (ctx, saving, _) => Container(
+                  padding: EdgeInsets.symmetric(
+                      vertical: kSizeS, horizontal: kSizeS),
+                  child: saving.saving.isEmpty
+                      ? SingleChildScrollView(
+                          child: Column(children: [
+                          kSizedBoxVerticalXL,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset("assets/images/empty-item.png")
+                            ],
                           ),
-                        )
-                        .toList(),
-                    _buildButtonCreate(context)
-                  ],
-                ),
-        ));
+                          kSizedBoxVerticalM,
+                          _buildButtonCreate(context),
+                        ]))
+                      : ListView(
+                          children: [
+                            ...saving.saving
+                                .map(
+                                  (saving) => SavingItem(
+                                    item: saving,
+                                  ),
+                                )
+                                .toList(),
+                            _buildButtonCreate(context)
+                          ],
+                        ),
+                )));
   }
 }
