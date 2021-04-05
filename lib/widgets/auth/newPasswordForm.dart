@@ -9,16 +9,17 @@ import 'package:setthi/widgets/buttons/primaryButton.dart';
 import 'package:setthi/widgets/buttons/secondaryButton.dart';
 import 'package:setthi/provider/authenicateProvider.dart';
 
-class ForgetForm extends StatefulWidget {
+class NewPasswordForm extends StatefulWidget {
   final Function changeModal;
-  ForgetForm({this.changeModal});
+  NewPasswordForm({this.changeModal});
 
   @override
-  _ForgetFormState createState() => _ForgetFormState();
+  _NewPasswordFormState createState() => _NewPasswordFormState();
 }
 
-class _ForgetFormState extends State<ForgetForm> {
-  final _email = TextEditingController();
+class _NewPasswordFormState extends State<NewPasswordForm> {
+  final _password = TextEditingController();
+  final _confirmPassword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -31,15 +32,8 @@ class _ForgetFormState extends State<ForgetForm> {
                 child: Column(children: [
           kSizedBoxVerticalS,
           Text(
-            "Forget Password",
+            "Enter new password",
             style: kHeadline2White,
-          ),
-          kSizedBoxVerticalS,
-          Text(
-            "Enter your email address below, we will send you insructions how to change password.",
-            textAlign: TextAlign.center,
-            softWrap: true,
-            style: kBody1White,
           ),
           kSizedBoxVerticalS,
           Form(
@@ -47,17 +41,19 @@ class _ForgetFormState extends State<ForgetForm> {
             child: Column(
               children: [
                 AuthTextField(
-                    textController: _email,
-                    placeholder: "Email",
-                    type: AuthTextFieldType.email),
+                    textController: _password,
+                    placeholder: "new password",
+                    type: AuthTextFieldType.password),
+                kSizedBoxVerticalS,
+                AuthTextField(
+                    textController: _confirmPassword,
+                    placeholder: "confirm new password",
+                    type: AuthTextFieldType.confirmPassword),
                 kSizedBoxVerticalS,
                 PrimaryButton(
-                    text: "SEND",
+                    text: "SUBMIT",
                     onPressed: () async {
-                      print('submit');
-                      print(_email.text);
-                      await authProvider.forgetPassword(_email.text);
-                      widget.changeModal(AuthType.token);
+                      widget.changeModal(AuthType.close);
                     }),
                 kSizedBoxVerticalS,
                 SecondaryButton(
