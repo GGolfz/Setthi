@@ -46,7 +46,7 @@ class _SigninFormState extends State<SigninForm> {
         setState(() => _isLoading = false);
       } on HttpException catch (error) {
         setState(() => _isLoading = false);
-        showCustomDialog(context: context, text: error.message);
+        showErrorDialog(context: context, text: error.message);
       }
     }
   }

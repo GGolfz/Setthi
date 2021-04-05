@@ -24,7 +24,7 @@ class ErrorDialog extends StatelessWidget {
   }
 }
 
-void showCustomDialog({BuildContext context, String text}) {
+void showErrorDialog({BuildContext context, String text}) {
   showGeneralDialog(
     context: context,
     barrierDismissible: true,

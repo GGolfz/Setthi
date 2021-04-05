@@ -24,53 +24,54 @@ class _TokenFormState extends State<TokenForm> {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthenticateProvider>(context);
     return Scaffold(
-        backgroundColor: kNeutral450,
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-            child: SingleChildScrollView(
-                child: Column(children: [
-          kSizedBoxVerticalS,
-          Text(
-            "Enter the recovery key",
-            style: kHeadline2White,
+      backgroundColor: kNeutral450,
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              kSizedBoxVerticalS,
+              Text(
+                "Enter the recovery key",
+                style: kHeadline2White,
+              ),
+              kSizedBoxVerticalS,
+              Text(
+                "We already sent you 6 digits recovery key in your email, please enter the recovery key below.",
+                textAlign: TextAlign.center,
+                softWrap: true,
+                style: kBody1White,
+              ),
+              kSizedBoxVerticalS,
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    AuthTextField(
+                        textController: _recoveryToken,
+                        placeholder: "6 digits recovery key",
+                        type: AuthTextFieldType.number),
+                    kSizedBoxVerticalS,
+                    PrimaryButton(
+                      text: "SUBMIT",
+                      onPressed: () async {
+                        await authProvider
+                            .checkResetPassword(_recoveryToken.text);
+                      },
+                    ),
+                    kSizedBoxVerticalS,
+                    SecondaryButton(
+                        text: "CANCEL",
+                        onPressed: () {
+                          widget.changeModal(AuthType.signin);
+                        }),
+                  ],
+                ),
+              )
+            ],
           ),
-          kSizedBoxVerticalS,
-          Text(
-            "We already sent you 6 digits recovery key in your email, please enter the recovery key below.",
-            textAlign: TextAlign.center,
-            softWrap: true,
-            style: kBody1White,
-          ),
-          kSizedBoxVerticalS,
-          Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                AuthTextField(
-                    textController: _recoveryToken,
-                    placeholder: "6 digits recovery key",
-                    type: AuthTextFieldType.number),
-                kSizedBoxVerticalS,
-                PrimaryButton(
-                    text: "SUBMIT",
-                    onPressed: () async {
-                      bool checked = await authProvider
-                          .checkResetPassword(_recoveryToken.text);
-                      if (checked) {
-                        widget.changeModal(AuthType.newPassword);
-                      } else {
-                        print('ERROR');
-                      }
-                    }),
-                kSizedBoxVerticalS,
-                SecondaryButton(
-                    text: "CANCEL",
-                    onPressed: () {
-                      widget.changeModal(AuthType.signin);
-                    }),
-              ],
-            ),
-          )
-        ]))));
+        ),
+      ),
+    );
   }
 }
