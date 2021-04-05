@@ -61,7 +61,6 @@ class AuthenticateProvider with ChangeNotifier {
     } catch (error) {
       prefs.clear();
     }
-    // Call api again to check
   }
 
   Future<void> logout() async {
@@ -75,27 +74,17 @@ class AuthenticateProvider with ChangeNotifier {
     _email = email;
     try {
       await Dio().post(apiEndpoint + '/auth/reset', data: {"email": email});
-      print('Success');
       Timer(Duration(milliseconds: 500), () => notifyListeners());
     } catch (error) {
-      print('error from forget provider');
-      print(error);
-      // Should to exception to warn user
+      throw HttpException('Invalid email');
     }
   }
 
-  Future<bool> checkResetPassword(String recoveryToken) async {
+  Future<void> checkResetPassword(String recoveryToken) async {
     try {
-      print('re is');
-      print(recoveryToken);
       await Dio()
           .patch(apiEndpoint + '/auth/reset', data: {"token": recoveryToken});
-      print('Check success');
       Timer(Duration(milliseconds: 500), () => notifyListeners());
-    } catch (error) {
-      print('error from provider');
-      print(error);
-      // Should to exception to warn user
-    }
+    } catch (error) {}
   }
 }
