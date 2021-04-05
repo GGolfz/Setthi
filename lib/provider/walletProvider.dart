@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:setthi/config/api.dart';
+import 'package:setthi/model/http_exception.dart';
 
 class WalletItem {
   final int id;
@@ -57,7 +58,7 @@ class WalletProvider with ChangeNotifier {
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      throw HttpException("Your can't Create more than 5 Wallet");
     }
   }
 
