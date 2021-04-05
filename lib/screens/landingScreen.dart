@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/widgets/auth/forgetForm.dart';
+import 'package:setthi/widgets/auth/newPasswordForm.dart';
+import 'package:setthi/widgets/auth/tokenForm.dart';
 import '../config/color.dart';
 import '../config/constants.dart';
 import '../model/authType.dart';
@@ -59,6 +61,16 @@ class LandingScreen extends StatelessWidget {
           Navigator.of(context).pop();
           _showBottomModal(
               context, ForgetForm(changeModal: _changeModal), AuthType.forget);
+          break;
+        case AuthType.token:
+          Navigator.of(context).pop();
+          _showBottomModal(
+              context, TokenForm(changeModal: _changeModal), AuthType.token);
+          break;
+        case AuthType.newPassword:
+          Navigator.of(context).pop();
+          _showBottomModal(context, NewPasswordForm(changeModal: _changeModal),
+              AuthType.newPassword);
           break;
         default:
           Navigator.of(context).pop();

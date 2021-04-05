@@ -9,16 +9,16 @@ import 'package:setthi/widgets/buttons/primaryButton.dart';
 import 'package:setthi/widgets/buttons/secondaryButton.dart';
 import 'package:setthi/provider/authenicateProvider.dart';
 
-class ForgetForm extends StatefulWidget {
+class TokenForm extends StatefulWidget {
   final Function changeModal;
-  ForgetForm({this.changeModal});
+  TokenForm({this.changeModal});
 
   @override
-  _ForgetFormState createState() => _ForgetFormState();
+  _TokenFormState createState() => _TokenFormState();
 }
 
-class _ForgetFormState extends State<ForgetForm> {
-  final _email = TextEditingController();
+class _TokenFormState extends State<TokenForm> {
+  final _recoveryToken = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -31,12 +31,12 @@ class _ForgetFormState extends State<ForgetForm> {
                 child: Column(children: [
           kSizedBoxVerticalS,
           Text(
-            "Forget Password",
+            "Enter the recovery key",
             style: kHeadline2White,
           ),
           kSizedBoxVerticalS,
           Text(
-            "Enter your email address below, we will send you insructions how to change password.",
+            "We already sent you 6 digits recovery key in your email, please enter the recovery key below.",
             textAlign: TextAlign.center,
             softWrap: true,
             style: kBody1White,
@@ -47,17 +47,20 @@ class _ForgetFormState extends State<ForgetForm> {
             child: Column(
               children: [
                 AuthTextField(
-                    textController: _email,
-                    placeholder: "Email",
-                    type: AuthTextFieldType.email),
+                    textController: _recoveryToken,
+                    placeholder: "6 digits recovery key",
+                    type: AuthTextFieldType.number),
                 kSizedBoxVerticalS,
                 PrimaryButton(
-                    text: "SEND",
+                    text: "SUBMIT",
                     onPressed: () async {
-                      print('submit');
-                      print(_email.text);
-                      await authProvider.forgetPassword(_email.text);
-                      widget.changeModal(AuthType.token);
+                      bool checked = await authProvider
+                          .checkResetPassword(_recoveryToken.text);
+                      if (checked) {
+                        widget.changeModal(AuthType.newPassword);
+                      } else {
+                        print('ERROR');
+                      }
                     }),
                 kSizedBoxVerticalS,
                 SecondaryButton(
