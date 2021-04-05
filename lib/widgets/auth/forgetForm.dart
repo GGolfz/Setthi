@@ -31,11 +31,11 @@ class _ForgetFormState extends State<ForgetForm> {
   void confirmForget(BuildContext context) async {
     if (validate()) {
       final auth = Provider.of<AuthenticateProvider>(context, listen: false);
-      setState(() => _isLoading = true);
       try {
+        setState(() => _isLoading = true);
         await auth.forgetPassword(_email.text);
+        await widget.changeModal(AuthType.token);
         setState(() => _isLoading = false);
-        widget.changeModal(AuthType.token);
       } on HttpException catch (error) {
         setState(() => _isLoading = false);
         showErrorDialog(context: context, text: error.message);

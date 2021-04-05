@@ -27,6 +27,12 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
+  void dispose() {
+    _password.dispose();
+    _confirmPassword.dispose();
+    super.dispose();
+  }
+
   Widget _buildResetCompleteDialog(BuildContext context) {
     return Wrap(
       children: [
@@ -63,18 +69,15 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
   }
 
   bool validate() {
-    return _password.text.isNotEmpty &&
-        _confirmPassword.text.isNotEmpty &&
-        _password.text == _confirmPassword.text;
+    _formKey.currentState.save();
+    return _formKey.currentState.validate();
   }
 
   void changePassword(BuildContext context) async {
-    print(_password.text);
-    print(_confirmPassword.text);
     if (validate()) {
       final auth = Provider.of<AuthenticateProvider>(context, listen: false);
-      setState(() => _isLoading = true);
       try {
+        setState(() => _isLoading = true);
         await auth.changePassword(_password.text);
         setState(() => _isLoading = false);
         showCustomDialog(
@@ -83,17 +86,14 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
         showErrorDialog(context: context, text: error.message);
         setState(() => _isLoading = false);
       }
-    } else {
-      if (_password.text.isEmpty || _confirmPassword.text.isEmpty) {
-        showErrorDialog(context: context, text: 'Password cannot be empty.');
-      } else {
-        showErrorDialog(context: context, text: 'Password does not match.');
-      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    _password.addListener(() {
+      setState(() {});
+    });
     return Scaffold(
       backgroundColor: kNeutral450,
       resizeToAvoidBottomInset: false,
@@ -117,9 +117,11 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
                         type: AuthTextFieldType.password),
                     kSizedBoxVerticalS,
                     AuthTextField(
-                        textController: _confirmPassword,
-                        placeholder: "confirm new password",
-                        type: AuthTextFieldType.confirmPassword),
+                      textController: _confirmPassword,
+                      placeholder: "confirm new password",
+                      type: AuthTextFieldType.confirmPassword,
+                      compareText: _password.text,
+                    ),
                     kSizedBoxVerticalS,
                     PrimaryButton(
                       text: "SUBMIT",
