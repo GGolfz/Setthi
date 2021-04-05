@@ -78,7 +78,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       kSizedBoxVerticalS,
                       wallet.isEmpty()
                           ? EmptyWallet()
-                          : Container(
+                          :Container(
                               height: 310,
                               child: ListView.builder(
                                 itemBuilder: (ctx, index) => WalletCard(
