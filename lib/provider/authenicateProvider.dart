@@ -45,6 +45,7 @@ class AuthenticateProvider with ChangeNotifier {
       prefs.setString('userToken', _token);
     } catch (error) {
       prefs.clear();
+      throw HttpException('Email Already Used');
       // Should to exception to warn user
     }
   }
