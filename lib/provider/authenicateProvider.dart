@@ -76,7 +76,7 @@ class AuthenticateProvider with ChangeNotifier {
       await Dio().post(apiEndpoint + '/auth/reset', data: {"email": email});
       Timer(Duration(milliseconds: 500), () => notifyListeners());
     } catch (error) {
-      throw HttpException('Invalid email');
+      throw HttpException('Invalid email.');
     }
   }
 
@@ -86,7 +86,9 @@ class AuthenticateProvider with ChangeNotifier {
       await Dio().post(apiEndpoint + '/auth/check-token',
           data: {"token": recoveryToken});
       Timer(Duration(milliseconds: 500), () => notifyListeners());
-    } catch (error) {}
+    } catch (error) {
+      throw HttpException('Invalid recovery key.');
+    }
   }
 
   Future<void> changePassword(String newPassword) async {
@@ -94,6 +96,8 @@ class AuthenticateProvider with ChangeNotifier {
       await Dio().patch(apiEndpoint + '/auth/reset',
           data: {"token": _recoveryToken, "password": newPassword});
       Timer(Duration(milliseconds: 500), () => notifyListeners());
-    } catch (error) {}
+    } catch (error) {
+      throw HttpException('Cannot change password.');
+    }
   }
 }

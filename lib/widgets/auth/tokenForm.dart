@@ -24,17 +24,22 @@ class _TokenFormState extends State<TokenForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   void checkResetPassword(BuildContext context) async {
-    final authProvider =
-        Provider.of<AuthenticateProvider>(context, listen: false);
-    try {
+    if (validate()) {
+      final auth = Provider.of<AuthenticateProvider>(context, listen: false);
       setState(() => _isLoading = true);
-      await authProvider.checkResetPassword(_recoveryToken.text);
-      setState(() => _isLoading = false);
-      widget.changeModal(AuthType.newPassword);
-    } on HttpException catch (error) {
-      setState(() => _isLoading = false);
-      showErrorDialog(context: context, text: error.message);
+      try {
+        await auth.checkResetPassword(_recoveryToken.text);
+        setState(() => _isLoading = false);
+        widget.changeModal(AuthType.newPassword);
+      } on HttpException catch (error) {
+        setState(() => _isLoading = false);
+        showErrorDialog(context: context, text: error.message);
+      }
     }
+  }
+
+  bool validate() {
+    return _formKey.currentState.validate();
   }
 
   @override
