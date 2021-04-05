@@ -7,15 +7,15 @@ import 'package:setthi/widgets/auth/authTextField.dart';
 import 'package:setthi/widgets/buttons/primaryButton.dart';
 import 'package:setthi/widgets/buttons/secondaryButton.dart';
 
-class ForgetForm extends StatefulWidget {
+class TokenForm extends StatefulWidget {
   final Function changeModal;
-  ForgetForm({this.changeModal});
+  TokenForm({this.changeModal});
 
   @override
-  _ForgetFormState createState() => _ForgetFormState();
+  _TokenFormState createState() => _TokenFormState();
 }
 
-class _ForgetFormState extends State<ForgetForm> {
+class _TokenFormState extends State<TokenForm> {
   final _email = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
@@ -28,12 +28,12 @@ class _ForgetFormState extends State<ForgetForm> {
                 child: Column(children: [
           kSizedBoxVerticalS,
           Text(
-            "Forget Password",
+            "Enter the recovery key",
             style: kHeadline2White,
           ),
           kSizedBoxVerticalS,
           Text(
-            "Enter your email address below, we will send you insructions how to change password.",
+            "We already sent you 6 digits recovery key in your email, please enter the recovery key below.",
             textAlign: TextAlign.center,
             softWrap: true,
             style: kBody1White,
@@ -45,13 +45,13 @@ class _ForgetFormState extends State<ForgetForm> {
               children: [
                 AuthTextField(
                     textController: _email,
-                    placeholder: "Email",
+                    placeholder: "6 digits recovery key",
                     type: AuthTextFieldType.email),
                 kSizedBoxVerticalS,
                 PrimaryButton(
-                    text: "SEND",
+                    text: "SUBMIT",
                     onPressed: () {
-                      widget.changeModal(AuthType.token);
+                      widget.changeModal(AuthType.close);
                     }),
                 kSizedBoxVerticalS,
                 SecondaryButton(
