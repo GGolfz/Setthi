@@ -4,9 +4,11 @@ import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/config/style.dart';
 import 'package:setthi/model/authType.dart';
+import 'package:setthi/model/http_exception.dart';
 import 'package:setthi/widgets/auth/authTextField.dart';
 import 'package:setthi/widgets/buttons/primaryButton.dart';
 import 'package:setthi/widgets/buttons/secondaryButton.dart';
+import 'package:setthi/widgets/layout/errorDialog.dart';
 import 'package:setthi/provider/authenicateProvider.dart';
 
 class TokenForm extends StatefulWidget {
@@ -20,9 +22,23 @@ class TokenForm extends StatefulWidget {
 class _TokenFormState extends State<TokenForm> {
   final _recoveryToken = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
+  void checkResetPassword(BuildContext context) async {
+    final authProvider =
+        Provider.of<AuthenticateProvider>(context, listen: false);
+    try {
+      setState(() => _isLoading = true);
+      await authProvider.checkResetPassword(_recoveryToken.text);
+      setState(() => _isLoading = false);
+      widget.changeModal(AuthType.newPassword);
+    } on HttpException catch (error) {
+      setState(() => _isLoading = false);
+      showErrorDialog(context: context, text: error.message);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthenticateProvider>(context);
     return Scaffold(
       backgroundColor: kNeutral450,
       resizeToAvoidBottomInset: false,
@@ -54,17 +70,16 @@ class _TokenFormState extends State<TokenForm> {
                     kSizedBoxVerticalS,
                     PrimaryButton(
                       text: "SUBMIT",
-                      onPressed: () async {
-                        await authProvider
-                            .checkResetPassword(_recoveryToken.text);
-                      },
+                      onPressed: () => checkResetPassword(context),
+                      isLoading: _isLoading,
                     ),
                     kSizedBoxVerticalS,
                     SecondaryButton(
-                        text: "CANCEL",
-                        onPressed: () {
-                          widget.changeModal(AuthType.signin);
-                        }),
+                      text: "CANCEL",
+                      onPressed: () {
+                        widget.changeModal(AuthType.signin);
+                      },
+                    ),
                   ],
                 ),
               )
