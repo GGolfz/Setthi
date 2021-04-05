@@ -56,7 +56,7 @@ class _ForgetFormState extends State<ForgetForm> {
                     onPressed: () async {
                       print('submit');
                       print(_email.text);
-                      // await authProvider.forgetPassword(_email.text);
+                      await authProvider.forgetPassword(_email.text);
                       widget.changeModal(AuthType.token);
                     }),
                 kSizedBoxVerticalS,

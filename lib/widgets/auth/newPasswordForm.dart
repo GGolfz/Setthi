@@ -42,17 +42,18 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
               children: [
                 AuthTextField(
                     textController: _password,
-                    placeholder: "6 digits recovery key",
+                    placeholder: "new password",
                     type: AuthTextFieldType.password),
+                kSizedBoxVerticalS,
                 AuthTextField(
                     textController: _confirmPassword,
-                    placeholder: "6 digits recovery key",
+                    placeholder: "confirm new password",
                     type: AuthTextFieldType.confirmPassword),
                 kSizedBoxVerticalS,
                 PrimaryButton(
                     text: "SUBMIT",
                     onPressed: () async {
-                      // widget.changeModal(AuthType.close);
+                      widget.changeModal(AuthType.close);
                     }),
                 kSizedBoxVerticalS,
                 SecondaryButton(

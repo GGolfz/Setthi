@@ -45,8 +45,8 @@ class _AuthTextFieldState extends State<AuthTextField> {
   }
 
   TextInputType getKeyboardType() {
-    if (!isPassword()) return TextInputType.emailAddress;
     if (widget.type == AuthTextFieldType.number) return TextInputType.number;
+    if (!isPassword()) return TextInputType.emailAddress;
     return TextInputType.text;
   }
 

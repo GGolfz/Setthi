@@ -54,9 +54,13 @@ class _TokenFormState extends State<TokenForm> {
                 PrimaryButton(
                     text: "SUBMIT",
                     onPressed: () async {
-                      // await authProvider
-                      //     .checkResetPassword(_recoveryToken.text);
-                      widget.changeModal(AuthType.close);
+                      bool checked = await authProvider
+                          .checkResetPassword(_recoveryToken.text);
+                      if (checked) {
+                        widget.changeModal(AuthType.newPassword);
+                      } else {
+                        print('ERROR');
+                      }
                     }),
                 kSizedBoxVerticalS,
                 SecondaryButton(

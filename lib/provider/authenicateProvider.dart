@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:setthi/config/api.dart';
+import 'package:setthi/model/http_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticateProvider with ChangeNotifier {
@@ -29,7 +30,7 @@ class AuthenticateProvider with ChangeNotifier {
       prefs.setString('userToken', _token);
     } catch (error) {
       prefs.clear();
-      // Should throw exception to warn user
+      throw HttpException('Your email or password is wrong');
     }
   }
 
@@ -77,18 +78,22 @@ class AuthenticateProvider with ChangeNotifier {
       print('Success');
       Timer(Duration(milliseconds: 500), () => notifyListeners());
     } catch (error) {
+      print('error from forget provider');
       print(error);
       // Should to exception to warn user
     }
   }
 
-  Future<void> checkResetPassword(String recoveryToken) async {
+  Future<bool> checkResetPassword(String recoveryToken) async {
     try {
+      print('re is');
+      print(recoveryToken);
       await Dio()
           .patch(apiEndpoint + '/auth/reset', data: {"token": recoveryToken});
       print('Check success');
       Timer(Duration(milliseconds: 500), () => notifyListeners());
     } catch (error) {
+      print('error from provider');
       print(error);
       // Should to exception to warn user
     }
