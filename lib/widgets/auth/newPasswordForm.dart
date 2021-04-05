@@ -9,16 +9,17 @@ import 'package:setthi/widgets/buttons/primaryButton.dart';
 import 'package:setthi/widgets/buttons/secondaryButton.dart';
 import 'package:setthi/provider/authenicateProvider.dart';
 
-class TokenForm extends StatefulWidget {
+class NewPasswordForm extends StatefulWidget {
   final Function changeModal;
-  TokenForm({this.changeModal});
+  NewPasswordForm({this.changeModal});
 
   @override
-  _TokenFormState createState() => _TokenFormState();
+  _NewPasswordFormState createState() => _NewPasswordFormState();
 }
 
-class _TokenFormState extends State<TokenForm> {
-  final _recoveryToken = TextEditingController();
+class _NewPasswordFormState extends State<NewPasswordForm> {
+  final _password = TextEditingController();
+  final _confirmPassword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -31,15 +32,8 @@ class _TokenFormState extends State<TokenForm> {
                 child: Column(children: [
           kSizedBoxVerticalS,
           Text(
-            "Enter the recovery key",
+            "Enter new password",
             style: kHeadline2White,
-          ),
-          kSizedBoxVerticalS,
-          Text(
-            "We already sent you 6 digits recovery key in your email, please enter the recovery key below.",
-            textAlign: TextAlign.center,
-            softWrap: true,
-            style: kBody1White,
           ),
           kSizedBoxVerticalS,
           Form(
@@ -47,16 +41,18 @@ class _TokenFormState extends State<TokenForm> {
             child: Column(
               children: [
                 AuthTextField(
-                    textController: _recoveryToken,
+                    textController: _password,
                     placeholder: "6 digits recovery key",
-                    type: AuthTextFieldType.number),
+                    type: AuthTextFieldType.password),
+                AuthTextField(
+                    textController: _confirmPassword,
+                    placeholder: "6 digits recovery key",
+                    type: AuthTextFieldType.confirmPassword),
                 kSizedBoxVerticalS,
                 PrimaryButton(
                     text: "SUBMIT",
                     onPressed: () async {
-                      // await authProvider
-                      //     .checkResetPassword(_recoveryToken.text);
-                      widget.changeModal(AuthType.close);
+                      // widget.changeModal(AuthType.close);
                     }),
                 kSizedBoxVerticalS,
                 SecondaryButton(
