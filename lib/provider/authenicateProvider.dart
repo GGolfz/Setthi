@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticateProvider with ChangeNotifier {
   String _token;
-  String _email;
+  String _recoveryToken;
 
   AuthenticateProvider();
   bool get isAuth {
@@ -71,7 +71,6 @@ class AuthenticateProvider with ChangeNotifier {
   }
 
   Future<void> forgetPassword(String email) async {
-    _email = email;
     try {
       await Dio().post(apiEndpoint + '/auth/reset', data: {"email": email});
       Timer(Duration(milliseconds: 500), () => notifyListeners());
@@ -82,8 +81,17 @@ class AuthenticateProvider with ChangeNotifier {
 
   Future<void> checkResetPassword(String recoveryToken) async {
     try {
-      await Dio()
-          .patch(apiEndpoint + '/auth/reset', data: {"token": recoveryToken});
+      _recoveryToken = recoveryToken;
+      await Dio().post(apiEndpoint + '/auth/check-token',
+          data: {"token": recoveryToken});
+      Timer(Duration(milliseconds: 500), () => notifyListeners());
+    } catch (error) {}
+  }
+
+  Future<void> changePassword(String newPassword) async {
+    try {
+      await Dio().patch(apiEndpoint + '/auth/reset',
+          data: {"token": _recoveryToken, "password": newPassword});
       Timer(Duration(milliseconds: 500), () => notifyListeners());
     } catch (error) {}
   }

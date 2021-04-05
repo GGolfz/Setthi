@@ -22,13 +22,17 @@ class ForgetForm extends StatefulWidget {
 class _ForgetFormState extends State<ForgetForm> {
   final _email = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
   void confirmForget(BuildContext context) async {
     final authProvider =
         Provider.of<AuthenticateProvider>(context, listen: false);
     try {
+      setState(() => _isLoading = true);
       await authProvider.forgetPassword(_email.text);
+      setState(() => _isLoading = false);
       widget.changeModal(AuthType.token);
     } on HttpException catch (error) {
+      setState(() => _isLoading = false);
       showErrorDialog(context: context, text: error.message);
     }
   }
@@ -65,7 +69,10 @@ class _ForgetFormState extends State<ForgetForm> {
                         type: AuthTextFieldType.email),
                     kSizedBoxVerticalS,
                     PrimaryButton(
-                        text: "SEND", onPressed: () => confirmForget(context)),
+                      text: "SEND",
+                      onPressed: () => confirmForget(context),
+                      isLoading: _isLoading,
+                    ),
                     kSizedBoxVerticalS,
                     SecondaryButton(
                       text: "CANCEL",
