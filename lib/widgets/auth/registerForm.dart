@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/model/http_exception.dart';
 import 'package:setthi/provider/authenicateProvider.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
@@ -8,6 +9,7 @@ import '../../config/style.dart';
 import '../../model/authType.dart';
 import '../../widgets/auth/authTextField.dart';
 import '../../widgets/buttons/primaryButton.dart';
+import '../../widgets/layout/errorDialog.dart';
 
 class RegisterForm extends StatefulWidget {
   final Function changeModal;
@@ -45,7 +47,11 @@ class _RegisterFormState extends State<RegisterForm> {
           _isLoading = false;
         });
         await widget.changeModal(AuthType.close);
-      } catch (error) {}
+        setState(() => _isLoading = false);
+      } on HttpException catch (error){
+        setState(() => _isLoading = false);
+        showErrorDialog(context: context,text: error.message);
+      }
     }
   }
 
