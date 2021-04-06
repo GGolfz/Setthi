@@ -47,13 +47,17 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 
   @override
-  void initState() async{
-    try {
-     await Provider.of<WalletProvider>(context, listen: false).fetchWallet();
-    } on HttpException catch (error) {
-      showErrorDialog(context: context, text: error.message);
-    }
+  void initState() {
+    asyncMethod();
     super.initState();
+  }
+
+  void asyncMethod() async {
+    try {
+      await Provider.of<WalletProvider>(context, listen: false).fetchWallet();
+    } on HttpException catch (error) {
+      showErrorDialog(context: context, text: error.message,isNetwork: true);
+    }
   }
 
   @override
