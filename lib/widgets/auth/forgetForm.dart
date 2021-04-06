@@ -23,17 +23,23 @@ class _ForgetFormState extends State<ForgetForm> {
   final _email = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+
+  bool validate() {
+    return _formKey.currentState.validate();
+  }
+
   void confirmForget(BuildContext context) async {
-    final authProvider =
-        Provider.of<AuthenticateProvider>(context, listen: false);
-    try {
-      setState(() => _isLoading = true);
-      await authProvider.forgetPassword(_email.text);
-      setState(() => _isLoading = false);
-      widget.changeModal(AuthType.token);
-    } on HttpException catch (error) {
-      setState(() => _isLoading = false);
-      showErrorDialog(context: context, text: error.message);
+    if (validate()) {
+      final auth = Provider.of<AuthenticateProvider>(context, listen: false);
+      try {
+        setState(() => _isLoading = true);
+        await auth.forgetPassword(_email.text);
+        await widget.changeModal(AuthType.token);
+        setState(() => _isLoading = false);
+      } on HttpException catch (error) {
+        setState(() => _isLoading = false);
+        showErrorDialog(context: context, text: error.message);
+      }
     }
   }
 

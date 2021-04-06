@@ -34,8 +34,8 @@ class _SigninFormState extends State<SigninForm> {
   Future<void> login(BuildContext context) async {
     var email = _email.text;
     var password = _password.text;
-    setState(() => _isLoading = true);
     if (validate()) {
+      setState(() => _isLoading = true);
       try {
         await Provider.of<AuthenticateProvider>(context, listen: false)
             .login(email, password);
