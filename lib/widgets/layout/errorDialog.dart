@@ -8,10 +8,10 @@ class ErrorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('An error occur'),
-      content: Text(text),
+      title: Text('An error occur',style: TextStyle(color: kRed400,fontSize: 30),),
+      content: Container(height: kSizeL,child:Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,children:[Text(text,style: TextStyle(fontSize: 15),),Icon(Icons.close_outlined,color: kRed400,)])),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },

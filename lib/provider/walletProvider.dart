@@ -45,8 +45,8 @@ class WalletProvider with ChangeNotifier {
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
-    } catch (error) {
-      print(error);
+    }catch (error) {
+      throw HttpException("Your Internet doesn't connect");
     }
   }
 
@@ -57,8 +57,14 @@ class WalletProvider with ChangeNotifier {
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
-    } catch (error) {
-      throw HttpException("Your can't Create more than 5 Wallet");
+    }on DioError catch (error) {
+      if(error.response == null){
+        throw HttpException("Internet connection was bad");
+      }else if(error.response.statusCode == 400){
+      throw HttpException("Your can't Create more than 5 Wallet .");
+      }else{
+        throw HttpException("SomeThing Error");
+      }
     }
   }
 
@@ -69,7 +75,7 @@ class WalletProvider with ChangeNotifier {
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      throw HttpException("Your Internet was bad. Please Try again .");
     }
   }
 
@@ -81,7 +87,7 @@ class WalletProvider with ChangeNotifier {
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      throw HttpException("Your Internet was bad. Please try Again .");
     }
   }
 

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/model/http_exception.dart';
 import '../../provider/walletProvider.dart';
 import '../buttons/actionButton.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
+import '../../widgets/layout/errorDialog.dart';
 
 class EditWalletForm extends StatefulWidget {
   final WalletItem selectedWallet;
@@ -65,10 +67,14 @@ class _EditWalletFormState extends State<EditWalletForm> {
                           text: "Delete",
                           color: kRed400,
                           isOutlined: true,
-                          onPressed: () {
-                            Provider.of<WalletProvider>(context, listen: false)
+                          onPressed: () async {
+                            try{
+                            await Provider.of<WalletProvider>(context, listen: false)
                                 .removeWallet(widget.selectedWallet.id);
                             Navigator.pop(context);
+                            }on HttpException catch(error){
+                              showErrorDialog(context: context,text: error.message);
+                            }
                           },
                         ),
                       ),
@@ -77,10 +83,11 @@ class _EditWalletFormState extends State<EditWalletForm> {
                         child: ActionButton(
                           text: "Submit",
                           color: kGold300,
-                          onPressed: () {
+                          onPressed: () async{
                             if (_formKey.currentState.validate()) {
+                              try{
                               _formKey.currentState.save();
-                              Provider.of<WalletProvider>(context,
+                              await Provider.of<WalletProvider>(context,
                                       listen: false)
                                   .editWallet(
                                 widget.selectedWallet.id,
@@ -88,6 +95,9 @@ class _EditWalletFormState extends State<EditWalletForm> {
                                 widget.selectedWallet.amount,
                               );
                               Navigator.pop(context);
+                              }on HttpException catch(error){
+                                showErrorDialog(context: context,text: error.message);
+                              }
                             }
                           },
                         ),
