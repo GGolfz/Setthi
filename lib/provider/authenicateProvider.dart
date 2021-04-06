@@ -28,9 +28,15 @@ class AuthenticateProvider with ChangeNotifier {
       _token = token;
       Timer(Duration(milliseconds: 500), () => notifyListeners());
       prefs.setString('userToken', _token);
-    } catch (error) {
+    } on DioError catch (error) {
       prefs.clear();
-      throw HttpException('Your email or password is wrong');
+      if(error.response == null){
+      throw HttpException('Your Connection was Bad');
+      }else if(error.response.statusCode == 401){
+        throw HttpException('Your email or password is wrong');
+      }else{
+        throw HttpException("Something was worng");
+      }
     }
   }
 
@@ -61,6 +67,8 @@ class AuthenticateProvider with ChangeNotifier {
           options: Options(headers: {"Authorization": "Bearer " + token}));
     } catch (error) {
       prefs.clear();
+      _token = null;
+      notifyListeners();
     }
   }
 
