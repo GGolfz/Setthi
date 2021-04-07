@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:setthi/config/api.dart';
+import 'package:setthi/config/string.dart';
 import 'package:setthi/model/httpException.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,12 +31,12 @@ class AuthenticateProvider with ChangeNotifier {
       prefs.setString('userToken', _token);
     } on DioError catch (error) {
       prefs.clear();
-      if(error.response == null){
-      throw HttpException('Your Connection was Bad');
-      }else if(error.response.statusCode == 401){
-        throw HttpException('Your email or password is wrong');
-      }else{
-        throw HttpException("Something was worng");
+      if (error.response == null) {
+        throw HttpException(internetException);
+      } else if (error.response.statusCode == 401) {
+        throw HttpException(incorrectAuthException);
+      } else {
+        throw HttpException(generalException);
       }
     }
   }
@@ -51,8 +52,7 @@ class AuthenticateProvider with ChangeNotifier {
       prefs.setString('userToken', _token);
     } catch (error) {
       prefs.clear();
-      throw HttpException('Email Already Used');
-      // Should to exception to warn user
+      throw HttpException(usedEmailException);
     }
   }
 
@@ -84,7 +84,7 @@ class AuthenticateProvider with ChangeNotifier {
       await Dio().post(apiEndpoint + '/auth/reset', data: {"email": email});
       Timer(Duration(milliseconds: 500), () => notifyListeners());
     } catch (error) {
-      throw HttpException('Invalid email.');
+      throw HttpException(invalidException('email'));
     }
   }
 
@@ -95,7 +95,7 @@ class AuthenticateProvider with ChangeNotifier {
           data: {"token": recoveryToken});
       Timer(Duration(milliseconds: 500), () => notifyListeners());
     } catch (error) {
-      throw HttpException('Invalid recovery key.');
+      throw HttpException(invalidException('token'));
     }
   }
 
@@ -105,7 +105,7 @@ class AuthenticateProvider with ChangeNotifier {
           data: {"token": _recoveryToken, "password": newPassword});
       Timer(Duration(milliseconds: 500), () => notifyListeners());
     } catch (error) {
-      throw HttpException('Cannot change password.');
+      throw HttpException(generalException);
     }
   }
 }

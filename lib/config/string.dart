@@ -13,7 +13,12 @@ const noBudgetText = "No budget now :(";
 const authenticateException = "Please login.";
 const internetException = "Please check your internet connection.";
 const generalException = "Something went wrong. Please try again later.";
+const incorrectAuthException = "Your email or password is incorrect.";
+String invalidException(type) {
+  return "The $type is invalid.";
+}
 
+const usedEmailException = "This email is already used.";
 String overLimitException(String type, int number) {
   return "You can't have more than $number $type";
 }
