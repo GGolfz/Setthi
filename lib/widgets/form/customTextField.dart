@@ -21,7 +21,7 @@ class CustomTextField extends StatelessWidget {
         labelStyle: kSubtitle2Black.copyWith(fontWeight: FontWeight.w600),
       ),
       validator: (value) {
-        if (value.isEmpty) return 'Please enter title';
+        if (value.isEmpty) return 'Please enter $title';
         return null;
       },
     );
