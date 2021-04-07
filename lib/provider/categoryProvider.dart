@@ -71,7 +71,6 @@ class CategoryProvider with ChangeNotifier {
       notifyListeners();
     } catch (error) {
       if (error.response == null) throw HttpException(internetException);
-      if (name == "") throw HttpException(nameCannotBeNull);
       if (error.response.statusCode == 400)
         throw HttpException(overLimitException('On Each Category', 10));
       if (error.response.statusCode == 401)
@@ -93,9 +92,7 @@ class CategoryProvider with ChangeNotifier {
       _categories = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      if(error.response == null) throw HttpException(internetException); 
-      if (error.response.statusCode == 400)
-        throw HttpException(nameCannotBeNull);
+      if (error.response == null) throw HttpException(internetException);
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
       throw HttpException(generalException);
@@ -109,7 +106,7 @@ class CategoryProvider with ChangeNotifier {
       _categories = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      if(error.response == null) throw HttpException(internetException);
+      if (error.response == null) throw HttpException(internetException);
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
       throw HttpException(generalException);
