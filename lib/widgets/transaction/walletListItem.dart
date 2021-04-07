@@ -3,6 +3,7 @@ import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/config/style.dart';
 import 'package:setthi/provider/walletProvider.dart';
+import '../../utils/format.dart';
 
 class WalletListItem extends StatelessWidget {
   final WalletItem wallet;
@@ -13,7 +14,7 @@ class WalletListItem extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(kSizeXS),
       padding: EdgeInsets.all(kSizeXXS),
-      width: 120,
+      width: 160,
       height: 50,
       decoration: BoxDecoration(
           color: isSelect ? kGold300Fade : kNeutral100,
@@ -24,11 +25,11 @@ class WalletListItem extends StatelessWidget {
         children: [
           Text(
             wallet.title,
-            style: kSubtitle1Black.copyWith(
+            style: kBody1Black.copyWith(
                 fontWeight: FontWeight.w600, color: kNeutral350),
           ),
           Text(
-            'THB ${wallet.amount}',
+            'THB ${formatCurrencyString(wallet.amount)}',
             style: kSubtitle2Black.copyWith(
                 color: kNeutralBlack, fontWeight: FontWeight.w500),
           )

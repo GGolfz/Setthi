@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:setthi/model/httpException.dart';
+import 'package:setthi/widgets/form/customTextField.dart';
 import '../../provider/walletProvider.dart';
 import '../buttons/actionButton.dart';
 import '../../config/color.dart';
@@ -44,19 +45,7 @@ class _EditWalletFormState extends State<EditWalletForm> {
                   ],
                 ),
                 kSizedBoxVerticalXXS,
-                TextFormField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: kNeutralWhite,
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                  keyboardType: TextInputType.text,
-                  validator: (value) {
-                    if (_title.text.isEmpty) return 'Title cannot be empty';
-                    return null;
-                  },
-                  controller: _title,
-                ),
+                CustomTextField(title: 'Title', textEditingController: _title),
                 kSizedBoxVerticalS,
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
@@ -75,7 +64,9 @@ class _EditWalletFormState extends State<EditWalletForm> {
                               Navigator.pop(context);
                             } on HttpException catch (error) {
                               showErrorDialog(
-                                  context: context, text: error.message,isNetwork:error.isInternetProblem);
+                                  context: context,
+                                  text: error.message,
+                                  isNetwork: error.isInternetProblem);
                             }
                           },
                         ),
@@ -99,7 +90,9 @@ class _EditWalletFormState extends State<EditWalletForm> {
                                 Navigator.pop(context);
                               } on HttpException catch (error) {
                                 showErrorDialog(
-                                    context: context, text: error.message,isNetwork: error.isInternetProblem);
+                                    context: context,
+                                    text: error.message,
+                                    isNetwork: error.isInternetProblem);
                               }
                             }
                           },

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/config/style.dart';
+import 'package:setthi/model/httpException.dart';
 import 'package:setthi/provider/authenicateProvider.dart';
 import 'package:setthi/provider/categoryProvider.dart';
 import 'package:setthi/provider/labelProvider.dart';
@@ -13,6 +14,7 @@ import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/layout/appBar.dart';
 import 'package:setthi/widgets/layout/divider.dart';
 import 'package:setthi/widgets/setting/settingItem.dart';
+import '../widgets/layout/errorDialog.dart';
 
 class SettingScreen extends StatefulWidget {
   static final routeName = '/setting';
@@ -31,9 +33,22 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   void initState() {
-    Provider.of<CategoryProvider>(context, listen: false).fetchCategories();
-    Provider.of<LabelProvider>(context, listen: false).fetchLabels();
+    // Provider.of<CategoryProvider>(context, listen: false).fetchCategories();
+    // Provider.of<LabelProvider>(context, listen: false).fetchLabels();
+    fetchData();
     super.initState();
+  }
+
+  void fetchData() async {
+    try {
+      await Provider.of<LabelProvider>(context, listen: false).fetchLabels();
+      await Provider.of<CategoryProvider>(context, listen: false).fetchCategories();
+    } on HttpException catch (error) {
+      showErrorDialog(
+          context: context,
+          text: error.message,
+          isNetwork: error.isInternetProblem);
+    }
   }
 
   @override

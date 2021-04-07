@@ -4,11 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/model/formType.dart';
+import 'package:setthi/model/httpException.dart';
 import 'package:setthi/provider/categoryProvider.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/form/customDropDown.dart';
 import 'package:setthi/widgets/form/customFormTitle.dart';
 import 'package:setthi/widgets/form/customTextField.dart';
+import '../layout/errorDialog.dart';
 
 class CategoryForm extends StatefulWidget {
   final FormType type;
@@ -31,6 +33,7 @@ class _CategoryFormState extends State<CategoryForm> {
   var _categoryType;
   Color pickerColor;
   Color currentColor;
+  var _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -61,9 +64,18 @@ class _CategoryFormState extends State<CategoryForm> {
         text: "Submit",
         color: kGold300,
         onPressed: () async {
-          await Provider.of<CategoryProvider>(context, listen: false)
-              .createCategory(_category.text, _categoryType, currentColor);
-          Navigator.of(context).pop();
+          if (_formKey.currentState.validate()) {
+            try {
+              await Provider.of<CategoryProvider>(context, listen: false)
+                  .createCategory(_category.text, _categoryType, currentColor);
+              Navigator.of(context).pop();
+            } on HttpException catch (error) {
+              showErrorDialog(
+                  context: context,
+                  text: error.message,
+                  isNetwork: error.isInternetProblem);
+            }
+          }
         },
       );
     }
@@ -76,9 +88,16 @@ class _CategoryFormState extends State<CategoryForm> {
             color: kRed400,
             isOutlined: true,
             onPressed: () async {
-              await Provider.of<CategoryProvider>(context, listen: false)
-                  .deleteCategory(widget.labelKey);
-              Navigator.of(context).pop();
+              try {
+                await Provider.of<CategoryProvider>(context, listen: false)
+                    .deleteCategory(widget.labelKey);
+                Navigator.of(context).pop();
+              } on HttpException catch (error) {
+                showErrorDialog(
+                    context: context,
+                    text: error.message,
+                    isNetwork: error.isInternetProblem);
+              }
             },
           )),
           kSizedBoxHorizontalS,
@@ -87,10 +106,19 @@ class _CategoryFormState extends State<CategoryForm> {
             text: "Submit",
             color: kGold300,
             onPressed: () async {
-              await Provider.of<CategoryProvider>(context, listen: false)
-                  .editCategory(widget.labelKey, _category.text, _categoryType,
-                      currentColor);
-              Navigator.of(context).pop();
+              if (_formKey.currentState.validate()) {
+                try {
+                  await Provider.of<CategoryProvider>(context, listen: false)
+                      .editCategory(
+                          widget.labelKey, _category.text, currentColor);
+                  Navigator.of(context).pop();
+                } on HttpException catch (error) {
+                  showErrorDialog(
+                      context: context,
+                      text: error.message,
+                      isNetwork: error.isInternetProblem);
+                }
+              }
             },
           ))
         ],
@@ -102,65 +130,67 @@ class _CategoryFormState extends State<CategoryForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 260,
+        height: widget.type == FormType.Create ? 280 : 200,
         width: 400,
         child: Form(
-            child: Column(children: [
-          CustomFormTitle(title: _getFormTitle()),
-          kSizedBoxVerticalS,
-          Row(
-            children: [
-              GestureDetector(
-                child: Container(
-                  width: kSizeM,
-                  height: kSizeM,
-                  decoration: BoxDecoration(
-                      borderRadius: kBorderRadiusXS, color: currentColor),
-                ),
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (ctx) => AlertDialog(
-                        content: Container(
-                      height: 400,
-                      child: Column(children: [
-                        ColorPicker(
-                          pickerColor: pickerColor,
-                          onColorChanged: changeColor,
-                          showLabel: false,
-                          pickerAreaHeightPercent: 0.8,
-                        ),
-                        ActionButton(
-                          text: "Select",
-                          color: kGold300,
-                          onPressed: () {
-                            setState(() => currentColor = pickerColor);
-                            Navigator.of(context).pop();
-                          },
-                        )
-                      ]),
-                    )),
-                  );
-                },
+            key: _formKey,
+            child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+              CustomFormTitle(title: _getFormTitle()),
+              kSizedBoxVerticalS,
+              Row(
+                children: [
+                  GestureDetector(
+                    child: Container(
+                      width: kSizeM,
+                      height: kSizeM,
+                      decoration: BoxDecoration(
+                          borderRadius: kBorderRadiusXS, color: currentColor),
+                    ),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                            content: Container(
+                          height: 400,
+                          child: Column(children: [
+                            ColorPicker(
+                              pickerColor: pickerColor,
+                              onColorChanged: changeColor,
+                              showLabel: false,
+                              pickerAreaHeightPercent: 0.8,
+                            ),
+                            ActionButton(
+                              text: "Select",
+                              color: kGold300,
+                              onPressed: () {
+                                setState(() => currentColor = pickerColor);
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ]),
+                        )),
+                      );
+                    },
+                  ),
+                  kSizedBoxHorizontalS,
+                  Flexible(
+                      child: CustomTextField(
+                          title: "Label", textEditingController: _category))
+                ],
               ),
-              kSizedBoxHorizontalS,
-              Flexible(
-                  child: CustomTextField(
-                      title: "Label", textEditingController: _category))
-            ],
-          ),
-          kSizedBoxVerticalS,
-          CustomDropDown(
-              title: "Type",
-              currentValue: _categoryType,
-              items: ["Income", "Expense"],
-              onChanged: (value) {
-                setState(() {
-                  _categoryType = value;
-                });
-              }),
-          kSizedBoxVerticalM,
-          _getButton(),
-        ])));
+              if (widget.type == FormType.Create) kSizedBoxVerticalS,
+              if (widget.type == FormType.Create)
+                CustomDropDown(
+                    title: "Type",
+                    currentValue: _categoryType,
+                    items: ["Income", "Expense"],
+                    onChanged: (value) {
+                      setState(() {
+                        _categoryType = value;
+                      });
+                    }),
+              kSizedBoxVerticalM,
+              _getButton(),
+            ])));
   }
 }

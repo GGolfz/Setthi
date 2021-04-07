@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:setthi/model/httpException.dart';
+import 'package:setthi/widgets/form/customTextField.dart';
 import '../../provider/walletProvider.dart';
 import '../buttons/actionButton.dart';
 import '../../config/color.dart';
@@ -13,8 +14,8 @@ class NewWalletForm extends StatefulWidget {
 }
 
 class _NewWalletFormState extends State<NewWalletForm> {
-  String _title = "";
-  double _amount = 0;
+  TextEditingController _title = TextEditingController();
+  TextEditingController _amount = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   InputDecoration buildInputDecoration(String hintText) {
     return InputDecoration(
@@ -45,24 +46,12 @@ class _NewWalletFormState extends State<NewWalletForm> {
                   ],
                 ),
                 kSizedBoxVerticalXXS,
-                TextFormField(
-                  decoration: buildInputDecoration('Title'),
-                  keyboardType: TextInputType.text,
-                  validator: (value) {
-                    if (value.isEmpty) return 'Please enter title';
-                    return null;
-                  },
-                  onSaved: (value) => _title = value,
-                ),
+                CustomTextField(title: 'Title', textEditingController: _title),
                 kSizedBoxVerticalXXS,
-                TextFormField(
-                  decoration: buildInputDecoration('Initial Amount'),
+                CustomTextField(
+                  title: 'Initial Amount',
+                  textEditingController: _amount,
                   keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value.isEmpty) return 'Please enter initial amount';
-                    return null;
-                  },
-                  onSaved: (value) => _amount = double.tryParse(value),
                 ),
                 kSizedBoxVerticalS,
                 Padding(
@@ -70,18 +59,22 @@ class _NewWalletFormState extends State<NewWalletForm> {
                   child: ActionButton(
                     text: "Submit",
                     color: kGold300,
-                    onPressed: () async{
+                    onPressed: () async {
                       if (_formKey.currentState.validate()) {
-                        try{
-                        _formKey.currentState.save();
-                        await Provider.of<WalletProvider>(context, listen: false)
-                            .addWallet(_title, _amount);
-                        Navigator.pop(context);
-                        } on HttpException catch(error){
-                          showErrorDialog(context: context, text: error.message,isNetwork: error.isInternetProblem);
+                        try {
+                          _formKey.currentState.save();
+                          await Provider.of<WalletProvider>(context,
+                                  listen: false)
+                              .addWallet(
+                                  _title.text, double.tryParse(_amount.text));
+                          Navigator.pop(context);
+                        } on HttpException catch (error) {
+                          showErrorDialog(
+                              context: context,
+                              text: error.message,
+                              isNetwork: error.isInternetProblem);
                         }
                       }
-                      
                     },
                   ),
                 ),

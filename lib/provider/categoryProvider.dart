@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:setthi/config/api.dart';
 import 'package:setthi/model/categoryType.dart';
+import 'package:setthi/config/string.dart';
+import 'package:setthi/model/httpException.dart';
 import 'package:setthi/utils/format.dart';
 
 class Category {
@@ -49,7 +51,10 @@ class CategoryProvider with ChangeNotifier {
       _categories = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response == null) throw HttpException(internetException);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(generalException);
     }
   }
 
@@ -65,24 +70,31 @@ class CategoryProvider with ChangeNotifier {
       _categories = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response == null) throw HttpException(internetException);
+      if (error.response.statusCode == 400)
+        throw HttpException(overLimitException('On Each Category', 10));
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(generalException);
     }
   }
 
   Future<void> editCategory(
-      int id, String name, String type, Color color) async {
+      int id, String name, Color color) async {
     try {
       final response = await Dio().patch(apiEndpoint + '/category/$id',
           data: {
             "name": name,
-            "type": type.toUpperCase(),
             "color": getColorText(color)
           },
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _categories = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response == null) throw HttpException(internetException);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(generalException);
     }
   }
 
@@ -93,7 +105,10 @@ class CategoryProvider with ChangeNotifier {
       _categories = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response == null) throw HttpException(internetException);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(generalException);
     }
   }
 

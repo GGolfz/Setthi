@@ -25,7 +25,7 @@ class LabelForm extends StatefulWidget {
 class _LabelFormState extends State<LabelForm> {
   TextEditingController _label;
   var _labelType;
-
+  var _formKey = GlobalKey<FormState>();
   String _getFormTitle() {
     if (widget.type == FormType.Create) {
       return "Create New Label";
@@ -42,15 +42,17 @@ class _LabelFormState extends State<LabelForm> {
         text: "Submit",
         color: kGold300,
         onPressed: () async {
-          try {
-            await Provider.of<LabelProvider>(context, listen: false)
-                .createLabel(_label.text, _labelType);
-            Navigator.of(context).pop();
-          } on HttpException catch (error) {
-            showErrorDialog(
-                context: context,
-                text: error.message,
-                isNetwork: error.isInternetProblem);
+          if (_formKey.currentState.validate()) {
+            try {
+              await Provider.of<LabelProvider>(context, listen: false)
+                  .createLabel(_label.text, _labelType);
+              Navigator.of(context).pop();
+            } on HttpException catch (error) {
+              showErrorDialog(
+                  context: context,
+                  text: error.message,
+                  isNetwork: error.isInternetProblem);
+            }
           }
         },
       );
@@ -82,15 +84,17 @@ class _LabelFormState extends State<LabelForm> {
             text: "Submit",
             color: kGold300,
             onPressed: () async {
-              try {
-                await Provider.of<LabelProvider>(context, listen: false)
-                    .editLabel(widget.labelKey, _label.text, _labelType);
-                Navigator.of(context).pop();
-              } on HttpException catch (error) {
-                showErrorDialog(
-                    context: context,
-                    text: error.message,
-                    isNetwork: error.isInternetProblem);
+              if (_formKey.currentState.validate()) {
+                try {
+                  await Provider.of<LabelProvider>(context, listen: false)
+                      .editLabel(widget.labelKey, _label.text, _labelType);
+                  Navigator.of(context).pop();
+                } on HttpException catch (error) {
+                  showErrorDialog(
+                      context: context,
+                      text: error.message,
+                      isNetwork: error.isInternetProblem);
+                }
               }
             },
           ))
@@ -110,25 +114,26 @@ class _LabelFormState extends State<LabelForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 260,
+        height: 280,
         width: 400,
         child: Form(
-            child: Column(children: [
-          CustomFormTitle(title: _getFormTitle()),
-          kSizedBoxVerticalS,
-          CustomTextField(title: "Label", textEditingController: _label),
-          kSizedBoxVerticalS,
-          CustomDropDown(
-              title: "Type",
-              currentValue: _labelType,
-              items: ["Income", "Expense"],
-              onChanged: (value) {
-                setState(() {
-                  _labelType = value;
-                });
-              }),
-          kSizedBoxVerticalM,
-          _getButton(),
-        ])));
+            key: _formKey,
+            child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+              CustomFormTitle(title: _getFormTitle()),
+              kSizedBoxVerticalS,
+              CustomTextField(title: "Label", textEditingController: _label),
+              kSizedBoxVerticalS,
+              CustomDropDown(
+                  title: "Type",
+                  currentValue: _labelType,
+                  items: ["Income", "Expense"],
+                  onChanged: (value) {
+                    setState(() {
+                      _labelType = value;
+                    });
+                  }),
+              kSizedBoxVerticalM,
+              _getButton(),
+            ])));
   }
 }
