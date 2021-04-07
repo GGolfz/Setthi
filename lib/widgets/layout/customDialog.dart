@@ -21,14 +21,7 @@ void showCustomDialog({BuildContext context, Widget content}) {
     barrierDismissible: true,
     barrierLabel: "",
     barrierColor: kNeutralWhiteFade,
-    pageBuilder: (ctx, animation1, animation2) => CustomDialog(
-        content: content == null
-            ? Container(
-                height: 300,
-                child: Column(
-                  children: [Text("Test Dialog")],
-                ),
-              )
-            : content),
+    pageBuilder: (ctx, animation1, animation2) =>
+        CustomDialog(content: content == null ? Container() : content),
   );
 }
