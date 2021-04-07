@@ -13,6 +13,9 @@ class WalletItem {
     @required this.title,
     @required this.amount,
   });
+  static WalletItem get defaultWallet {
+    return WalletItem(id: 0, title: '', amount: 0);
+  }
 }
 
 class WalletProvider with ChangeNotifier {

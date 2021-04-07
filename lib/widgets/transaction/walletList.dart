@@ -14,7 +14,7 @@ class WalletList extends StatelessWidget {
       onItemFocus: (val) {
         onSelect(wallets[val]);
       },
-      itemSize: 136,
+      itemSize: 176,
       itemBuilder: (context, index) => WalletListItem(
           wallet: wallets[index], isSelect: wallets[index].id == selected.id),
       focusOnItemTap: true,
