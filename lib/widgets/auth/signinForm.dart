@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:setthi/provider/authenicateProvider.dart';
-import 'package:setthi/model/http_exception.dart';
+import 'package:setthi/model/httpException.dart';
 import '../../widgets/layout/errorDialog.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';

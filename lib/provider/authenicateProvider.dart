@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:setthi/config/api.dart';
-import 'package:setthi/model/http_exception.dart';
+import 'package:setthi/model/httpException.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticateProvider with ChangeNotifier {

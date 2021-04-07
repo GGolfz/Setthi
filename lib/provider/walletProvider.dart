@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:setthi/config/api.dart';
-import 'package:setthi/model/http_exception.dart';
+import 'package:setthi/config/string.dart';
+import 'package:setthi/model/httpException.dart';
 
 class WalletItem {
   final int id;
@@ -45,8 +46,10 @@ class WalletProvider with ChangeNotifier {
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
-    }catch (error) {
-      throw HttpException("Your Internet doesn't connect");
+    } catch (error) {
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(internetException);
     }
   }
 
@@ -57,14 +60,12 @@ class WalletProvider with ChangeNotifier {
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
-    }on DioError catch (error) {
-      if(error.response == null){
-        throw HttpException("Internet connection was bad");
-      }else if(error.response.statusCode == 400){
-      throw HttpException("Your can't Create more than 5 Wallet .");
-      }else{
-        throw HttpException("SomeThing Error");
-      }
+    } catch (error) {
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      if (error.response.statusCode == 400)
+        throw HttpException(overLimitException("wallets", 5));
+      throw HttpException(internetException);
     }
   }
 
@@ -75,7 +76,11 @@ class WalletProvider with ChangeNotifier {
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      throw HttpException("Your Internet was bad. Please Try again .");
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      if (error.response.statusCode == 400)
+        throw HttpException(atleastException("wallet"));
+      throw HttpException(internetException);
     }
   }
 
@@ -87,7 +92,11 @@ class WalletProvider with ChangeNotifier {
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      throw HttpException("Your Internet was bad. Please try Again .");
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      if (error.response.statusCode == 400)
+        throw HttpException(generalException);
+      throw HttpException(internetException);
     }
   }
 

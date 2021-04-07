@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/model/http_exception.dart';
+import 'package:setthi/model/httpException.dart';
 import '../config/style.dart';
 import '../widgets/wallet/emptyWallet.dart';
 import '../widgets/wallet/walletCard.dart';
@@ -48,15 +48,18 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   void initState() {
-    asyncMethod();
+    fetchWallet();
     super.initState();
   }
 
-  void asyncMethod() async {
+  void fetchWallet() async {
     try {
       await Provider.of<WalletProvider>(context, listen: false).fetchWallet();
     } on HttpException catch (error) {
-      showErrorDialog(context: context, text: error.message,isNetwork: true);
+      showErrorDialog(
+          context: context,
+          text: error.message,
+          isNetwork: error.isInternetProblem);
     }
   }
 
