@@ -4,7 +4,7 @@ import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/config/style.dart';
 import 'package:setthi/model/authType.dart';
-import 'package:setthi/model/http_exception.dart';
+import 'package:setthi/model/httpException.dart';
 import 'package:setthi/widgets/auth/authTextField.dart';
 import 'package:setthi/widgets/buttons/primaryButton.dart';
 import 'package:setthi/widgets/buttons/secondaryButton.dart';
