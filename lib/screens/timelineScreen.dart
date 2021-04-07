@@ -33,7 +33,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
   @override
   void initState() {
     super.initState();
-
+    
     _scrollController = new ScrollController();
   }
 
