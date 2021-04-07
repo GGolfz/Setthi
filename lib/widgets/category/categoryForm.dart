@@ -109,8 +109,8 @@ class _CategoryFormState extends State<CategoryForm> {
               if (_formKey.currentState.validate()) {
                 try {
                   await Provider.of<CategoryProvider>(context, listen: false)
-                      .editCategory(widget.labelKey, _category.text,
-                          _categoryType, currentColor);
+                      .editCategory(
+                          widget.labelKey, _category.text, currentColor);
                   Navigator.of(context).pop();
                 } on HttpException catch (error) {
                   showErrorDialog(
@@ -130,11 +130,11 @@ class _CategoryFormState extends State<CategoryForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 280,
+        height: widget.type == FormType.Create ? 280 : 200,
         width: 400,
         child: Form(
             key: _formKey,
-            child: Column(children: [
+            child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
               CustomFormTitle(title: _getFormTitle()),
               kSizedBoxVerticalS,
               Row(
@@ -178,16 +178,17 @@ class _CategoryFormState extends State<CategoryForm> {
                           title: "Label", textEditingController: _category))
                 ],
               ),
-              kSizedBoxVerticalS,
-              CustomDropDown(
-                  title: "Type",
-                  currentValue: _categoryType,
-                  items: ["Income", "Expense"],
-                  onChanged: (value) {
-                    setState(() {
-                      _categoryType = value;
-                    });
-                  }),
+              if (widget.type == FormType.Create) kSizedBoxVerticalS,
+              if (widget.type == FormType.Create)
+                CustomDropDown(
+                    title: "Type",
+                    currentValue: _categoryType,
+                    items: ["Income", "Expense"],
+                    onChanged: (value) {
+                      setState(() {
+                        _categoryType = value;
+                      });
+                    }),
               kSizedBoxVerticalM,
               _getButton(),
             ])));

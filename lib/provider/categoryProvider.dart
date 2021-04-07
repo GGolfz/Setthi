@@ -80,12 +80,11 @@ class CategoryProvider with ChangeNotifier {
   }
 
   Future<void> editCategory(
-      int id, String name, String type, Color color) async {
+      int id, String name, Color color) async {
     try {
       final response = await Dio().patch(apiEndpoint + '/category/$id',
           data: {
             "name": name,
-            "type": type.toUpperCase(),
             "color": getColorText(color)
           },
           options: Options(headers: {"Authorization": "Bearer " + _token}));

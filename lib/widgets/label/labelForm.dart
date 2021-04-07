@@ -118,7 +118,7 @@ class _LabelFormState extends State<LabelForm> {
         width: 400,
         child: Form(
             key: _formKey,
-            child: Column(children: [
+            child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
               CustomFormTitle(title: _getFormTitle()),
               kSizedBoxVerticalS,
               CustomTextField(title: "Label", textEditingController: _label),
