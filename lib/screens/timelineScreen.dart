@@ -5,7 +5,7 @@ import '../config/constants.dart';
 import '../config/style.dart';
 import '../model/item.dart';
 import '../widgets/timeline/balanceBox.dart';
-import '../widgets/timeline/transactionItem.dart';
+import '../widgets/timeline/transactionItemBox.dart';
 
 class TimelineScreen extends StatefulWidget {
   static final routeName = '/timeline';
@@ -43,7 +43,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
         shrinkWrap: true,
         controller: _scrollController,
         children: _items.map((Item item) {
-          return TransactionItem(item: item);
+          return TransactionItemBox(item: item);
         }).toList());
     return Scaffold(
       backgroundColor: kGold100,
