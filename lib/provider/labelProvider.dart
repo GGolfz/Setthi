@@ -42,7 +42,10 @@ class LabelProvider with ChangeNotifier {
       _labels = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response == null) throw HttpException(internetException);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(generalException);
     }
   }
 
@@ -58,14 +61,13 @@ class LabelProvider with ChangeNotifier {
       _labels = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      if (name == "") {
-        throw HttpException(nameCannotBeNull);
-      }
+      if (error.response == null) throw HttpException(internetException);
+      if (name == "") throw HttpException(nameCannotBeNull);
       if (error.response.statusCode == 400)
         throw HttpException(overLimitException('On Each Label', 10));
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
-      throw HttpException(internetException);
+      throw HttpException(generalException);
     }
   }
 
@@ -77,12 +79,12 @@ class LabelProvider with ChangeNotifier {
       _labels = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response == null) throw HttpException(internetException);
       if (error.response.statusCode == 400)
         throw HttpException(nameCannotBeNull);
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
-      throw HttpException(internetException);
+      throw HttpException(generalException);
     }
   }
 
@@ -93,9 +95,10 @@ class LabelProvider with ChangeNotifier {
       _labels = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
+      if (error.response == null) throw HttpException(internetException);
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
-      throw HttpException(internetException);
+      throw HttpException(generalException);
     }
   }
 

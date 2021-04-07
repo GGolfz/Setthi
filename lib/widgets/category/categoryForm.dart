@@ -4,11 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/model/formType.dart';
+import 'package:setthi/model/httpException.dart';
 import 'package:setthi/provider/categoryProvider.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/form/customDropDown.dart';
 import 'package:setthi/widgets/form/customFormTitle.dart';
 import 'package:setthi/widgets/form/customTextField.dart';
+import '../layout/errorDialog.dart';
 
 class CategoryForm extends StatefulWidget {
   final FormType type;
@@ -61,9 +63,16 @@ class _CategoryFormState extends State<CategoryForm> {
         text: "Submit",
         color: kGold300,
         onPressed: () async {
-          await Provider.of<CategoryProvider>(context, listen: false)
-              .createCategory(_category.text, _categoryType, currentColor);
-          Navigator.of(context).pop();
+          try {
+            await Provider.of<CategoryProvider>(context, listen: false)
+                .createCategory(_category.text, _categoryType, currentColor);
+            Navigator.of(context).pop();
+          } on HttpException catch (error) {
+            showErrorDialog(
+                context: context,
+                text: error.message,
+                isNetwork: error.isInternetProblem);
+          }
         },
       );
     }
@@ -76,9 +85,16 @@ class _CategoryFormState extends State<CategoryForm> {
             color: kRed400,
             isOutlined: true,
             onPressed: () async {
-              await Provider.of<CategoryProvider>(context, listen: false)
-                  .deleteCategory(widget.labelKey);
-              Navigator.of(context).pop();
+              try {
+                await Provider.of<CategoryProvider>(context, listen: false)
+                    .deleteCategory(widget.labelKey);
+                Navigator.of(context).pop();
+              } on HttpException catch (error) {
+                showErrorDialog(
+                    context: context,
+                    text: error.message,
+                    isNetwork: error.isInternetProblem);
+              }
             },
           )),
           kSizedBoxHorizontalS,
@@ -87,10 +103,17 @@ class _CategoryFormState extends State<CategoryForm> {
             text: "Submit",
             color: kGold300,
             onPressed: () async {
-              await Provider.of<CategoryProvider>(context, listen: false)
-                  .editCategory(widget.labelKey, _category.text, _categoryType,
-                      currentColor);
-              Navigator.of(context).pop();
+              try {
+                await Provider.of<CategoryProvider>(context, listen: false)
+                    .editCategory(widget.labelKey, _category.text,
+                        _categoryType, currentColor);
+                Navigator.of(context).pop();
+              } on HttpException catch (error) {
+                showErrorDialog(
+                    context: context,
+                    text: error.message,
+                    isNetwork: error.isInternetProblem);
+              }
             },
           ))
         ],

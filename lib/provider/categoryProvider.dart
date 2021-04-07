@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:setthi/config/api.dart';
 import 'package:setthi/model/categoryType.dart';
+import 'package:setthi/config/string.dart';
+import 'package:setthi/model/httpException.dart';
 
 class Category {
   int id;
@@ -57,7 +59,10 @@ class CategoryProvider with ChangeNotifier {
       _categories = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response == null) throw HttpException(internetException);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(generalException);
     }
   }
 
@@ -73,7 +78,13 @@ class CategoryProvider with ChangeNotifier {
       _categories = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response == null) throw HttpException(internetException);
+      if (name == "") throw HttpException(nameCannotBeNull);
+      if (error.response.statusCode == 400)
+        throw HttpException(overLimitException('On Each Category', 10));
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(generalException);
     }
   }
 
@@ -90,7 +101,12 @@ class CategoryProvider with ChangeNotifier {
       _categories = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if(error.response == null) throw HttpException(internetException); 
+      if (error.response.statusCode == 400)
+        throw HttpException(nameCannotBeNull);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(generalException);
     }
   }
 
@@ -101,7 +117,10 @@ class CategoryProvider with ChangeNotifier {
       _categories = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if(error.response == null) throw HttpException(internetException);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(generalException);
     }
   }
 
