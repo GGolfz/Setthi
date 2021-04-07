@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:setthi/config/api.dart';
 import 'package:setthi/model/categoryType.dart';
+import 'package:setthi/utils/format.dart';
 
 class Category {
   int id;
@@ -39,15 +40,6 @@ class CategoryProvider with ChangeNotifier {
       "INCOME": CategoryType.Income,
       "EXPENSE": CategoryType.Expense
     }[type];
-  }
-
-  String getColorText(Color color) {
-    return "${color.red.toString()}:${color.green.toString()}:${color.blue.toString()}:${color.alpha.toString()}";
-  }
-
-  Color getColorFromText(String colorText) {
-    var colorVal = colorText.split(':').map((e) => int.parse(e)).toList();
-    return Color.fromARGB(colorVal[3], colorVal[0], colorVal[1], colorVal[2]);
   }
 
   Future<void> fetchCategories() async {

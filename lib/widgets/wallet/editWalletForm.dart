@@ -68,12 +68,14 @@ class _EditWalletFormState extends State<EditWalletForm> {
                           color: kRed400,
                           isOutlined: true,
                           onPressed: () async {
-                            try{
-                            await Provider.of<WalletProvider>(context, listen: false)
-                                .removeWallet(widget.selectedWallet.id);
-                            Navigator.pop(context);
-                            }on HttpException catch(error){
-                              showErrorDialog(context: context,text: error.message);
+                            try {
+                              await Provider.of<WalletProvider>(context,
+                                      listen: false)
+                                  .removeWallet(widget.selectedWallet.id);
+                              Navigator.pop(context);
+                            } on HttpException catch (error) {
+                              showErrorDialog(
+                                  context: context, text: error.message,isNetwork:error.isInternetProblem);
                             }
                           },
                         ),
@@ -83,20 +85,21 @@ class _EditWalletFormState extends State<EditWalletForm> {
                         child: ActionButton(
                           text: "Submit",
                           color: kGold300,
-                          onPressed: () async{
+                          onPressed: () async {
                             if (_formKey.currentState.validate()) {
-                              try{
-                              _formKey.currentState.save();
-                              await Provider.of<WalletProvider>(context,
-                                      listen: false)
-                                  .editWallet(
-                                widget.selectedWallet.id,
-                                _title.text,
-                                widget.selectedWallet.amount,
-                              );
-                              Navigator.pop(context);
-                              }on HttpException catch(error){
-                                showErrorDialog(context: context,text: error.message);
+                              try {
+                                _formKey.currentState.save();
+                                await Provider.of<WalletProvider>(context,
+                                        listen: false)
+                                    .editWallet(
+                                  widget.selectedWallet.id,
+                                  _title.text,
+                                  widget.selectedWallet.amount,
+                                );
+                                Navigator.pop(context);
+                              } on HttpException catch (error) {
+                                showErrorDialog(
+                                    context: context, text: error.message,isNetwork: error.isInternetProblem);
                               }
                             }
                           },

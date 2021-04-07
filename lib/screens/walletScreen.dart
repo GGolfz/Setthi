@@ -62,7 +62,6 @@ class _WalletScreenState extends State<WalletScreen> {
           isNetwork: error.isInternetProblem);
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<WalletProvider>(
