@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:setthi/config/api.dart';
+import 'package:setthi/config/string.dart';
+import 'package:setthi/model/httpException.dart';
 
 class WalletItem {
   final int id;
@@ -45,7 +47,9 @@ class WalletProvider with ChangeNotifier {
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(internetException);
     }
   }
 
@@ -57,7 +61,11 @@ class WalletProvider with ChangeNotifier {
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      if (error.response.statusCode == 400)
+        throw HttpException(overLimitException("wallets", 5));
+      throw HttpException(internetException);
     }
   }
 
@@ -68,7 +76,11 @@ class WalletProvider with ChangeNotifier {
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      if (error.response.statusCode == 400)
+        throw HttpException(atleastException("wallet"));
+      throw HttpException(internetException);
     }
   }
 
@@ -80,7 +92,11 @@ class WalletProvider with ChangeNotifier {
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      if (error.response.statusCode == 400)
+        throw HttpException(generalException);
+      throw HttpException(internetException);
     }
   }
 

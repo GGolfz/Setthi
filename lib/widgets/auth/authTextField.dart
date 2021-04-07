@@ -44,6 +44,12 @@ class _AuthTextFieldState extends State<AuthTextField> {
         .hasMatch(val);
   }
 
+  TextInputType getKeyboardType() {
+    if (widget.type == AuthTextFieldType.number) return TextInputType.number;
+    if (!isPassword()) return TextInputType.emailAddress;
+    return TextInputType.text;
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -68,8 +74,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
       },
       controller: widget.textController,
       obscureText: isPassword() && _isHiddenText,
-      keyboardType:
-          !isPassword() ? TextInputType.emailAddress : TextInputType.text,
+      keyboardType: getKeyboardType(),
       style: kBody1Gold,
       decoration: InputDecoration(
           border: OutlineInputBorder(

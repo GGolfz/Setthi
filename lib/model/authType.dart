@@ -1,2 +1,2 @@
-enum AuthType { signin, register, forget, close }
-enum AuthTextFieldType { email, password, confirmPassword }
+enum AuthType { signin, register, forget, close, token, newPassword }
+enum AuthTextFieldType { email, password, confirmPassword, number }

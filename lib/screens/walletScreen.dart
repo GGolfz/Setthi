@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/model/httpException.dart';
 import '../config/style.dart';
 import '../widgets/wallet/emptyWallet.dart';
 import '../widgets/wallet/walletCard.dart';
@@ -13,6 +14,7 @@ import '../widgets/wallet/expenseChart.dart';
 import '../utils/format.dart';
 import '../config/constants.dart';
 import '../config/color.dart';
+import '../widgets/layout/errorDialog.dart';
 
 class WalletScreen extends StatefulWidget {
   static final routeName = '/wallet';
@@ -46,8 +48,19 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   void initState() {
-    Provider.of<WalletProvider>(context, listen: false).fetchWallet();
+    fetchWallet();
     super.initState();
+  }
+
+  void fetchWallet() async {
+    try {
+      await Provider.of<WalletProvider>(context, listen: false).fetchWallet();
+    } on HttpException catch (error) {
+      showErrorDialog(
+          context: context,
+          text: error.message,
+          isNetwork: error.isInternetProblem);
+    }
   }
 
   @override

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:setthi/provider/authenicateProvider.dart';
+import 'package:setthi/model/httpException.dart';
+import '../../widgets/layout/errorDialog.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
 import '../../config/string.dart';
@@ -29,13 +31,11 @@ class _SigninFormState extends State<SigninForm> {
     super.dispose();
   }
 
-  Future<void> login() async {
+  Future<void> login(BuildContext context) async {
     var email = _email.text;
     var password = _password.text;
-    setState(() {
-      _isLoading = true;
-    });
     if (validate()) {
+      setState(() => _isLoading = true);
       try {
         await Provider.of<AuthenticateProvider>(context, listen: false)
             .login(email, password);
@@ -43,7 +43,11 @@ class _SigninFormState extends State<SigninForm> {
           _isLoading = false;
         });
         await widget.changeModal(AuthType.close);
-      } catch (error) {}
+        setState(() => _isLoading = false);
+      } on HttpException catch (error) {
+        setState(() => _isLoading = false);
+        showErrorDialog(context: context, text: error.message);
+      }
     }
   }
 
@@ -97,7 +101,7 @@ class _SigninFormState extends State<SigninForm> {
                     kSizedBoxVerticalS,
                     PrimaryButton(
                       text: "SIGN IN",
-                      onPressed: login,
+                      onPressed: () => login(context),
                       isLoading: _isLoading,
                     ),
                     kSizedBoxVerticalS,

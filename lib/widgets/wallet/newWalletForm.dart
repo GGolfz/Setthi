@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/model/httpException.dart';
 import '../../provider/walletProvider.dart';
 import '../buttons/actionButton.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
+import '../../widgets/layout/errorDialog.dart';
 
 class NewWalletForm extends StatefulWidget {
   @override
@@ -68,13 +70,18 @@ class _NewWalletFormState extends State<NewWalletForm> {
                   child: ActionButton(
                     text: "Submit",
                     color: kGold300,
-                    onPressed: () {
+                    onPressed: () async{
                       if (_formKey.currentState.validate()) {
+                        try{
                         _formKey.currentState.save();
-                        Provider.of<WalletProvider>(context, listen: false)
+                        await Provider.of<WalletProvider>(context, listen: false)
                             .addWallet(_title, _amount);
                         Navigator.pop(context);
+                        } on HttpException catch(error){
+                          showErrorDialog(context: context, text: error.message);
+                        }
                       }
+                      
                     },
                   ),
                 ),

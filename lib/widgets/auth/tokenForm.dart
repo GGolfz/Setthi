@@ -8,39 +8,38 @@ import 'package:setthi/model/httpException.dart';
 import 'package:setthi/widgets/auth/authTextField.dart';
 import 'package:setthi/widgets/buttons/primaryButton.dart';
 import 'package:setthi/widgets/buttons/secondaryButton.dart';
-import 'package:setthi/provider/authenicateProvider.dart';
 import 'package:setthi/widgets/layout/errorDialog.dart';
+import 'package:setthi/provider/authenicateProvider.dart';
 
-class ForgetForm extends StatefulWidget {
+class TokenForm extends StatefulWidget {
   final Function changeModal;
-  ForgetForm({this.changeModal});
+  TokenForm({this.changeModal});
 
   @override
-  _ForgetFormState createState() => _ForgetFormState();
+  _TokenFormState createState() => _TokenFormState();
 }
 
-class _ForgetFormState extends State<ForgetForm> {
-  final _email = TextEditingController();
+class _TokenFormState extends State<TokenForm> {
+  final _recoveryToken = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-
-  bool validate() {
-    return _formKey.currentState.validate();
-  }
-
-  void confirmForget(BuildContext context) async {
+  void checkResetPassword(BuildContext context) async {
     if (validate()) {
       final auth = Provider.of<AuthenticateProvider>(context, listen: false);
+      setState(() => _isLoading = true);
       try {
-        setState(() => _isLoading = true);
-        await auth.forgetPassword(_email.text);
-        await widget.changeModal(AuthType.token);
+        await auth.checkResetPassword(_recoveryToken.text);
         setState(() => _isLoading = false);
+        widget.changeModal(AuthType.newPassword);
       } on HttpException catch (error) {
         setState(() => _isLoading = false);
         showErrorDialog(context: context, text: error.message);
       }
     }
+  }
+
+  bool validate() {
+    return _formKey.currentState.validate();
   }
 
   @override
@@ -54,12 +53,12 @@ class _ForgetFormState extends State<ForgetForm> {
             children: [
               kSizedBoxVerticalS,
               Text(
-                "Forget Password",
+                "Enter the recovery key",
                 style: kHeadline2White,
               ),
               kSizedBoxVerticalS,
               Text(
-                "Enter your email address below, we will send you insructions how to change password.",
+                "We already sent you 6 digits recovery key in your email, please enter the recovery key below.",
                 textAlign: TextAlign.center,
                 softWrap: true,
                 style: kBody1White,
@@ -70,13 +69,13 @@ class _ForgetFormState extends State<ForgetForm> {
                 child: Column(
                   children: [
                     AuthTextField(
-                        textController: _email,
-                        placeholder: "Email",
-                        type: AuthTextFieldType.email),
+                        textController: _recoveryToken,
+                        placeholder: "6 digits recovery key",
+                        type: AuthTextFieldType.number),
                     kSizedBoxVerticalS,
                     PrimaryButton(
-                      text: "SEND",
-                      onPressed: () => confirmForget(context),
+                      text: "SUBMIT",
+                      onPressed: () => checkResetPassword(context),
                       isLoading: _isLoading,
                     ),
                     kSizedBoxVerticalS,
