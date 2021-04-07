@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/model/httpException.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/layout/customDialog.dart';
 import 'package:setthi/widgets/saving/savingItem.dart';
+import 'package:setthi/widgets/saving/savingTitleToggle.dart';
 import '../config/constants.dart';
 import '../widgets/layout/appBar.dart';
 import '../widgets/saving/savingForm.dart';
 import '../widgets/saving/savingItem.dart';
 import '../provider/savingProvider.dart';
+import '../widgets/layout/errorDialog.dart';
 
 class SavingScreen extends StatefulWidget {
   static final routeName = '/saving';
@@ -17,6 +20,10 @@ class SavingScreen extends StatefulWidget {
 }
 
 class _SavingScreenState extends State<SavingScreen> {
+  var inProcessOpen = true;
+  var finishOpen = false;
+  var usedOpen = false;
+
   Widget _buildButtonCreate(BuildContext context) {
     return Center(
         child: Container(
@@ -32,8 +39,19 @@ class _SavingScreenState extends State<SavingScreen> {
 
   @override
   void initState() {
-    Provider.of<SavingProvider>(context, listen: false).fetchSaving();
+    fetchSaving();
     super.initState();
+  }
+
+  void fetchSaving() async {
+    try {
+      await Provider.of<SavingProvider>(context, listen: false).fetchSaving();
+    } on HttpException catch (error) {
+      showErrorDialog(
+          context: context,
+          text: error.message,
+          isNetwork: error.isInternetProblem);
+    }
   }
 
   @override
@@ -44,33 +62,79 @@ class _SavingScreenState extends State<SavingScreen> {
         ),
         body: Consumer<SavingProvider>(
             builder: (ctx, saving, _) => Container(
-                  padding: EdgeInsets.symmetric(
-                      vertical: kSizeS, horizontal: kSizeS),
-                  child: saving.saving.isEmpty
-                      ? SingleChildScrollView(
-                          child: Column(children: [
-                          kSizedBoxVerticalXL,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset("assets/images/empty-item.png")
-                            ],
-                          ),
-                          kSizedBoxVerticalM,
-                          _buildButtonCreate(context),
-                        ]))
-                      : ListView(
-                          children: [
-                            ...saving.saving
-                                .map(
-                                  (saving) => SavingItem(
-                                    item: saving,
+                padding:
+                    EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeS),
+                child: Column(
+                    mainAxisAlignment: saving.saving.isEmpty
+                        ? MainAxisAlignment.center
+                        : MainAxisAlignment.start,
+                    children: [
+                      saving.saving.isEmpty
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset("assets/images/empty-item.png")
+                              ],
+                            )
+                          : Container(
+                              height: 500,
+                              child: ListView(
+                                children: [
+                                  SavingTitleToggle(
+                                    text: "In Progress",
+                                    isOpen: inProcessOpen,
+                                    toggle: () {
+                                      setState(() {
+                                        inProcessOpen = !inProcessOpen;
+                                      });
+                                    },
                                   ),
-                                )
-                                .toList(),
-                            _buildButtonCreate(context)
-                          ],
-                        ),
-                )));
+                                  if (inProcessOpen)
+                                    ...saving.saving.inProcess
+                                        .map(
+                                          (saving) => SavingItem(
+                                            item: saving,
+                                          ),
+                                        )
+                                        .toList(),
+                                  SavingTitleToggle(
+                                    text: "Finished",
+                                    isOpen: finishOpen,
+                                    toggle: () {
+                                      setState(() {
+                                        finishOpen = !finishOpen;
+                                      });
+                                    },
+                                  ),
+                                  if (finishOpen)
+                                    ...saving.saving.finish
+                                        .map(
+                                          (saving) => SavingItem(
+                                            item: saving,
+                                          ),
+                                        )
+                                        .toList(),
+                                  SavingTitleToggle(
+                                    text: "Used",
+                                    isOpen: usedOpen,
+                                    toggle: () {
+                                      setState(() {
+                                        usedOpen = !usedOpen;
+                                      });
+                                    },
+                                  ),
+                                  if (usedOpen)
+                                    ...saving.saving.used
+                                        .map(
+                                          (saving) => SavingItem(
+                                            item: saving,
+                                          ),
+                                        )
+                                        .toList(),
+                                ],
+                              )),
+                      kSizedBoxVerticalS,
+                      _buildButtonCreate(context)
+                    ]))));
   }
 }

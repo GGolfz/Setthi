@@ -54,7 +54,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
         shrinkWrap: true,
         controller: _scrollController,
         children: _items.map((Item item) {
-          return TransactionItem(item: item);
+          return AllTransactionItem(item: item);
         }).toList());
     return Scaffold(
       backgroundColor: kGold100,

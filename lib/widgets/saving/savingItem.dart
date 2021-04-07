@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
+import 'package:setthi/config/constants.dart';
 import 'package:setthi/config/style.dart';
 import '../../utils/format.dart';
 import '../layout/customDialog.dart';
@@ -17,7 +18,7 @@ class _SavingItemState extends State<SavingItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(kSizeXS),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,42 +38,34 @@ class _SavingItemState extends State<SavingItem> {
               },
             )
           ]),
-          SizedBox(height: 10),
+          kSizedBoxVerticalXXS,
           Row(
             children: [
               Text(
                 'THB ${formatCurrencyString(widget.item.currentAmount)}',
                 style: kHeadline4Green,
               ),
-              SizedBox(width: 15),
+              kSizedBoxHorizontalXS,
               Text(
                 'of THB ${formatCurrencyString(widget.item.targetAmount)}',
                 style: kBody1Black.copyWith(color: kNeutral300),
               ),
             ],
           ),
-          SizedBox(height: 10),
+          kSizedBoxVerticalXXS,
           Container(
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: kNeutral150,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(children: [
-                SizedBox(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: kGold500,
-                    ),
-                    height: double.infinity,
-                    width: MediaQuery.of(context).size.width *
-                        widget.item.currentPercent,
-                  ),
-                  height: 25,
-                )
-              ])),
-          SizedBox(height: 5),
+            width: double.infinity,
+            child: ClipRRect(
+                borderRadius: kBorderRadiusS,
+                clipBehavior: Clip.hardEdge,
+                child: LinearProgressIndicator(
+                  color: kGold500,
+                  value: widget.item.currentPercent,
+                  backgroundColor: kNeutral150,
+                  minHeight: 25,
+                )),
+          ),
+          kSizedBoxVerticalXS,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

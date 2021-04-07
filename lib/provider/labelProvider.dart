@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:setthi/config/api.dart';
+import 'package:setthi/config/string.dart';
 import 'package:setthi/model/labelType.dart';
+import 'package:setthi/model/httpException.dart';
 
 class Label {
   int id;
@@ -56,7 +58,14 @@ class LabelProvider with ChangeNotifier {
       _labels = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (name == "") {
+        throw HttpException(nameCannotBeNull);
+      }
+      if (error.response.statusCode == 400)
+        throw HttpException(overLimitException('On Each Label', 10));
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(internetException);
     }
   }
 
@@ -69,6 +78,11 @@ class LabelProvider with ChangeNotifier {
       notifyListeners();
     } catch (error) {
       print(error);
+      if (error.response.statusCode == 400)
+        throw HttpException(nameCannotBeNull);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(internetException);
     }
   }
 
@@ -79,7 +93,9 @@ class LabelProvider with ChangeNotifier {
       _labels = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(internetException);
     }
   }
 

@@ -33,7 +33,7 @@ class SetthiApp extends StatelessWidget {
               WalletProvider(auth.token, prev == null ? [] : prev.wallets),
         ),
         ChangeNotifierProxyProvider<AuthenticateProvider, SavingProvider>(
-          create: (ctx) => SavingProvider(null, []),
+          create: (ctx) => SavingProvider(null, SavingGroup.empty),
           update: (ctx, auth, prev) =>
               SavingProvider(auth.token, prev == null ? [] : prev.saving),
         ),
