@@ -4,9 +4,9 @@ import '../../config/constants.dart';
 import '../../config/style.dart';
 import '../../model/item.dart';
 
-class TransactionItem extends StatelessWidget {
+class AllTransactionItem extends StatelessWidget {
   final Item item;
-  TransactionItem({@required this.item});
+  AllTransactionItem({@required this.item});
 
   @override
   Widget build(BuildContext context) {
