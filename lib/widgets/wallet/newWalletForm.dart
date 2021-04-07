@@ -78,7 +78,7 @@ class _NewWalletFormState extends State<NewWalletForm> {
                             .addWallet(_title, _amount);
                         Navigator.pop(context);
                         } on HttpException catch(error){
-                          showErrorDialog(context: context, text: error.message);
+                          showErrorDialog(context: context, text: error.message,isNetwork: error.isInternetProblem);
                         }
                       }
                       

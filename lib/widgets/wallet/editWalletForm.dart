@@ -75,7 +75,7 @@ class _EditWalletFormState extends State<EditWalletForm> {
                               Navigator.pop(context);
                             } on HttpException catch (error) {
                               showErrorDialog(
-                                  context: context, text: error.message);
+                                  context: context, text: error.message,isNetwork:error.isInternetProblem);
                             }
                           },
                         ),
@@ -99,7 +99,7 @@ class _EditWalletFormState extends State<EditWalletForm> {
                                 Navigator.pop(context);
                               } on HttpException catch (error) {
                                 showErrorDialog(
-                                    context: context, text: error.message);
+                                    context: context, text: error.message,isNetwork: error.isInternetProblem);
                               }
                             }
                           },

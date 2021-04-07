@@ -54,7 +54,6 @@ class _WalletScreenState extends State<WalletScreen> {
 
   void fetchWallet() async {
     try {
-      print('here4');
       await Provider.of<WalletProvider>(context, listen: false).fetchWallet();
     } on HttpException catch (error) {
       showErrorDialog(

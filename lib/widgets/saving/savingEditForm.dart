@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/model/http_exception.dart';
+import 'package:setthi/model/httpException.dart';
 import '../../provider/savingProvider.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
@@ -93,7 +93,7 @@ class _SavingEditFormState extends State<SavingEditForm> {
                             Navigator.pop(context);
                           } on HttpException catch (error) {
                             showErrorDialog(
-                                context: context, text: error.message);
+                                context: context, text: error.message,isNetwork: error.isInternetProblem);
                           }
                         },
                       ),
@@ -112,7 +112,7 @@ class _SavingEditFormState extends State<SavingEditForm> {
                             Navigator.pop(context);
                           } on HttpException catch (error) {
                             showErrorDialog(
-                                context: context, text: error.message);
+                                context: context, text: error.message,isNetwork: error.isInternetProblem);
                           }
                         },
                       ),

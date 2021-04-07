@@ -3,11 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/model/formType.dart';
+import 'package:setthi/model/httpException.dart';
 import 'package:setthi/provider/labelProvider.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/form/customDropDown.dart';
 import 'package:setthi/widgets/form/customFormTitle.dart';
 import 'package:setthi/widgets/form/customTextField.dart';
+import '../layout/errorDialog.dart';
 
 class LabelForm extends StatefulWidget {
   final FormType type;
@@ -40,9 +42,16 @@ class _LabelFormState extends State<LabelForm> {
         text: "Submit",
         color: kGold300,
         onPressed: () async {
-          await Provider.of<LabelProvider>(context, listen: false)
-              .createLabel(_label.text, _labelType);
-          Navigator.of(context).pop();
+          try {
+            await Provider.of<LabelProvider>(context, listen: false)
+                .createLabel(_label.text, _labelType);
+            Navigator.of(context).pop();
+          } on HttpException catch (error) {
+            showErrorDialog(
+                context: context,
+                text: error.message,
+                isNetwork: error.isInternetProblem);
+          }
         },
       );
     }
@@ -55,9 +64,16 @@ class _LabelFormState extends State<LabelForm> {
             color: kRed400,
             isOutlined: true,
             onPressed: () async {
-              await Provider.of<LabelProvider>(context, listen: false)
-                  .deleteLabel(widget.labelKey);
-              Navigator.of(context).pop();
+              try {
+                await Provider.of<LabelProvider>(context, listen: false)
+                    .deleteLabel(widget.labelKey);
+                Navigator.of(context).pop();
+              } on HttpException catch (error) {
+                showErrorDialog(
+                    context: context,
+                    text: error.message,
+                    isNetwork: error.isInternetProblem);
+              }
             },
           )),
           kSizedBoxHorizontalS,
@@ -66,9 +82,16 @@ class _LabelFormState extends State<LabelForm> {
             text: "Submit",
             color: kGold300,
             onPressed: () async {
-              await Provider.of<LabelProvider>(context, listen: false)
-                  .editLabel(widget.labelKey, _label.text, _labelType);
-              Navigator.of(context).pop();
+              try {
+                await Provider.of<LabelProvider>(context, listen: false)
+                    .editLabel(widget.labelKey, _label.text, _labelType);
+                Navigator.of(context).pop();
+              } on HttpException catch (error) {
+                showErrorDialog(
+                    context: context,
+                    text: error.message,
+                    isNetwork: error.isInternetProblem);
+              }
             },
           ))
         ],

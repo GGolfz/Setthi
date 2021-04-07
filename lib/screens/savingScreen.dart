@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/model/http_exception.dart';
+import 'package:setthi/model/httpException.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/layout/customDialog.dart';
 import 'package:setthi/widgets/saving/savingItem.dart';
@@ -34,14 +34,18 @@ class _SavingScreenState extends State<SavingScreen> {
 
   @override
   void initState() {
-    asyncMethod();
+    fetchSaving();
     super.initState();
   }
-  void asyncMethod() async{
-    try{
+
+  void fetchSaving() async {
+    try {
       await Provider.of<SavingProvider>(context, listen: false).fetchSaving();
-    }on HttpException catch(error){
-      showErrorDialog(context: context,text: error.message,isNetwork: true);
+    } on HttpException catch (error) {
+      showErrorDialog(
+          context: context,
+          text: error.message,
+          isNetwork: error.isInternetProblem);
     }
   }
 
