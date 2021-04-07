@@ -13,12 +13,17 @@ class CustomTextField extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return TextFormField(
-        controller: textEditingController,
-        keyboardType: keyboardType,
-        style: kSubtitle2Black.copyWith(fontWeight: FontWeight.w600),
-        decoration: InputDecoration(
-          hintText: title,
-          labelStyle: kSubtitle2Black.copyWith(fontWeight: FontWeight.w600),
-        ));
+      controller: textEditingController,
+      keyboardType: keyboardType,
+      style: kSubtitle2Black.copyWith(fontWeight: FontWeight.w600),
+      decoration: InputDecoration(
+        hintText: title,
+        labelStyle: kSubtitle2Black.copyWith(fontWeight: FontWeight.w600),
+      ),
+      validator: (value) {
+        if (value.isEmpty) return 'Please enter title';
+        return null;
+      },
+    );
   }
 }
