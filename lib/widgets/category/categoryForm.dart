@@ -33,6 +33,7 @@ class _CategoryFormState extends State<CategoryForm> {
   var _categoryType;
   Color pickerColor;
   Color currentColor;
+  var _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -63,15 +64,17 @@ class _CategoryFormState extends State<CategoryForm> {
         text: "Submit",
         color: kGold300,
         onPressed: () async {
-          try {
-            await Provider.of<CategoryProvider>(context, listen: false)
-                .createCategory(_category.text, _categoryType, currentColor);
-            Navigator.of(context).pop();
-          } on HttpException catch (error) {
-            showErrorDialog(
-                context: context,
-                text: error.message,
-                isNetwork: error.isInternetProblem);
+          if (_formKey.currentState.validate()) {
+            try {
+              await Provider.of<CategoryProvider>(context, listen: false)
+                  .createCategory(_category.text, _categoryType, currentColor);
+              Navigator.of(context).pop();
+            } on HttpException catch (error) {
+              showErrorDialog(
+                  context: context,
+                  text: error.message,
+                  isNetwork: error.isInternetProblem);
+            }
           }
         },
       );
@@ -103,16 +106,18 @@ class _CategoryFormState extends State<CategoryForm> {
             text: "Submit",
             color: kGold300,
             onPressed: () async {
-              try {
-                await Provider.of<CategoryProvider>(context, listen: false)
-                    .editCategory(widget.labelKey, _category.text,
-                        _categoryType, currentColor);
-                Navigator.of(context).pop();
-              } on HttpException catch (error) {
-                showErrorDialog(
-                    context: context,
-                    text: error.message,
-                    isNetwork: error.isInternetProblem);
+              if (_formKey.currentState.validate()) {
+                try {
+                  await Provider.of<CategoryProvider>(context, listen: false)
+                      .editCategory(widget.labelKey, _category.text,
+                          _categoryType, currentColor);
+                  Navigator.of(context).pop();
+                } on HttpException catch (error) {
+                  showErrorDialog(
+                      context: context,
+                      text: error.message,
+                      isNetwork: error.isInternetProblem);
+                }
               }
             },
           ))
@@ -125,65 +130,66 @@ class _CategoryFormState extends State<CategoryForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 260,
+        height: 280,
         width: 400,
         child: Form(
+            key: _formKey,
             child: Column(children: [
-          CustomFormTitle(title: _getFormTitle()),
-          kSizedBoxVerticalS,
-          Row(
-            children: [
-              GestureDetector(
-                child: Container(
-                  width: kSizeM,
-                  height: kSizeM,
-                  decoration: BoxDecoration(
-                      borderRadius: kBorderRadiusXS, color: currentColor),
-                ),
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (ctx) => AlertDialog(
-                        content: Container(
-                      height: 400,
-                      child: Column(children: [
-                        ColorPicker(
-                          pickerColor: pickerColor,
-                          onColorChanged: changeColor,
-                          showLabel: false,
-                          pickerAreaHeightPercent: 0.8,
-                        ),
-                        ActionButton(
-                          text: "Select",
-                          color: kGold300,
-                          onPressed: () {
-                            setState(() => currentColor = pickerColor);
-                            Navigator.of(context).pop();
-                          },
-                        )
-                      ]),
-                    )),
-                  );
-                },
+              CustomFormTitle(title: _getFormTitle()),
+              kSizedBoxVerticalS,
+              Row(
+                children: [
+                  GestureDetector(
+                    child: Container(
+                      width: kSizeM,
+                      height: kSizeM,
+                      decoration: BoxDecoration(
+                          borderRadius: kBorderRadiusXS, color: currentColor),
+                    ),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                            content: Container(
+                          height: 400,
+                          child: Column(children: [
+                            ColorPicker(
+                              pickerColor: pickerColor,
+                              onColorChanged: changeColor,
+                              showLabel: false,
+                              pickerAreaHeightPercent: 0.8,
+                            ),
+                            ActionButton(
+                              text: "Select",
+                              color: kGold300,
+                              onPressed: () {
+                                setState(() => currentColor = pickerColor);
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ]),
+                        )),
+                      );
+                    },
+                  ),
+                  kSizedBoxHorizontalS,
+                  Flexible(
+                      child: CustomTextField(
+                          title: "Label", textEditingController: _category))
+                ],
               ),
-              kSizedBoxHorizontalS,
-              Flexible(
-                  child: CustomTextField(
-                      title: "Label", textEditingController: _category))
-            ],
-          ),
-          kSizedBoxVerticalS,
-          CustomDropDown(
-              title: "Type",
-              currentValue: _categoryType,
-              items: ["Income", "Expense"],
-              onChanged: (value) {
-                setState(() {
-                  _categoryType = value;
-                });
-              }),
-          kSizedBoxVerticalM,
-          _getButton(),
-        ])));
+              kSizedBoxVerticalS,
+              CustomDropDown(
+                  title: "Type",
+                  currentValue: _categoryType,
+                  items: ["Income", "Expense"],
+                  onChanged: (value) {
+                    setState(() {
+                      _categoryType = value;
+                    });
+                  }),
+              kSizedBoxVerticalM,
+              _getButton(),
+            ])));
   }
 }
