@@ -14,6 +14,7 @@ const authenticateException = "Please login.";
 const internetException = "Please check your internet connection.";
 const generalException = "Something went wrong. Please try again later.";
 const incorrectAuthException = "Your email or password is incorrect.";
+const nameCannotBeNull = "Name Couldn't be null";
 String invalidException(type) {
   return "The $type is invalid.";
 }
