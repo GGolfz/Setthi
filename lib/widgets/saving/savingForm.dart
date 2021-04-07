@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
+import 'package:setthi/model/http_exception.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/form/customDatePicker.dart';
 import 'package:setthi/widgets/form/customFormTitle.dart';
 import 'package:setthi/widgets/form/customTextField.dart';
 import '../../provider/savingProvider.dart';
+import '../../widgets/layout/errorDialog.dart';
 
 class SavingForm extends StatefulWidget {
   @override
@@ -18,14 +20,20 @@ class _SavingFormState extends State<SavingForm> {
   final _maxBudget = TextEditingController();
   DateTime startDay;
   DateTime lastDay;
-  void submitData() {
+  void submitData() async {
     if (_title.text != null &&
         _maxBudget.text != null &&
         startDay != null &&
         lastDay != null) {
-      Provider.of<SavingProvider>(context, listen: false)
-          .addSaving(_title.text, _maxBudget.text, startDay, lastDay);
-      Navigator.pop(context);
+      try {
+        await Provider.of<SavingProvider>(context, listen: false)
+            .addSaving(_title.text, _maxBudget.text, startDay, lastDay);
+        Navigator.pop(context);
+      } on HttpException catch (error) {
+        print('This');
+        print(error);
+        showErrorDialog(context: context, text: error.message);
+      }
     }
   }
 
@@ -83,7 +91,7 @@ class _SavingFormState extends State<SavingForm> {
             ActionButton(
               text: "Submit",
               color: kGold300,
-              onPressed: submitData,
+              onPressed: ()=>submitData(),
             ),
           ],
         ),

@@ -54,12 +54,14 @@ class _WalletScreenState extends State<WalletScreen> {
 
   void asyncMethod() async {
     try {
+      print('here4');
       await Provider.of<WalletProvider>(context, listen: false).fetchWallet();
     } on HttpException catch (error) {
-      showErrorDialog(context: context, text: error.message,isNetwork: true);
+      print('here3');
+      print(error);
+      showErrorDialog(context: context, text: error.message, isNetwork: true);
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<WalletProvider>(

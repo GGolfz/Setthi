@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/model/http_exception.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/layout/customDialog.dart';
 import 'package:setthi/widgets/saving/savingItem.dart';
@@ -8,6 +9,7 @@ import '../widgets/layout/appBar.dart';
 import '../widgets/saving/savingForm.dart';
 import '../widgets/saving/savingItem.dart';
 import '../provider/savingProvider.dart';
+import '../widgets/layout/errorDialog.dart';
 
 class SavingScreen extends StatefulWidget {
   static final routeName = '/saving';
@@ -32,8 +34,15 @@ class _SavingScreenState extends State<SavingScreen> {
 
   @override
   void initState() {
-    Provider.of<SavingProvider>(context, listen: false).fetchSaving();
+    asyncMethod();
     super.initState();
+  }
+  void asyncMethod() async{
+    try{
+      await Provider.of<SavingProvider>(context, listen: false).fetchSaving();
+    }on HttpException catch(error){
+      showErrorDialog(context: context,text: error.message,isNetwork: true);
+    }
   }
 
   @override

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/model/http_exception.dart';
 import '../../provider/savingProvider.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
 import '../buttons/actionButton.dart';
+import '../../widgets/layout/errorDialog.dart';
 
 class SavingEditForm extends StatefulWidget {
   final Saving selectedSaving;
@@ -83,10 +85,16 @@ class _SavingEditFormState extends State<SavingEditForm> {
                         text: "Delete",
                         color: kRed400,
                         isOutlined: true,
-                        onPressed: () {
-                          Provider.of<SavingProvider>(context, listen: false)
-                              .deleteSaving(widget.selectedSaving.id);
-                          Navigator.pop(context);
+                        onPressed: () async {
+                          try {
+                            await Provider.of<SavingProvider>(context,
+                                    listen: false)
+                                .deleteSaving(widget.selectedSaving.id);
+                            Navigator.pop(context);
+                          } on HttpException catch (error) {
+                            showErrorDialog(
+                                context: context, text: error.message);
+                          }
                         },
                       ),
                     ),
@@ -95,11 +103,17 @@ class _SavingEditFormState extends State<SavingEditForm> {
                       child: ActionButton(
                         text: "Submit",
                         color: kGold300,
-                        onPressed: () {
-                          Provider.of<SavingProvider>(context, listen: false)
-                              .editSaving(widget.selectedSaving.id,
-                                  _controller.text, _controllerAmount.text);
-                          Navigator.pop(context);
+                        onPressed: () async {
+                          try {
+                            await Provider.of<SavingProvider>(context,
+                                    listen: false)
+                                .editSaving(widget.selectedSaving.id,
+                                    _controller.text, _controllerAmount.text);
+                            Navigator.pop(context);
+                          } on HttpException catch (error) {
+                            showErrorDialog(
+                                context: context, text: error.message);
+                          }
                         },
                       ),
                     )

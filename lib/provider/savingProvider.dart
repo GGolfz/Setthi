@@ -44,7 +44,7 @@ class SavingProvider with ChangeNotifier {
       _saving = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      throw HttpException("Your Internet was Bad. Please Try Again");
     }
   }
 
@@ -61,8 +61,14 @@ class SavingProvider with ChangeNotifier {
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _saving = modifyResponse(response.data.toList());
       notifyListeners();
-    } catch (error) {
-      print(error);
+    } on DioError catch (error) {
+      if (error.response == null) {
+        throw HttpException("Internet connection was bad");
+      } else if (error.response.statusCode == 400) {
+        throw HttpException("Your can't Create more than 5 Wallet .");
+      } else {
+        throw HttpException("SomeThing Error");
+      }
     }
   }
 
@@ -76,8 +82,15 @@ class SavingProvider with ChangeNotifier {
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _saving = modifyResponse(response.data.toList());
       notifyListeners();
-    } catch (error) {
-      print(error);
+    } on DioError catch (error) {
+      if(error.response == null){
+        throw HttpException("Your Internet was bad. Please try Again .");
+      }else if(error.response.statusCode == 400){
+        throw HttpException("Your Name can't be Empty");
+      }else{
+        throw HttpException("Something Error");
+      }
+      
     }
   }
 
@@ -88,7 +101,7 @@ class SavingProvider with ChangeNotifier {
       _saving = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      print(error);
+      throw HttpException("Your Internet was bad. Please try Again .");
     }
   }
 
