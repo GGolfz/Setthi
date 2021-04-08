@@ -37,6 +37,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   }
 
   ScrollController _scrollController;
+  TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -44,6 +45,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
         .fetchAllTransactions();
     _scrollController = new ScrollController();
     super.initState();
+  }
+  void dispose(){
+    _controller.dispose();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -66,7 +71,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       child: TextField(
                         controller: _search,
                         onEditingComplete: () {
-                          // Call Provider Here
+                          Provider.of<TransactionProvider>(context, listen: false)
+          .fetchAllTransactionBySearch(_search.text);
                           FocusScope.of(context).unfocus();
                         },
                         decoration: InputDecoration(
@@ -77,6 +83,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(15.0)),
                             hintText: 'Search'),
+                            
                       ),
                     ),
                   ),

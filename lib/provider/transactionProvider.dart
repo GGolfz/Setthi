@@ -87,6 +87,17 @@ class TransactionProvider with ChangeNotifier {
     }
   }
 
+  Future<void> fetchAllTransactionBySearch(String search) async {
+    try {
+      final response = await Dio().get(apiEndpoint + '/transactions/search?term=${search}',
+          options: Options(headers: {"Authorization": "Bearer " + _token}));
+      _allTransactions = modifyResponse(response.data);
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
+  }
+
   List<TransactionItem> modifyResponse(List<dynamic> data) {
     List<TransactionItem> transactions = [];
     data.forEach((el) {
