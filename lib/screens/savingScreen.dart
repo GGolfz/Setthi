@@ -60,81 +60,82 @@ class _SavingScreenState extends State<SavingScreen> {
         appBar: SetthiAppBar(
           title: "Saving Goal",
         ),
-        body: Consumer<SavingProvider>(
-            builder: (ctx, saving, _) => Container(
-                padding:
-                    EdgeInsets.symmetric(vertical: kSizeS, horizontal: kSizeS),
-                child: Column(
-                    mainAxisAlignment: saving.saving.isEmpty
-                        ? MainAxisAlignment.center
-                        : MainAxisAlignment.start,
-                    children: [
-                      saving.saving.isEmpty
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset("assets/images/empty-item.png")
-                              ],
-                            )
-                          : Container(
-                              height: 500,
-                              child: ListView(
-                                children: [
-                                  SavingTitleToggle(
-                                    text: "In Progress",
-                                    isOpen: inProcessOpen,
-                                    toggle: () {
-                                      setState(() {
-                                        inProcessOpen = !inProcessOpen;
-                                      });
-                                    },
-                                  ),
-                                  if (inProcessOpen)
-                                    ...saving.saving.inProcess
-                                        .map(
-                                          (saving) => SavingItem(
-                                            item: saving,
-                                          ),
-                                        )
-                                        .toList(),
-                                  SavingTitleToggle(
-                                    text: "Finished",
-                                    isOpen: finishOpen,
-                                    toggle: () {
-                                      setState(() {
-                                        finishOpen = !finishOpen;
-                                      });
-                                    },
-                                  ),
-                                  if (finishOpen)
-                                    ...saving.saving.finish
-                                        .map(
-                                          (saving) => SavingItem(
-                                            item: saving,
-                                          ),
-                                        )
-                                        .toList(),
-                                  SavingTitleToggle(
-                                    text: "Used",
-                                    isOpen: usedOpen,
-                                    toggle: () {
-                                      setState(() {
-                                        usedOpen = !usedOpen;
-                                      });
-                                    },
-                                  ),
-                                  if (usedOpen)
-                                    ...saving.saving.used
-                                        .map(
-                                          (saving) => SavingItem(
-                                            item: saving,
-                                          ),
-                                        )
-                                        .toList(),
-                                ],
-                              )),
-                      kSizedBoxVerticalS,
-                      _buildButtonCreate(context)
-                    ]))));
+        body: SingleChildScrollView(
+            child: Consumer<SavingProvider>(
+                builder: (ctx, saving, _) => Container(
+                    padding: EdgeInsets.symmetric(
+                        vertical: kSizeS, horizontal: kSizeS),
+                    child: Column(
+                        mainAxisAlignment: saving.saving.isEmpty
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.start,
+                        children: [
+                          saving.saving.isEmpty
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset("assets/images/empty-item.png")
+                                  ],
+                                )
+                              : Container(
+                                  height: 500,
+                                  child: ListView(
+                                    children: [
+                                      SavingTitleToggle(
+                                        text: "In Progress",
+                                        isOpen: inProcessOpen,
+                                        toggle: () {
+                                          setState(() {
+                                            inProcessOpen = !inProcessOpen;
+                                          });
+                                        },
+                                      ),
+                                      if (inProcessOpen)
+                                        ...saving.saving.inProcess
+                                            .map(
+                                              (saving) => SavingItem(
+                                                item: saving,
+                                              ),
+                                            )
+                                            .toList(),
+                                      SavingTitleToggle(
+                                        text: "Finished",
+                                        isOpen: finishOpen,
+                                        toggle: () {
+                                          setState(() {
+                                            finishOpen = !finishOpen;
+                                          });
+                                        },
+                                      ),
+                                      if (finishOpen)
+                                        ...saving.saving.finish
+                                            .map(
+                                              (saving) => SavingItem(
+                                                item: saving,
+                                              ),
+                                            )
+                                            .toList(),
+                                      SavingTitleToggle(
+                                        text: "Used",
+                                        isOpen: usedOpen,
+                                        toggle: () {
+                                          setState(() {
+                                            usedOpen = !usedOpen;
+                                          });
+                                        },
+                                      ),
+                                      if (usedOpen)
+                                        ...saving.saving.used
+                                            .map(
+                                              (saving) => SavingItem(
+                                                item: saving,
+                                              ),
+                                            )
+                                            .toList(),
+                                    ],
+                                  )),
+                          kSizedBoxVerticalS,
+                          _buildButtonCreate(context)
+                        ])))));
   }
 }
