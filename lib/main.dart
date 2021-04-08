@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:setthi/provider/categoryProvider.dart';
 import 'package:setthi/provider/labelProvider.dart';
+import 'package:setthi/provider/transactionProvider.dart';
 import './config/color.dart';
 import './provider/authenicateProvider.dart';
 import './provider/walletProvider.dart';
@@ -44,7 +45,13 @@ class SetthiApp extends StatelessWidget {
         ChangeNotifierProxyProvider<AuthenticateProvider, LabelProvider>(
             create: (ctx) => LabelProvider(null, []),
             update: (ctx, auth, prev) =>
-                LabelProvider(auth.token, prev == null ? [] : prev.labels))
+                LabelProvider(auth.token, prev == null ? [] : prev.labels)),
+        ChangeNotifierProxyProvider<AuthenticateProvider, TransactionProvider>(
+            create: (ctx) => TransactionProvider(null, [], []),
+            update: (ctx, auth, prev) => TransactionProvider(
+                auth.token,
+                prev == null ? [] : prev.transactions,
+                prev == null ? [] : prev.allTransactions))
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
