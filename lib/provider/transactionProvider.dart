@@ -8,7 +8,6 @@ import 'package:setthi/model/transactionType.dart';
 import 'package:setthi/utils/format.dart';
 import 'package:setthi/widgets/transaction/transactionTypeItem.dart';
 
-
 class TransactionItem {
   int id;
   String name;
@@ -38,10 +37,15 @@ class TransactionItem {
 
 class TransactionProvider with ChangeNotifier {
   String _token;
-  List<TransactionItem> _transaction;
-  TransactionProvider(this._token, this._transaction);
+  List<TransactionItem> _transactions;
+  List<TransactionItem> _allTransactions;
+  TransactionProvider(this._token, this._transactions, this._allTransactions);
   List<TransactionItem> get transactions {
-    return this._transaction;
+    return this._transactions;
+  }
+
+  List<TransactionItem> get allTransactions {
+    return this._allTransactions;
   }
 
   TransactionType getTransactionType(String type) {
@@ -58,11 +62,15 @@ class TransactionProvider with ChangeNotifier {
       final response = await Dio().get(apiEndpoint + '/timeline',
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       print(response.data);
-      _transaction = modifyResponse(response.data);
+      _transactions = modifyResponse(response.data);
       notifyListeners();
     } catch (error) {
       print(error);
     }
+  }
+
+  Future<void> fetchAllTransactions() async {
+    // Do here;
   }
 
   List<TransactionItem> modifyResponse(List<dynamic> data) {
@@ -75,7 +83,9 @@ class TransactionProvider with ChangeNotifier {
           type: type,
           amount: double.parse(el["amount"]),
           date: stringToDateTime(el["date"]),
-          wallet: type==TransactionType.ExpenseFromSaving ? el["saving"]["name"]:el["wallet"]["name"],
+          wallet: type == TransactionType.ExpenseFromSaving
+              ? el["saving"]["name"]
+              : el["wallet"]["name"],
           color: getColorFromText(el["category"]["color"])));
     });
     return transactions;

@@ -47,9 +47,11 @@ class SetthiApp extends StatelessWidget {
             update: (ctx, auth, prev) =>
                 LabelProvider(auth.token, prev == null ? [] : prev.labels)),
         ChangeNotifierProxyProvider<AuthenticateProvider, TransactionProvider>(
-            create: (ctx) => TransactionProvider(null, []),
-            update: (ctx, auth, prev) =>
-                TransactionProvider(auth.token, prev == null ? [] : prev.transactions))
+            create: (ctx) => TransactionProvider(null, [], []),
+            update: (ctx, auth, prev) => TransactionProvider(
+                auth.token,
+                prev == null ? [] : prev.transactions,
+                prev == null ? [] : prev.allTransactions))
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
