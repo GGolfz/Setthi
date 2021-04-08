@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:setthi/model/transactionType.dart';
+import 'package:setthi/provider/transactionProvider.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
 import '../../config/style.dart';
-import '../../model/item.dart';
+import 'package:setthi/utils/format.dart';
 
 class AllTransactionItem extends StatelessWidget {
-  final Item item;
+  final TransactionItem item;
   AllTransactionItem({@required this.item});
+  Widget _textType(type) {
+    switch (type) {
+      case TransactionType.Income:
+        return Text("+ THB ${item.amount}", style: kHeadline4Green);
+        break;
+
+      case TransactionType.Expense:
+        return Text("- THB ${item.amount}", style: kHeadline4Red);
+        break;
+
+      default:
+        return Text("- THB ${item.amount}", style: kHeadline4Red);
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +48,10 @@ class AllTransactionItem extends StatelessWidget {
                   ),
                   color: kRed100),
             ),
-            title: Text(item.displayName, style: kSubtitle1Black),
-            subtitle: Text(item.category.toString(), style: kSubtitle2Black),
-            trailing: Text("- THB ${item.price}", style: kHeadline4Red),
+            title: Text(item.name, style: kSubtitle1Black),
+            subtitle: Text("${formatDate(item.date)} (${item.wallet})",
+                style: kSubtitle2Black),
+            trailing: _textType(item.type),
           ),
         ));
   }

@@ -4,7 +4,6 @@ import 'package:setthi/provider/transactionProvider.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
 import '../../config/style.dart';
-import '../../model/item.dart';
 import 'package:setthi/utils/format.dart';
 
 class TransactionItemBox extends StatelessWidget {

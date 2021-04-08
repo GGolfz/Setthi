@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:setthi/config/color.dart';
-import 'package:setthi/model/item.dart';
+import 'package:setthi/provider/transactionProvider.dart';
 import '../widgets/layout/appBar.dart';
 import '../widgets/timeline/alltransactionItem.dart';
 
@@ -26,19 +26,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
       });
   }
 
-  List<Item> _items = [
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320)
-  ];
+  List<TransactionItem> _items = [];
   ScrollController _scrollController;
 
   @override
@@ -53,7 +41,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         controller: _scrollController,
-        children: _items.map((Item item) {
+        children: _items.map((TransactionItem item) {
           return AllTransactionItem(item: item);
         }).toList());
     return Scaffold(

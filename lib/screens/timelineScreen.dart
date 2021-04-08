@@ -4,7 +4,6 @@ import '../config/color.dart';
 import 'package:provider/provider.dart';
 import '../config/constants.dart';
 import '../config/style.dart';
-import '../model/item.dart';
 import '../widgets/timeline/balanceBox.dart';
 import '../widgets/timeline/transactionItemBox.dart';
 import '../provider/transactionProvider.dart';
@@ -19,19 +18,6 @@ class TimelineScreen extends StatefulWidget {
 }
 
 class _TimelineScreenState extends State<TimelineScreen> {
-  List<Item> _items = [
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320),
-    Item("Food & Drink", "Today, 10.34 AM (Wallet1)", 320)
-  ];
   ScrollController _scrollController;
   @override
   void initState() {
