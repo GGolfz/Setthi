@@ -98,7 +98,7 @@ class WalletProvider with ChangeNotifier {
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
-      if(error.response == null) throw HttpException(internetException);
+      if (error.response == null) throw HttpException(internetException);
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
       if (error.response.statusCode == 400)
