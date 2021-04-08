@@ -36,12 +36,17 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   List<TransactionItem> _items = [];
   ScrollController _scrollController;
+  TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
     Provider.of<TransactionProvider>(context, listen: false).fetchAllTransactions();
     _scrollController = new ScrollController();
     super.initState();
+  }
+  void dispose(){
+    _controller.dispose();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -62,6 +67,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: TextField(
+                        controller: _controller,
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(left: 20),
                             filled: true,
@@ -70,6 +76,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(15.0)),
                             hintText: 'Search'),
+                            
                       ),
                     ),
                   ),
