@@ -1,1 +1,1 @@
-enum TransactionType { Income, Expense, Saving }
+enum TransactionType { Income, Expense, Saving, ExpenseFromSaving }
