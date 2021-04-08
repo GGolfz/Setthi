@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:setthi/model/httpException.dart';
 import 'package:setthi/screens/transactionScreen.dart';
+import 'package:setthi/widgets/layout/errorDialog.dart';
 import '../config/color.dart';
 import 'package:provider/provider.dart';
 import '../config/constants.dart';
@@ -21,8 +23,16 @@ class _TimelineScreenState extends State<TimelineScreen> {
   ScrollController _scrollController;
   @override
   void initState() {
-    Provider.of<WalletProvider>(context, listen: false).fetchWallet();
-    Provider.of<TransactionProvider>(context, listen: false).fetchTransaction();
+    try {
+      Provider.of<WalletProvider>(context, listen: false).fetchWallet();
+      Provider.of<TransactionProvider>(context, listen: false)
+          .fetchTransaction();
+    } on HttpException catch (error) {
+      showErrorDialog(
+          context: context,
+          text: error.message,
+          isNetwork: error.isInternetProblem);
+    }
     _scrollController = new ScrollController();
     super.initState();
   }

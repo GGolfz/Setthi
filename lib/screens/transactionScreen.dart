@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:setthi/config/color.dart';
+import 'package:setthi/model/httpException.dart';
 import 'package:setthi/provider/transactionProvider.dart';
+import 'package:setthi/widgets/layout/errorDialog.dart';
 import '../widgets/layout/appBar.dart';
 import '../widgets/timeline/alltransactionItem.dart';
 import '../provider/transactionProvider.dart';
@@ -17,7 +19,7 @@ class TransactionScreen extends StatefulWidget {
 class _TransactionScreenState extends State<TransactionScreen> {
   DateTime currentDate = DateTime.now();
   TextEditingController _search = TextEditingController();
-  Future<void> _selectDate(BuildContext context) {
+  void _selectDate(BuildContext context) {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -31,8 +33,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
       if (date == null) {
         return;
       }
-      Provider.of<TransactionProvider>(context, listen: false)
-          .fetchAllTransactionByDate(date);
+      try {
+        Provider.of<TransactionProvider>(context, listen: false)
+            .fetchAllTransactionByDate(date);
+      } on HttpException catch (error) {
+        showErrorDialog(
+            context: context,
+            text: error.message,
+            isNetwork: error.isInternetProblem);
+      }
     });
   }
 
@@ -41,12 +50,20 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   @override
   void initState() {
-    Provider.of<TransactionProvider>(context, listen: false)
-        .fetchAllTransactions();
+    try {
+      Provider.of<TransactionProvider>(context, listen: false)
+          .fetchAllTransactions();
+    } on HttpException catch (error) {
+      showErrorDialog(
+          context: context,
+          text: error.message,
+          isNetwork: error.isInternetProblem);
+    }
     _scrollController = new ScrollController();
     super.initState();
   }
-  void dispose(){
+
+  void dispose() {
     _controller.dispose();
     super.dispose();
   }
@@ -71,8 +88,16 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       child: TextField(
                         controller: _search,
                         onEditingComplete: () {
-                          Provider.of<TransactionProvider>(context, listen: false)
-          .fetchAllTransactionBySearch(_search.text);
+                          try {
+                            Provider.of<TransactionProvider>(context,
+                                    listen: false)
+                                .fetchAllTransactionBySearch(_search.text);
+                          } on HttpException catch (error) {
+                            showErrorDialog(
+                                context: context,
+                                text: error.message,
+                                isNetwork: error.isInternetProblem);
+                          }
                           FocusScope.of(context).unfocus();
                         },
                         decoration: InputDecoration(
@@ -83,7 +108,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(15.0)),
                             hintText: 'Search'),
-                            
                       ),
                     ),
                   ),

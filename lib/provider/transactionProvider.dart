@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:setthi/config/api.dart';
+import 'package:setthi/config/string.dart';
+import 'package:setthi/model/httpException.dart';
 import 'package:setthi/model/transactionType.dart';
 import 'package:setthi/utils/format.dart';
 
@@ -61,7 +63,9 @@ class TransactionProvider with ChangeNotifier {
       _transactions = modifyResponse(response.data);
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(internetException);
     }
   }
 
@@ -72,29 +76,37 @@ class TransactionProvider with ChangeNotifier {
       _allTransactions = modifyResponse(response.data);
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(internetException);
     }
   }
 
   Future<void> fetchAllTransactionByDate(DateTime dateTime) async {
     try {
-      final response = await Dio().get(apiEndpoint + '/transactions?date=${dateTime.toString()}',
+      final response = await Dio().get(
+          apiEndpoint + '/transactions?date=${dateTime.toString()}',
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _allTransactions = modifyResponse(response.data);
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(internetException);
     }
   }
 
   Future<void> fetchAllTransactionBySearch(String search) async {
     try {
-      final response = await Dio().get(apiEndpoint + '/transactions/search?term=${search}',
+      final response = await Dio().get(
+          apiEndpoint + '/transactions/search?term=$search',
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _allTransactions = modifyResponse(response.data);
       notifyListeners();
     } catch (error) {
-      print(error);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(internetException);
     }
   }
 
