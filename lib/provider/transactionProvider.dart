@@ -47,6 +47,27 @@ class TransactionProvider with ChangeNotifier {
     return this._allTransactions;
   }
 
+  Future<void> createTransaction() async {
+    try {
+      // final response = await Dio().post(apiEndpoint + '/category',
+      //     data: {
+      //       "name": name,
+      //       "type": type.toUpperCase(),
+      //       "color": getColorText(color)
+      //     },
+      //     options: Options(headers: {"Authorization": "Bearer " + _token}));
+      // _categories = modifyResponse(response.data.toList());
+      notifyListeners();
+    } catch (error) {
+      if (error.response == null) throw HttpException(internetException);
+      if (error.response.statusCode == 400)
+        throw HttpException(overLimitException('On Each Category', 10));
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(generalException);
+    }
+  }
+
   TransactionType getTransactionType(String type) {
     return {
       "INCOME": TransactionType.Income,
