@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:setthi/config/constants.dart';
 import 'package:setthi/model/formType.dart';
-import 'package:setthi/model/httpException.dart';
 import 'package:setthi/model/labelType.dart';
 import 'package:setthi/provider/labelProvider.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
@@ -12,7 +11,6 @@ import 'package:setthi/widgets/label/labelTypeSelect.dart';
 import 'package:setthi/widgets/layout/appBar.dart';
 import 'package:setthi/widgets/layout/customDialog.dart';
 import 'package:setthi/widgets/layout/divider.dart';
-import '../widgets/layout/errorDialog.dart';
 
 class LabelScreen extends StatefulWidget {
   static const routeName = '/label';
@@ -26,20 +24,8 @@ class _LabelScreenState extends State<LabelScreen> {
 
   @override
   void initState() {
-    // fetchLabel();
     super.initState();
   }
-
-  // void fetchLabel() async {
-  //   try {
-  //     await Provider.of<LabelProvider>(context, listen: false).fetchLabels();
-  //   } on HttpException catch (error) {
-  //     showErrorDialog(
-  //         context: context,
-  //         text: error.message,
-  //         isNetwork: error.isInternetProblem);
-  //   }
-  // }
 
   void _changeStatus(LabelType status) {
     setState(() {
