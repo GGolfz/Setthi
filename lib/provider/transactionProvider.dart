@@ -70,7 +70,15 @@ class TransactionProvider with ChangeNotifier {
   }
 
   Future<void> fetchAllTransactions() async {
-    // Do here;
+    try {
+      final response = await Dio().get(apiEndpoint + '/transactions',
+          options: Options(headers: {"Authorization": "Bearer " + _token}));
+      print(response.data);
+      _transactions = modifyResponse(response.data);
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
   }
 
   List<TransactionItem> modifyResponse(List<dynamic> data) {

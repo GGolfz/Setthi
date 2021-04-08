@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/provider/transactionProvider.dart';
 import '../widgets/layout/appBar.dart';
 import '../widgets/timeline/alltransactionItem.dart';
+import '../provider/transactionProvider.dart';
 
 class TransactionScreen extends StatefulWidget {
   static const routeName = '/transactions';
@@ -31,9 +33,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   @override
   void initState() {
-    super.initState();
-
+    Provider.of<TransactionProvider>(context, listen: false).fetchAllTransactions();
     _scrollController = new ScrollController();
+    super.initState();
   }
 
   Widget build(BuildContext context) {
@@ -82,7 +84,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
             ),
           ),
           Expanded(
-            child: itemsWidget,
+            child: Consumer<TransactionProvider>(
+                builder: (ctx, transaction, _) => ListView(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    controller: _scrollController,
+                    children: transaction.transactions.map((transaction) {
+                      return AllTransactionItem(item: transaction);
+                    }).toList()),
+              ),
           ),
         ],
       ),
