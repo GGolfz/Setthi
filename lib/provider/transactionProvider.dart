@@ -69,7 +69,18 @@ class TransactionProvider with ChangeNotifier {
     try {
       final response = await Dio().get(apiEndpoint + '/transactions',
           options: Options(headers: {"Authorization": "Bearer " + _token}));
-      _transactions = modifyResponse(response.data);
+      _allTransactions = modifyResponse(response.data);
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  Future<void> fetchAllTransactionByDate(DateTime dateTime) async {
+    try {
+      final response = await Dio().get(apiEndpoint + '/transactions?date=${dateTime.toString()}',
+          options: Options(headers: {"Authorization": "Bearer " + _token}));
+      _allTransactions = modifyResponse(response.data);
       notifyListeners();
     } catch (error) {
       print(error);

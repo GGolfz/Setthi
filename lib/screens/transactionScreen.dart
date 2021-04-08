@@ -16,16 +16,22 @@ class TransactionScreen extends StatefulWidget {
 
 class _TransactionScreenState extends State<TransactionScreen> {
   DateTime currentDate = DateTime.now();
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime pickedDate = await showDatePicker(
-        context: context,
-        initialDate: currentDate,
-        firstDate: DateTime(2015),
-        lastDate: DateTime(2050));
-    if (pickedDate != null && pickedDate != currentDate)
-      setState(() {
-        currentDate = pickedDate;
-      });
+  Future<void> _selectDate(BuildContext context){
+  showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2001),
+            lastDate: DateTime(2022),
+            errorFormatText: 'Enter valid date',
+            errorInvalidText: 'Enter date in valid range',
+            fieldHintText: 'Month/Date/Year',
+            fieldLabelText: 'Transaction date',
+          ).then((date) {
+            if (date == null) {
+              return;
+            }
+            Provider.of<TransactionProvider>(context, listen: false).fetchAllTransactionByDate(date);
+          });
   }
 
   List<TransactionItem> _items = [];
@@ -82,7 +88,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     controller: _scrollController,
-                    children: transaction.transactions.map((transaction) {
+                    children: transaction.allTransactions.map((transaction) {
                       return AllTransactionItem(item: transaction);
                     }).toList()),
               ),
