@@ -59,8 +59,8 @@ class _SavingItemState extends State<SavingItem> {
                 borderRadius: kBorderRadiusS,
                 clipBehavior: Clip.hardEdge,
                 child: LinearProgressIndicator(
-                  //color: kGold500,
                   value: widget.item.currentPercent,
+                  color: kGold500,
                   backgroundColor: kNeutral150,
                   minHeight: 25,
                 )),

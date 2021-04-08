@@ -1,12 +1,9 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:setthi/config/api.dart';
 import 'package:setthi/model/transactionType.dart';
 import 'package:setthi/utils/format.dart';
-import 'package:setthi/widgets/transaction/transactionTypeItem.dart';
 
 class TransactionItem {
   int id;
@@ -61,7 +58,6 @@ class TransactionProvider with ChangeNotifier {
     try {
       final response = await Dio().get(apiEndpoint + '/timeline',
           options: Options(headers: {"Authorization": "Bearer " + _token}));
-      print(response.data);
       _transactions = modifyResponse(response.data);
       notifyListeners();
     } catch (error) {
@@ -73,7 +69,6 @@ class TransactionProvider with ChangeNotifier {
     try {
       final response = await Dio().get(apiEndpoint + '/transactions',
           options: Options(headers: {"Authorization": "Bearer " + _token}));
-      print(response.data);
       _transactions = modifyResponse(response.data);
       notifyListeners();
     } catch (error) {

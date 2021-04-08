@@ -39,13 +39,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
   }
 
   Widget build(BuildContext context) {
-    Widget itemsWidget = new ListView(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        controller: _scrollController,
-        children: _items.map((TransactionItem item) {
-          return AllTransactionItem(item: item);
-        }).toList());
     return Scaffold(
       backgroundColor: kGold100,
       appBar: SetthiAppBar(
