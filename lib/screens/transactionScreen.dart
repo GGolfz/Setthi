@@ -16,30 +16,32 @@ class TransactionScreen extends StatefulWidget {
 
 class _TransactionScreenState extends State<TransactionScreen> {
   DateTime currentDate = DateTime.now();
-  Future<void> _selectDate(BuildContext context){
-  showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2001),
-            lastDate: DateTime(2022),
-            errorFormatText: 'Enter valid date',
-            errorInvalidText: 'Enter date in valid range',
-            fieldHintText: 'Month/Date/Year',
-            fieldLabelText: 'Transaction date',
-          ).then((date) {
-            if (date == null) {
-              return;
-            }
-            Provider.of<TransactionProvider>(context, listen: false).fetchAllTransactionByDate(date);
-          });
+  TextEditingController _search = TextEditingController();
+  Future<void> _selectDate(BuildContext context) {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2001),
+      lastDate: DateTime(2022),
+      errorFormatText: 'Enter valid date',
+      errorInvalidText: 'Enter date in valid range',
+      fieldHintText: 'Month/Date/Year',
+      fieldLabelText: 'Transaction date',
+    ).then((date) {
+      if (date == null) {
+        return;
+      }
+      Provider.of<TransactionProvider>(context, listen: false)
+          .fetchAllTransactionByDate(date);
+    });
   }
 
-  List<TransactionItem> _items = [];
   ScrollController _scrollController;
 
   @override
   void initState() {
-    Provider.of<TransactionProvider>(context, listen: false).fetchAllTransactions();
+    Provider.of<TransactionProvider>(context, listen: false)
+        .fetchAllTransactions();
     _scrollController = new ScrollController();
     super.initState();
   }
@@ -62,6 +64,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: TextField(
+                        controller: _search,
+                        onEditingComplete: () {
+                          // Call Provider Here
+                          FocusScope.of(context).unfocus();
+                        },
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(left: 20),
                             filled: true,
@@ -84,14 +91,14 @@ class _TransactionScreenState extends State<TransactionScreen> {
           ),
           Expanded(
             child: Consumer<TransactionProvider>(
-                builder: (ctx, transaction, _) => ListView(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    controller: _scrollController,
-                    children: transaction.allTransactions.map((transaction) {
-                      return AllTransactionItem(item: transaction);
-                    }).toList()),
-              ),
+              builder: (ctx, transaction, _) => ListView(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  controller: _scrollController,
+                  children: transaction.allTransactions.map((transaction) {
+                    return AllTransactionItem(item: transaction);
+                  }).toList()),
+            ),
           ),
         ],
       ),
