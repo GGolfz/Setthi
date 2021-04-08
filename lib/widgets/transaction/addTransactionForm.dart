@@ -80,140 +80,136 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
       case TransactionType.Saving:
       default:
         return Consumer<WalletProvider>(
-            builder: (ctx, wallet, _) => Consumer<CategoryProvider>(
-                builder: (ctx, category, _) => Container(
-                      height: 504,
-                      child: wallet.isEmpty() ||
-                              (category
-                                      .getCategoriesByType(categoryType)
-                                      .length ==
-                                  0)
-                          ? Container()
-                          : Wrap(children: [
-                              SingleChildScrollView(
-                                  child: Column(
-                                children: [
-                                  kSizedBoxVerticalXS,
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Wallet",
-                                        style: kHeadline4Black.copyWith(
-                                            color: kNeutral400,
-                                            fontWeight: FontWeight.w600),
+          builder: (ctx, wallet, _) => Consumer<CategoryProvider>(
+            builder: (ctx, category, _) => Container(
+              height: 504,
+              child: wallet.isEmpty() ||
+                      (_current != TransactionType.Saving &&
+                          category.getCategoriesByType(categoryType).isEmpty)
+                  ? Container()
+                  : Wrap(children: [
+                      SingleChildScrollView(
+                          child: Column(
+                        children: [
+                          kSizedBoxVerticalXS,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Wallet",
+                                style: kHeadline4Black.copyWith(
+                                    color: kNeutral400,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          kSizedBoxVerticalXXS,
+                          Container(
+                              width: double.infinity,
+                              height: 75,
+                              child: WalletList(
+                                selected: selectedWallet,
+                                wallets: wallet.wallets,
+                                onSelect: (id) {
+                                  setState(() {
+                                    selectedWallet = id;
+                                  });
+                                },
+                              )),
+                          kSizedBoxVerticalXXS,
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: wallet.wallets.map((w) {
+                                return Container(
+                                  width: kSizeXS,
+                                  height: kSizeXS,
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: kSizeXXXS),
+                                  decoration: BoxDecoration(
+                                      borderRadius: kBorderRadiusXXS,
+                                      color: w.id == selectedWallet.id
+                                          ? kGold300
+                                          : kNeutral200),
+                                );
+                              }).toList()),
+                          kSizedBoxVerticalXS,
+                          CustomTextField(
+                              title: 'Title', textEditingController: _title),
+                          kSizedBoxVerticalXS,
+                          Consumer<LabelProvider>(
+                            builder: (ctx, label, _) => Row(
+                              children: label.labels
+                                  .map(
+                                    (e) => GestureDetector(
+                                      child: Container(
+                                        child: Text(e.name),
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 1, horizontal: 2),
                                       ),
-                                    ],
-                                  ),
-                                  kSizedBoxVerticalXXS,
-                                  Container(
-                                      width: double.infinity,
-                                      height: 75,
-                                      child: WalletList(
-                                        selected: selectedWallet,
-                                        wallets: wallet.wallets,
-                                        onSelect: (id) {
-                                          setState(() {
-                                            selectedWallet = id;
-                                          });
-                                        },
-                                      )),
-                                  kSizedBoxVerticalXXS,
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: wallet.wallets.map((w) {
-                                        return Container(
-                                          width: kSizeXS,
-                                          height: kSizeXS,
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: kSizeXXXS),
-                                          decoration: BoxDecoration(
-                                              borderRadius: kBorderRadiusXXS,
-                                              color: w.id == selectedWallet.id
-                                                  ? kGold300
-                                                  : kNeutral200),
-                                        );
-                                      }).toList()),
-                                  kSizedBoxVerticalXS,
-                                  CustomTextField(
-                                      title: 'Title',
-                                      textEditingController: _title),
-                                  kSizedBoxVerticalXS,
-                                  Consumer<LabelProvider>(
-                                    builder: (ctx, label, _) => Row(
-                                      children: label.labels
-                                          .map(
-                                            (e) => GestureDetector(
-                                              child: Container(
-                                                child: Text(e.name),
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 1, horizontal: 2),
-                                              ),
-                                              onTap: () {
-                                                _title.text = e.name;
-                                              },
-                                            ),
-                                          )
-                                          .toList(),
+                                      onTap: () {
+                                        _title.text = e.name;
+                                      },
                                     ),
-                                  ),
-                                  kSizedBoxVerticalS,
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Amount",
-                                        style: kBody1Black.copyWith(
-                                            color: kNeutral450,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Column(
-                                        children: [Text("THB")],
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                      ),
-                                      kSizedBoxHorizontalXS,
-                                      Expanded(
-                                        child: CustomTextField(
-                                          title: '',
-                                          textEditingController: _amount,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  kSizedBoxVerticalXS,
-                                  CategoryDropDown(
-                                      title: 'Category',
-                                      currentValue: _category == null
-                                          ? _category
-                                          : category.getCategoriesByType(
-                                              categoryType)[0],
-                                      items: category
-                                          .getCategoriesByType(categoryType),
-                                      onChanged: (val) {
-                                        setState(() {
-                                          _category = val;
-                                        });
-                                      }),
-                                  kSizedBoxVerticalXS,
-                                  CustomDatePicker(
-                                      title: 'Date',
-                                      getDateTime: (val) {},
-                                      dateTime: DateTime.now()),
-                                  kSizedBoxVerticalXS,
-                                  ActionButton(
-                                    text: "Save",
-                                    color: kGold300,
                                   )
-                                ],
-                              ))
-                            ]),
-                    )));
+                                  .toList(),
+                            ),
+                          ),
+                          kSizedBoxVerticalS,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Amount",
+                                style: kBody1Black.copyWith(
+                                    color: kNeutral450,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Column(
+                                children: [Text("THB")],
+                                mainAxisAlignment: MainAxisAlignment.center,
+                              ),
+                              kSizedBoxHorizontalXS,
+                              Expanded(
+                                child: CustomTextField(
+                                  title: '',
+                                  textEditingController: _amount,
+                                ),
+                              )
+                            ],
+                          ),
+                          kSizedBoxVerticalXS,
+                          if (_current != TransactionType.Saving)
+                            CategoryDropDown(
+                                title: 'Category',
+                                currentValue: _category == null
+                                    ? _category
+                                    : category
+                                        .getCategoriesByType(categoryType)[0],
+                                items:
+                                    category.getCategoriesByType(categoryType),
+                                onChanged: (val) {
+                                  setState(() => _category = val);
+                                }),
+                          kSizedBoxVerticalXS,
+                          CustomDatePicker(
+                              title: 'Date',
+                              getDateTime: (val) {},
+                              dateTime: DateTime.now()),
+                          kSizedBoxVerticalXS,
+                          ActionButton(
+                            text: "Save",
+                            color: kGold300,
+                          )
+                        ],
+                      ))
+                    ]),
+            ),
+          ),
+        );
     }
   }
 
