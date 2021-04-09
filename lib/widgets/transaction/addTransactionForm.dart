@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
@@ -89,7 +90,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
       ...savings.finish.map((el) => SourceItem(
           id: el.id,
           title: el.title,
-          amount: el.amount,
+          amount: el.currentAmount,
           sourceType: SourceType.saving))
     ];
     List<SourceItem> sources = [...walletSources, ...savingSources];
@@ -159,7 +160,9 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                                   Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: wallet.wallets.map((w) {
+                                      children: getSources(
+                                              wallet.wallets, saving.saving)
+                                          .map((s) {
                                         return Container(
                                           width: kSizeXS,
                                           height: kSizeXS,
@@ -167,9 +170,13 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                                               horizontal: kSizeXXXS),
                                           decoration: BoxDecoration(
                                               borderRadius: kBorderRadiusXXS,
-                                              color: w.id == selectedWallet.id
-                                                  ? kGold300
-                                                  : kNeutral200),
+                                              color:
+                                                  s.id == selectedSource.id &&
+                                                          s.sourceType ==
+                                                              selectedSource
+                                                                  .sourceType
+                                                      ? kGold300
+                                                      : kNeutral200),
                                         );
                                       }).toList()),
                                   kSizedBoxVerticalXS,
@@ -178,21 +185,27 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                                       textEditingController: _title),
                                   kSizedBoxVerticalXS,
                                   Consumer<LabelProvider>(
-                                    builder: (ctx, label, _) => Row(
-                                      children: label.labels
-                                          .map(
-                                            (e) => GestureDetector(
-                                              child: Container(
-                                                child: Text(e.name),
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 1, horizontal: 2),
+                                    builder: (ctx, label, _) => Container(
+                                      height: 20,
+                                      width: 300,
+                                      child: ListView(
+                                        scrollDirection: Axis.horizontal,
+                                        children: label.labels
+                                            .map(
+                                              (e) => GestureDetector(
+                                                child: Container(
+                                                  child: Text(e.name),
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 1,
+                                                      horizontal: 2),
+                                                ),
+                                                onTap: () {
+                                                  _title.text = e.name;
+                                                },
                                               ),
-                                              onTap: () {
-                                                _title.text = e.name;
-                                              },
-                                            ),
-                                          )
-                                          .toList(),
+                                            )
+                                            .toList(),
+                                      ),
                                     ),
                                   ),
                                   kSizedBoxVerticalS,
