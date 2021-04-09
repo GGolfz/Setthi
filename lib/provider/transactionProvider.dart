@@ -5,7 +5,10 @@ import 'package:setthi/config/api.dart';
 import 'package:setthi/config/string.dart';
 import 'package:setthi/model/httpException.dart';
 import 'package:setthi/model/transactionType.dart';
+import 'package:setthi/provider/categoryProvider.dart' as CategoryProvider;
+import 'package:setthi/provider/savingProvider.dart';
 import 'package:setthi/utils/format.dart';
+import 'package:setthi/widgets/transaction/sourceList.dart';
 
 class TransactionItem {
   int id;
@@ -47,16 +50,59 @@ class TransactionProvider with ChangeNotifier {
     return this._allTransactions;
   }
 
-  Future<void> createTransaction() async {
+  String dateTimetoDate(DateTime dateTime) {
+    return dateTime.toString().split(' ')[0];
+  }
+
+  Future<void> createTransaction({
+    @required String title,
+    @required double amount,
+    @required TransactionType transactionType,
+    @required SourceItem selectedSource,
+    @required CategoryProvider.Category category,
+    @required DateTime dateTime,
+    Saving saving,
+  }) async {
     try {
-      // final response = await Dio().post(apiEndpoint + '/category',
-      //     data: {
-      //       "name": name,
-      //       "type": type.toUpperCase(),
-      //       "color": getColorText(color)
-      //     },
-      //     options: Options(headers: {"Authorization": "Bearer " + _token}));
-      // _categories = modifyResponse(response.data.toList());
+      var response;
+      var baseData = {
+        "title": title,
+        "amount": amount,
+        "date": dateTimetoDate(dateTime),
+        "category_id": category.id,
+        "wallet_id": selectedSource.id,
+      };
+      var options = Options(headers: {"Authorization": "Bearer " + _token});
+
+      try {
+        switch (transactionType) {
+          case TransactionType.Income:
+            response = await Dio().post(apiEndpoint + '/transaction/income',
+                data: baseData, options: options);
+            break;
+          case TransactionType.Expense:
+            if (selectedSource.sourceType == SourceType.wallet) {
+              response = await Dio().post(apiEndpoint + '/transaction/expense',
+                  data: baseData, options: options);
+            } else {
+              response = await Dio().post(
+                  apiEndpoint + '/transaction/expense-saving',
+                  data: baseData,
+                  options: options);
+            }
+            break;
+          case TransactionType.Saving:
+            var data = {...baseData, "saving_id": saving.id};
+            response = await Dio().post(apiEndpoint + '/transaction/saving',
+                data: data, options: options);
+            break;
+        }
+      } on DioError catch (error) {
+        print(error.message);
+      }
+      print('response is');
+      print(response);
+      _transactions = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
       if (error.response == null) throw HttpException(internetException);
