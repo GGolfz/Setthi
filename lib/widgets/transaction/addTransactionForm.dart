@@ -98,6 +98,10 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
     return walletSources;
   }
 
+  String getSourceText() {
+    return _current == TransactionType.Income ? 'Destination' : 'Source';
+  }
+
   Widget _renderForm(context) {
     return Consumer<WalletProvider>(
       builder: (ctx, wallet, _) => Consumer<CategoryProvider>(
@@ -130,7 +134,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Wallet",
+                                        getSourceText(),
                                         style: kHeadline4Black.copyWith(
                                             color: kNeutral400,
                                             fontWeight: FontWeight.w600),
