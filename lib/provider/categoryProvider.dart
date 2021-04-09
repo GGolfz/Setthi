@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:setthi/config/api.dart';
-import 'package:setthi/model/categoryType.dart';
-import 'package:setthi/config/string.dart';
-import 'package:setthi/model/httpException.dart';
-import 'package:setthi/utils/format.dart';
+import '../config/api.dart';
+import '../model/categoryType.dart';
+import '../config/string.dart';
+import '../model/httpException.dart';
+import '../utils/format.dart';
 
 class Category {
   int id;

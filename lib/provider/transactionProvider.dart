@@ -1,14 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:setthi/config/api.dart';
-import 'package:setthi/config/string.dart';
-import 'package:setthi/model/httpException.dart';
-import 'package:setthi/model/transactionType.dart';
-import 'package:setthi/provider/categoryProvider.dart' as CategoryProvider;
-import 'package:setthi/provider/savingProvider.dart';
-import 'package:setthi/utils/format.dart';
-import 'package:setthi/widgets/transaction/sourceList.dart';
+import '../config/api.dart';
+import '../config/string.dart';
+import '../model/httpException.dart';
+import '../model/transactionType.dart';
+import '../provider/categoryProvider.dart';
+import '../provider/savingProvider.dart';
+import '../utils/format.dart';
+import '../widgets/transaction/sourceList.dart';
 
 class TransactionItem {
   int id;
@@ -59,7 +58,7 @@ class TransactionProvider with ChangeNotifier {
     @required double amount,
     @required TransactionType transactionType,
     @required SourceItem selectedSource,
-    @required CategoryProvider.Category category,
+    @required Category category,
     @required DateTime dateTime,
     Saving saving,
   }) async {
