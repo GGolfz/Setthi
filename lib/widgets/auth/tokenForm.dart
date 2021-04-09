@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/config/style.dart';
-import 'package:setthi/model/authType.dart';
-import 'package:setthi/model/httpException.dart';
-import 'package:setthi/widgets/auth/authTextField.dart';
-import 'package:setthi/widgets/buttons/primaryButton.dart';
-import 'package:setthi/widgets/buttons/secondaryButton.dart';
-import 'package:setthi/widgets/layout/errorDialog.dart';
-import 'package:setthi/provider/authenicateProvider.dart';
+import '../auth/authTextField.dart';
+import '../buttons/primaryButton.dart';
+import '../buttons/secondaryButton.dart';
+import '../layout/errorDialog.dart';
+import '../../config/color.dart';
+import '../../config/constants.dart';
+import '../../config/style.dart';
+import '../../model/authType.dart';
+import '../../model/httpException.dart';
+import '../../provider/authenicateProvider.dart';
 
 class TokenForm extends StatefulWidget {
   final Function changeModal;

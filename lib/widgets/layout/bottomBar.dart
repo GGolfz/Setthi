@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import '../layout/bottomBarItem.dart';
+import '../../config/constants.dart';
+import '../../config/color.dart';
 import '../../screens/savingScreen.dart';
 import '../../screens/settingScreen.dart';
 import '../../screens/timelineScreen.dart';
 import '../../screens/walletScreen.dart';
-import '../../widgets/layout/bottomBarItem.dart';
-import '../../config/constants.dart';
-import '../../config/color.dart';
 
 class BottomBar extends StatelessWidget {
   final String currentTab;

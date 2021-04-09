@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/model/httpException.dart';
-import 'package:setthi/provider/authenicateProvider.dart';
+import '../auth/authTextField.dart';
+import '../buttons/primaryButton.dart';
+import '../layout/errorDialog.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
 import '../../config/string.dart';
 import '../../config/style.dart';
 import '../../model/authType.dart';
-import '../../widgets/auth/authTextField.dart';
-import '../../widgets/buttons/primaryButton.dart';
-import '../../widgets/layout/errorDialog.dart';
+import '../../model/httpException.dart';
+import '../../provider/authenicateProvider.dart';
 
 class RegisterForm extends StatefulWidget {
   final Function changeModal;

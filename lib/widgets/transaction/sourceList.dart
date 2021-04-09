@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
-import 'package:setthi/widgets/transaction/sourceListItem.dart';
+import 'sourceListItem.dart';
 
 enum SourceType { wallet, saving }
 

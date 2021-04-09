@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/style.dart';
-import 'package:setthi/model/labelType.dart';
+import '../../config/color.dart';
+import '../../config/style.dart';
+import '../../model/labelType.dart';
 
 class LabelTypeSelect extends StatelessWidget {
   final String text;

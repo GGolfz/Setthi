@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/model/transactionType.dart';
-import 'package:setthi/widgets/transaction/transactionTypeItem.dart';
+import 'transactionTypeItem.dart';
+import '../../config/color.dart';
+import '../../config/constants.dart';
+import '../../model/transactionType.dart';
 
 class SelectTypeBar extends StatelessWidget {
   final TransactionType current;

@@ -1,9 +1,8 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/config/style.dart';
+import '../../config/color.dart';
+import '../../config/constants.dart';
+import '../../config/style.dart';
 
 class ActionButton extends StatelessWidget {
   final Color color;

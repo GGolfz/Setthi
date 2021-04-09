@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/style.dart';
-import 'package:setthi/provider/categoryProvider.dart';
+import '../../config/style.dart';
+import '../../provider/categoryProvider.dart';
 
 class TransactionDropDown extends StatelessWidget {
   final String title;

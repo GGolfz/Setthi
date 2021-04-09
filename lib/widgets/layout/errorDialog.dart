@@ -1,8 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
+import '../../config/color.dart';
+import '../../config/constants.dart';
 
 class ErrorDialog extends StatelessWidget {
   final String text;

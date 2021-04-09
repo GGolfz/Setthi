@@ -1,10 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/config/style.dart';
-import 'package:setthi/provider/walletProvider.dart';
+import '../../config/color.dart';
+import '../../config/constants.dart';
+import '../../config/style.dart';
+import '../../provider/walletProvider.dart';
 
 class ExpenseChart extends StatefulWidget {
   @override
