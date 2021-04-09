@@ -29,9 +29,9 @@ class SetthiApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (ctx) => AuthenticateProvider()),
         ChangeNotifierProxyProvider<AuthenticateProvider, WalletProvider>(
-          create: (ctx) => WalletProvider(null, []),
+          create: (ctx) => WalletProvider(null, [],ChartData.empty),
           update: (ctx, auth, prev) =>
-              WalletProvider(auth.token, prev == null ? [] : prev.wallets),
+              WalletProvider(auth.token, prev == null ? [] : prev.wallets,prev == null ? ChartData.empty : prev.chartData),
         ),
         ChangeNotifierProxyProvider<AuthenticateProvider, SavingProvider>(
           create: (ctx) => SavingProvider(null, SavingGroup.empty),

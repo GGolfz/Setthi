@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:setthi/config/api.dart';
 import 'package:setthi/config/string.dart';
 import 'package:setthi/model/httpException.dart';
+import 'package:setthi/utils/format.dart';
 
 class WalletItem {
   final int id;
@@ -18,13 +19,39 @@ class WalletItem {
   }
 }
 
+class ChartDataPoint {
+  String date;
+  double amount;
+  ChartDataPoint(this.date, this.amount);
+}
+
+class ChartData {
+  double max;
+  List<ChartDataPoint> data;
+  ChartData(this.max, this.data);
+  static get empty {
+    DateTime today = DateTime.now();
+    List<ChartDataPoint> data = [];
+    for (var i = 0; i < 7; i++) {
+      data.add(ChartDataPoint(getWeekDayString(today.weekday), 0));
+      today.add(Duration(days: 1));
+    }
+    return ChartData(0, data);
+  }
+}
+
 class WalletProvider with ChangeNotifier {
   String _token;
   List<WalletItem> _wallets;
-  WalletProvider(this._token, this._wallets);
+  ChartData _chartData;
+  WalletProvider(this._token, this._wallets, this._chartData);
 
   List<WalletItem> get wallets {
     return _wallets ?? [];
+  }
+
+  ChartData get chartData {
+    return _chartData ?? ChartData.empty;
   }
 
   double get totalAmount {
@@ -41,6 +68,33 @@ class WalletProvider with ChangeNotifier {
 
   int get walletCount {
     return _wallets.length;
+  }
+
+  Future<void> fetchExpenseChart() async {
+    try {
+      final response = await Dio().get(apiEndpoint + '/expense-graph',
+          options: Options(headers: {"Authorization": "Bearer " + _token}));
+      _chartData = modifyExpenseChartResponse(
+          response.data["top"].toDouble(), response.data["data"].toList());
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      if (error.response == null) throw HttpException(internetException);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(generalException);
+    }
+  }
+
+  ChartData modifyExpenseChartResponse(double top, List<dynamic> data) {
+    List<ChartDataPoint> dataPoints = [];
+    try {
+      data.forEach((el) =>
+          dataPoints.add(ChartDataPoint(el["date"], el["amount"].toDouble())));
+    } catch (error) {
+      print(error);
+    }
+    return ChartData(top, dataPoints);
   }
 
   Future<void> fetchWallet() async {

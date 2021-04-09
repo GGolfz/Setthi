@@ -1,27 +1,24 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:setthi/config/color.dart';
+import 'package:setthi/config/constants.dart';
+import 'package:setthi/config/style.dart';
+import 'package:setthi/provider/walletProvider.dart';
 
-class LineChartSample2 extends StatefulWidget {
+class ExpenseChart extends StatefulWidget {
   @override
-  _LineChartSample2State createState() => _LineChartSample2State();
+  _ExpenseChartState createState() => _ExpenseChartState();
 }
 
-class _LineChartSample2State extends State<LineChartSample2> {
+class _ExpenseChartState extends State<ExpenseChart> {
   List<Color> gradientColors = [
-    const Color(0xff23b6e6),
-    const Color(0xff02d39a),
+    const Color(0xFFDEC489),
+    const Color(0xFFF6E0A4),
+    const Color(0xFFD1B372),
+    const Color(0xFFE3CC97),
+    const Color(0xFFBF9A5E),
   ];
-
-  bool showAvg = false;
-  Map<int, String> days = {
-    0: "Sun",
-    1: "Mon",
-    2: "Tue",
-    3: "Wed",
-    4: "Thu",
-    5: "Fri",
-    6: "Sat",
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +28,14 @@ class _LineChartSample2State extends State<LineChartSample2> {
           aspectRatio: 2,
           child: Container(
             decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(18),
-                ),
-                color: Color(0xff232d37)),
+                borderRadius: kBorderRadiusS, color: kNeutral700),
             child: Padding(
               padding: const EdgeInsets.only(
-                  right: 18.0, left: 12.0, top: 24, bottom: 12),
-              child: LineChart(
-                mainData(),
-              ),
+                  right: 18, left: 12, top: 24, bottom: 12),
+              child: Consumer<WalletProvider>(
+                  builder: (ctx, wallet, _) => LineChart(
+                        graphData(wallet.chartData),
+                      )),
             ),
           ),
         ),
@@ -48,20 +43,25 @@ class _LineChartSample2State extends State<LineChartSample2> {
     );
   }
 
-  LineChartData mainData() {
+  double getInterval(double max) {
+    return max == 0 ? 1 : max / 5;
+  }
+
+  LineChartData graphData(ChartData data) {
     return LineChartData(
       gridData: FlGridData(
         show: true,
         drawVerticalLine: true,
+        horizontalInterval: getInterval(data.max) / 2,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: const Color(0xff37434d),
+            color: kNeutral500,
             strokeWidth: 1,
           );
         },
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: const Color(0xff37434d),
+            color: kNeutral500,
             strokeWidth: 1,
           );
         },
@@ -71,51 +71,35 @@ class _LineChartSample2State extends State<LineChartSample2> {
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 22,
-          getTextStyles: (value) => const TextStyle(
-              color: Color(0xff68737d),
-              fontWeight: FontWeight.bold,
-              fontSize: 16),
+          getTextStyles: (value) => kBody1Black,
           getTitles: (value) {
-            if (value >= 0 && value <= 6) {
-              return days[value];
-            }
-            return '';
+            return data.data[value.toInt()].date;
           },
           margin: 8,
         ),
         leftTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (value) => const TextStyle(
-            color: Color(0xff67727d),
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
+          getTextStyles: (value) => kBody1Black,
           getTitles: (value) {
-            return (value.floor() * 100).toString();
+            return (value.floor()).toString();
           },
+          interval: getInterval(data.max),
           reservedSize: 28,
           margin: 12,
         ),
       ),
       borderData: FlBorderData(
-          show: true,
-          border: Border.all(color: const Color(0xff37434d), width: 1)),
+          show: true, border: Border.all(color: kNeutral500, width: 1)),
       minX: 0,
       maxX: 6,
       minY: 0,
-      maxY: 6,
+      maxY: data.max,
       lineBarsData: [
         LineChartBarData(
-          spots: [
-            FlSpot(0, 5),
-            FlSpot(1, 5),
-            FlSpot(2, 1),
-            FlSpot(3, 3),
-            FlSpot(4, 4),
-            FlSpot(5, 2),
-            FlSpot(6.0, 3.1),
-          ],
-          isCurved: true,
+          spots: Iterable<int>.generate(7)
+              .toList()
+              .map((i) => FlSpot(i.toDouble(), data.data[i].amount))
+              .toList(),
           colors: gradientColors,
           barWidth: 5,
           isStrokeCapRound: true,
