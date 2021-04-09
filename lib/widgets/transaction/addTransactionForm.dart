@@ -8,6 +8,7 @@ import 'package:setthi/model/categoryType.dart';
 import 'package:setthi/model/httpException.dart';
 import 'package:setthi/model/labelType.dart';
 import 'package:setthi/model/transactionType.dart';
+import 'package:setthi/provider/transactionProvider.dart';
 import 'package:setthi/provider/categoryProvider.dart';
 import 'package:setthi/provider/labelProvider.dart';
 import 'package:setthi/provider/savingProvider.dart';
@@ -16,7 +17,7 @@ import 'package:setthi/screens/settingScreen.dart';
 import 'package:setthi/widgets/buttons/actionButton.dart';
 import 'package:setthi/widgets/form/customDatePicker.dart';
 import 'package:setthi/widgets/transaction/sourceList.dart';
-import './categoryDropDown.dart';
+import 'customDropDown.dart';
 import 'package:setthi/widgets/form/customTextField.dart';
 import 'package:setthi/widgets/layout/errorDialog.dart';
 import 'package:setthi/widgets/transaction/selectTypeBar.dart';
@@ -29,13 +30,13 @@ class AddTransactionForm extends StatefulWidget {
 
 class _AddTransactionFormState extends State<AddTransactionForm> {
   TransactionType _current = TransactionType.Income;
-  CategoryType _test = CategoryType.Income;
-
   SourceItem selectedSource = SourceItem.defaultSource;
   SourceType sourceType = SourceType.wallet;
   TextEditingController _title = TextEditingController();
   TextEditingController _amount = TextEditingController();
+  DateTime _dateTime = DateTime.now();
   Category _category = null;
+  Saving _saving = null;
   @override
   void initState() {
     super.initState();
@@ -52,6 +53,9 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
       await savingProvider.fetchSaving();
       if (ctProvider.getCategoriesByType(categoryType).isNotEmpty) {
         _category = ctProvider.getCategoriesByType(categoryType)[0];
+      }
+      if (savingProvider.saving.inProcess.isNotEmpty) {
+        _saving = savingProvider.saving.inProcess[0];
       }
       await Provider.of<LabelProvider>(context, listen: false).fetchLabels();
     } on HttpException catch (error) {
@@ -113,173 +117,162 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
     }[_current];
   }
 
-  Future<void> submitForm() async {}
+  Future<void> submitForm() async {
+    // print('title ${_title.text}');
+    // print('amount ${_amount.text}');
+    // print('date is ${_dateTime.toIso8601String()}');
+
+    // print('Transation type ${_current.toString()}');
+    // print('category id ${_category.id}');
+    // print('source type is ${sourceType.toString()}');
+    // print('Source id is ${selectedSource.id}');
+    final tsProvider = Provider.of<TransactionProvider>(context, listen: false);
+    await tsProvider.createTransaction(
+        title: _title.text,
+        amount: double.tryParse(_amount.text),
+        category: _category,
+        transactionType: _current,
+        selectedSource: selectedSource,
+        dateTime: _dateTime);
+  }
 
   Widget _renderForm(context) {
     return Consumer<WalletProvider>(
       builder: (ctx, wallet, _) => Consumer<CategoryProvider>(
-          builder: (ctx, category, _) => Consumer<SavingProvider>(
-                builder: (ctx, saving, _) => Container(
-                  height: 504,
-                  child: wallet.isEmpty() ||
-                          category.getCategoriesByType(categoryType).isEmpty
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text('You have to add category'),
-                            kSizedBoxVerticalXS,
-                            ActionButton(
-                              text: 'Add Category',
-                              onPressed: () => Navigator.of(context)
-                                  .pushReplacementNamed(
-                                      SettingScreen.routeName),
-                              color: kGold300,
-                            )
-                          ],
+        builder: (ctx, category, _) => Consumer<SavingProvider>(
+          builder: (ctx, saving, _) => Column(
+            children: [
+              kSizedBoxVerticalXS,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    getSourceText(),
+                    style: kHeadline4Black.copyWith(
+                        color: kNeutral400, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+              kSizedBoxVerticalXXS,
+              Container(
+                  width: double.infinity,
+                  height: 90,
+                  child: SourceList(
+                    selected: selectedSource,
+                    sources: getSources(wallet.wallets, saving.saving),
+                    onSelect: (id) {
+                      setState(() {
+                        selectedSource = id;
+                      });
+                    },
+                  )),
+              kSizedBoxVerticalXXS,
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: getSources(wallet.wallets, saving.saving).map((s) {
+                    return Container(
+                      width: kSizeXS,
+                      height: kSizeXS,
+                      margin: EdgeInsets.symmetric(horizontal: kSizeXXXS),
+                      decoration: BoxDecoration(
+                          borderRadius: kBorderRadiusXXS,
+                          color: s.id == selectedSource.id &&
+                                  s.sourceType == selectedSource.sourceType
+                              ? kGold300
+                              : kNeutral200),
+                    );
+                  }).toList()),
+              kSizedBoxVerticalXS,
+              CustomTextField(title: 'Title', textEditingController: _title),
+              kSizedBoxVerticalXS,
+              Consumer<LabelProvider>(
+                builder: (ctx, label, _) => Container(
+                  height: 20,
+                  width: 300,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: label
+                        .getLabelByType(labelType)
+                        .map(
+                          (e) => GestureDetector(
+                            child: Container(
+                              child: Text(e.name),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 1, horizontal: 2),
+                            ),
+                            onTap: () {
+                              _title.text = e.name;
+                            },
+                          ),
                         )
-                      : Wrap(
-                          children: [
-                            SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  kSizedBoxVerticalXS,
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        getSourceText(),
-                                        style: kHeadline4Black.copyWith(
-                                            color: kNeutral400,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ],
-                                  ),
-                                  kSizedBoxVerticalXXS,
-                                  Container(
-                                      width: double.infinity,
-                                      height: 90,
-                                      child: SourceList(
-                                        selected: selectedSource,
-                                        sources: getSources(
-                                            wallet.wallets, saving.saving),
-                                        onSelect: (id) {
-                                          setState(() {
-                                            selectedSource = id;
-                                          });
-                                        },
-                                      )),
-                                  kSizedBoxVerticalXXS,
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: getSources(
-                                              wallet.wallets, saving.saving)
-                                          .map((s) {
-                                        return Container(
-                                          width: kSizeXS,
-                                          height: kSizeXS,
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: kSizeXXXS),
-                                          decoration: BoxDecoration(
-                                              borderRadius: kBorderRadiusXXS,
-                                              color:
-                                                  s.id == selectedSource.id &&
-                                                          s.sourceType ==
-                                                              selectedSource
-                                                                  .sourceType
-                                                      ? kGold300
-                                                      : kNeutral200),
-                                        );
-                                      }).toList()),
-                                  kSizedBoxVerticalXS,
-                                  CustomTextField(
-                                      title: 'Title',
-                                      textEditingController: _title),
-                                  kSizedBoxVerticalXS,
-                                  Consumer<LabelProvider>(
-                                    builder: (ctx, label, _) => Container(
-                                      height: 20,
-                                      width: 300,
-                                      child: ListView(
-                                        scrollDirection: Axis.horizontal,
-                                        children: label
-                                            .getLabelByType(labelType)
-                                            .map(
-                                              (e) => GestureDetector(
-                                                child: Container(
-                                                  child: Text(e.name),
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 1,
-                                                      horizontal: 2),
-                                                ),
-                                                onTap: () {
-                                                  _title.text = e.name;
-                                                },
-                                              ),
-                                            )
-                                            .toList(),
-                                      ),
-                                    ),
-                                  ),
-                                  kSizedBoxVerticalS,
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Amount",
-                                        style: kBody1Black.copyWith(
-                                            color: kNeutral450,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Column(
-                                        children: [Text("THB")],
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                      ),
-                                      kSizedBoxHorizontalXS,
-                                      Expanded(
-                                        child: CustomTextField(
-                                          title: '',
-                                          textEditingController: _amount,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  kSizedBoxVerticalXS,
-                                  CategoryDropDown(
-                                    title: 'Category',
-                                    currentValue: _category == null
-                                        ? _category
-                                        : category.getCategoriesByType(
-                                            categoryType)[0],
-                                    items: category
-                                        .getCategoriesByType(categoryType),
-                                    onChanged: (val) {
-                                      setState(() => _category = val);
-                                    },
-                                  ),
-                                  kSizedBoxVerticalXS,
-                                  CustomDatePicker(
-                                      title: 'Date',
-                                      getDateTime: (val) {},
-                                      dateTime: DateTime.now()),
-                                  kSizedBoxVerticalXS,
-                                  ActionButton(
-                                    text: "Save",
-                                    color: kGold300,
-                                    onPressed: () => submitForm(),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
+                        .toList(),
+                  ),
                 ),
-              )),
+              ),
+              kSizedBoxVerticalS,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Amount",
+                    style: kBody1Black.copyWith(
+                        color: kNeutral450, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Column(
+                    children: [Text("THB")],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  ),
+                  kSizedBoxHorizontalXS,
+                  Expanded(
+                    child: CustomTextField(
+                      title: '',
+                      textEditingController: _amount,
+                    ),
+                  )
+                ],
+              ),
+              kSizedBoxVerticalXS,
+              CustomDropDown(
+                title: 'Category',
+                currentValue: _category == null
+                    ? _category
+                    : category.getCategoriesByType(categoryType)[0],
+                items: category.getCategoriesByType(categoryType),
+                onChanged: (val) {
+                  setState(() => _category = val);
+                },
+              ),
+              kSizedBoxVerticalXS,
+              if (_current == TransactionType.Saving)
+                CustomDropDown(
+                  title: 'Saving',
+                  currentValue: _saving,
+                  items: saving.saving.inProcess,
+                  onChanged: (val) {
+                    setState(() => _saving = val);
+                  },
+                ),
+              kSizedBoxVerticalXS,
+              CustomDatePicker(
+                  title: 'Date',
+                  getDateTime: (val) {
+                    _dateTime = val;
+                  },
+                  dateTime: _dateTime),
+              kSizedBoxVerticalXS,
+              ActionButton(
+                text: "Save",
+                color: kGold300,
+                onPressed: () => submitForm(),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -288,17 +281,21 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
     return Container(
       height: 550,
       width: 400,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SelectTypeBar(
-                current: _current,
-                onChange: (value) {
-                  setState(() => _current = value);
-                }),
-            _renderForm(context),
-          ],
-        ),
+      child: Column(
+        children: [
+          SelectTypeBar(
+              current: _current,
+              onChange: (value) {
+                setState(() => _current = value);
+              }),
+          kSizedBoxVerticalXS,
+          Container(
+            height: 504,
+            child: SingleChildScrollView(
+              child: _renderForm(context),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -5,7 +5,9 @@ import 'package:setthi/config/api.dart';
 import 'package:setthi/config/string.dart';
 import 'package:setthi/model/httpException.dart';
 import 'package:setthi/model/transactionType.dart';
+import 'package:setthi/provider/categoryProvider.dart' as CategoryProvider;
 import 'package:setthi/utils/format.dart';
+import 'package:setthi/widgets/transaction/sourceList.dart';
 
 class TransactionItem {
   int id;
@@ -47,8 +49,26 @@ class TransactionProvider with ChangeNotifier {
     return this._allTransactions;
   }
 
-  Future<void> createTransaction() async {
+  Future<void> createTransaction({
+    @required String title,
+    @required double amount,
+    @required TransactionType transactionType,
+    @required SourceItem selectedSource,
+    @required CategoryProvider.Category category,
+    @required DateTime dateTime,
+  }) async {
     try {
+      print('title ${title}');
+      print('amount ${amount}');
+      print('date is ${dateTime.toIso8601String()}');
+
+      print('Transation type ${transactionType.toString()}');
+      print('category id ${category.id}');
+
+      print('Source id is ${selectedSource.id}');
+      print('Source Type is ${selectedSource.sourceType}');
+      if (transactionType == TransactionType.Income) {
+      } else if (transactionType == TransactionType.Saving) {}
       // final response = await Dio().post(apiEndpoint + '/category',
       //     data: {
       //       "name": name,

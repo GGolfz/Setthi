@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:setthi/config/style.dart';
 import 'package:setthi/provider/categoryProvider.dart';
 
-class CategoryDropDown extends StatelessWidget {
+class CustomDropDown extends StatelessWidget {
   final String title;
-  final Category currentValue;
-  final List<Category> items;
+  final dynamic currentValue;
+  final List<dynamic> items;
   final Function onChanged;
-  CategoryDropDown(
+  CustomDropDown(
       {@required this.title,
       @required this.currentValue,
       @required this.items,
       @required this.onChanged});
+  String getTitle(dynamic el) {
+    if (el is Category) return el.name;
+    return el.title;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,7 +32,7 @@ class CategoryDropDown extends StatelessWidget {
           items: items
               .map((element) => DropdownMenuItem(
                     child: Text(
-                      element.name,
+                      getTitle(element),
                       style:
                           kSubtitle2Black.copyWith(fontWeight: FontWeight.w600),
                     ),
