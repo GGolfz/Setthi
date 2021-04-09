@@ -30,7 +30,7 @@ class AddTransactionForm extends StatefulWidget {
 class _AddTransactionFormState extends State<AddTransactionForm> {
   TransactionType _current = TransactionType.Income;
   CategoryType _test = CategoryType.Income;
-  WalletItem selectedWallet = WalletItem.defaultWallet;
+
   SourceItem selectedSource = SourceItem.defaultSource;
   SourceType sourceType = SourceType.wallet;
   TextEditingController _title = TextEditingController();
@@ -112,6 +112,8 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
       TransactionType.Income: LabelType.Income,
     }[_current];
   }
+
+  Future<void> submitForm() async {}
 
   Widget _renderForm(context) {
     return Consumer<WalletProvider>(
@@ -269,6 +271,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                                   ActionButton(
                                     text: "Save",
                                     color: kGold300,
+                                    onPressed: () => submitForm(),
                                   )
                                 ],
                               ),
