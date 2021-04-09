@@ -71,9 +71,19 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
         builder: (ctx, category, _) => Container(
           height: 504,
           child: wallet.isEmpty() ||
-                  (_current != TransactionType.Saving &&
-                      category.getCategoriesByType(categoryType).isEmpty)
-              ? Container()
+                  category.getCategoriesByType(categoryType).isEmpty
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('You have to add category'),
+                    kSizedBoxVerticalXS,
+                    ActionButton(
+                      text: 'Add Category',
+                      onPressed: () => null,
+                      color: kGold300,
+                    )
+                  ],
+                )
               : Wrap(
                   children: [
                     SingleChildScrollView(
