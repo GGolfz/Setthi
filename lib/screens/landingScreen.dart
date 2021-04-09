@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/widgets/auth/forgetForm.dart';
-import 'package:setthi/widgets/auth/newPasswordForm.dart';
-import 'package:setthi/widgets/auth/tokenForm.dart';
 import '../config/color.dart';
 import '../config/constants.dart';
 import '../model/authType.dart';
+import '../widgets/auth/forgetForm.dart';
+import '../widgets/auth/newPasswordForm.dart';
 import '../widgets/auth/registerForm.dart';
 import '../widgets/auth/signinForm.dart';
+import '../widgets/auth/tokenForm.dart';
 import '../widgets/buttons/primaryButton.dart';
 import '../widgets/buttons/secondaryButton.dart';
 import '../widgets/landing/descriptionText.dart';

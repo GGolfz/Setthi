@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/widgets/layout/customDialog.dart';
-import 'package:setthi/widgets/transaction/addTransactionForm.dart';
+import '../layout/customDialog.dart';
+import '../transaction/addTransactionForm.dart';
 import '../../config/color.dart';
 
 class AddButton extends StatelessWidget {

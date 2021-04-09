@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/config/style.dart';
-import 'package:setthi/model/httpException.dart';
-import 'package:setthi/provider/authenicateProvider.dart';
-import 'package:setthi/provider/categoryProvider.dart';
-import 'package:setthi/provider/labelProvider.dart';
-import 'package:setthi/screens/categoryScreen.dart';
-import 'package:setthi/screens/labelScreen.dart';
-import 'package:setthi/widgets/buttons/actionButton.dart';
-import 'package:setthi/widgets/layout/appBar.dart';
-import 'package:setthi/widgets/layout/divider.dart';
-import 'package:setthi/widgets/setting/settingItem.dart';
+import '../config/color.dart';
+import '../config/constants.dart';
+import '../config/style.dart';
+import '../model/httpException.dart';
+import '../provider/authenicateProvider.dart';
+import '../provider/categoryProvider.dart';
+import '../provider/labelProvider.dart';
+import '../screens/categoryScreen.dart';
+import '../screens/labelScreen.dart';
+import '../widgets/buttons/actionButton.dart';
+import '../widgets/layout/appBar.dart';
+import '../widgets/layout/divider.dart';
 import '../widgets/layout/errorDialog.dart';
+import '../widgets/setting/settingItem.dart';
 
 class SettingScreen extends StatefulWidget {
   static final routeName = '/setting';
@@ -33,8 +33,6 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   void initState() {
-    // Provider.of<CategoryProvider>(context, listen: false).fetchCategories();
-    // Provider.of<LabelProvider>(context, listen: false).fetchLabels();
     fetchData();
     super.initState();
   }

@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/widgets/logo/logoImage.dart';
-import 'package:setthi/widgets/logo/logoText.dart';
+import '../config/color.dart';
+import '../config/constants.dart';
+import '../widgets/logo/logoImage.dart';
+import '../widgets/logo/logoText.dart';
 
 class SplashScreen extends StatefulWidget {
   final Widget nextScreen;

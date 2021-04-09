@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/model/categoryType.dart';
-import 'package:setthi/model/formType.dart';
-import 'package:setthi/provider/categoryProvider.dart';
-import 'package:setthi/widgets/buttons/actionButton.dart';
-import 'package:setthi/widgets/category/categoryForm.dart';
-import 'package:setthi/widgets/category/categoryItem.dart';
-import 'package:setthi/widgets/category/categoryTypeSelect.dart';
-import 'package:setthi/widgets/layout/appBar.dart';
-import 'package:setthi/widgets/layout/customDialog.dart';
-import 'package:setthi/widgets/layout/divider.dart';
+import '../config/constants.dart';
+import '../model/categoryType.dart';
+import '../model/formType.dart';
+import '../provider/categoryProvider.dart';
+import '../widgets/buttons/actionButton.dart';
+import '../widgets/category/categoryForm.dart';
+import '../widgets/category/categoryItem.dart';
+import '../widgets/category/categoryTypeSelect.dart';
+import '../widgets/layout/appBar.dart';
+import '../widgets/layout/customDialog.dart';
+import '../widgets/layout/divider.dart';
 
 class CategoryScreen extends StatefulWidget {
   static const routeName = '/category';

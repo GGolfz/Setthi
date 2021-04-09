@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/config/style.dart';
+import '../../config/constants.dart';
+import '../../config/style.dart';
 
 class CategoryItem extends StatelessWidget {
   final String categoryText;

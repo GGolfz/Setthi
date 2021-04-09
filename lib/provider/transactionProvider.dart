@@ -1,14 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:setthi/config/api.dart';
-import 'package:setthi/config/string.dart';
-import 'package:setthi/model/httpException.dart';
-import 'package:setthi/model/transactionType.dart';
-import 'package:setthi/provider/categoryProvider.dart' as CategoryProvider;
-import 'package:setthi/provider/savingProvider.dart';
-import 'package:setthi/utils/format.dart';
-import 'package:setthi/widgets/transaction/sourceList.dart';
+import '../config/api.dart';
+import '../config/string.dart';
+import '../model/httpException.dart';
+import '../model/transactionType.dart';
+import '../provider/categoryProvider.dart';
+import '../provider/savingProvider.dart';
+import '../utils/format.dart';
+import '../widgets/transaction/sourceList.dart';
 
 class TransactionItem {
   int id;
@@ -59,7 +58,7 @@ class TransactionProvider with ChangeNotifier {
     @required double amount,
     @required TransactionType transactionType,
     @required SourceItem selectedSource,
-    @required CategoryProvider.Category category,
+    @required Category category,
     @required DateTime dateTime,
     Saving saving,
   }) async {
@@ -73,7 +72,6 @@ class TransactionProvider with ChangeNotifier {
         "wallet_id": selectedSource.id,
       };
       var options = Options(headers: {"Authorization": "Bearer " + _token});
-
       try {
         switch (transactionType) {
           case TransactionType.Income:
@@ -81,6 +79,7 @@ class TransactionProvider with ChangeNotifier {
                 data: baseData, options: options);
             break;
           case TransactionType.Expense:
+          case TransactionType.ExpenseFromSaving:
             if (selectedSource.sourceType == SourceType.wallet) {
               response = await Dio().post(apiEndpoint + '/transaction/expense',
                   data: baseData, options: options);
@@ -97,12 +96,10 @@ class TransactionProvider with ChangeNotifier {
                 data: data, options: options);
             break;
         }
+        _transactions = modifyResponse(response.data.toList());
       } on DioError catch (error) {
         print(error.message);
       }
-      print('response is');
-      print(response);
-      _transactions = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
       if (error.response == null) throw HttpException(internetException);

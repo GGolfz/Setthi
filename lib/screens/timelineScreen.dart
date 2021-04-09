@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/model/httpException.dart';
-import 'package:setthi/screens/transactionScreen.dart';
-import 'package:setthi/widgets/layout/errorDialog.dart';
-import '../config/color.dart';
 import 'package:provider/provider.dart';
+import '../config/color.dart';
 import '../config/constants.dart';
 import '../config/style.dart';
-import '../widgets/timeline/balanceBox.dart';
-import '../widgets/timeline/transactionItemBox.dart';
+import '../model/httpException.dart';
 import '../provider/transactionProvider.dart';
 import '../provider/walletProvider.dart';
+import '../screens/transactionScreen.dart';
+import '../widgets/layout/errorDialog.dart';
+import '../widgets/timeline/balanceBox.dart';
+import '../widgets/timeline/transactionItemBox.dart';
 
 class TimelineScreen extends StatefulWidget {
   static final routeName = '/timeline';

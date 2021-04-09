@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/style.dart';
+import '../../config/style.dart';
 
 class CustomTextField extends StatelessWidget {
   final String title;

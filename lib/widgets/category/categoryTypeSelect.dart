@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/style.dart';
-import 'package:setthi/model/categoryType.dart';
+import '../../config/color.dart';
+import '../../config/style.dart';
+import '../../model/categoryType.dart';
 
 class CategoryTypeSelect extends StatelessWidget {
   final String text;

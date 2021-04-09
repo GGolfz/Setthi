@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:setthi/config/style.dart';
-import 'package:setthi/provider/categoryProvider.dart';
+import '../../config/style.dart';
+import '../../provider/categoryProvider.dart';
 
-class CustomDropDown extends StatelessWidget {
+class TransactionDropDown extends StatelessWidget {
   final String title;
   final dynamic currentValue;
   final List<dynamic> items;
   final Function onChanged;
-  CustomDropDown(
+  TransactionDropDown(
       {@required this.title,
       @required this.currentValue,
       @required this.items,

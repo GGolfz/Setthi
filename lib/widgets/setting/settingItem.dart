@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/style.dart';
+import '../../config/color.dart';
+import '../../config/style.dart';
 
 class SettingItem extends StatelessWidget {
   final IconData icon;
