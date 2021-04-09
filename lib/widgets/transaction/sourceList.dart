@@ -29,6 +29,8 @@ class SourceList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScrollSnapList(
       onItemFocus: (val) {
+        print('val is');
+        print(val);
         onSelect(sources[val]);
       },
       itemSize: 176,

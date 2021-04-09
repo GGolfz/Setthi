@@ -30,6 +30,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   CategoryType _test = CategoryType.Income;
   WalletItem selectedWallet = WalletItem.defaultWallet;
   SourceItem selectedSource = SourceItem.defaultSource;
+  SourceType sourceType = SourceType.wallet;
   TextEditingController _title = TextEditingController();
   TextEditingController _amount = TextEditingController();
   Category _category = null;
@@ -60,10 +61,14 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   }
 
   void _fetchFirstWallet() async {
-    await Provider.of<WalletProvider>(context, listen: false).fetchWallet();
-    if (!Provider.of<WalletProvider>(context, listen: false).isEmpty()) {
-      selectedWallet =
-          Provider.of<WalletProvider>(context, listen: false).wallets[0];
+    final walletProvider = Provider.of<WalletProvider>(context, listen: false);
+    await walletProvider.fetchWallet();
+    if (walletProvider.wallets.isNotEmpty) {
+      selectedSource = SourceItem(
+          id: walletProvider.wallets[0].id,
+          title: walletProvider.wallets[0].title,
+          amount: walletProvider.wallets[0].amount,
+          sourceType: SourceType.wallet);
     }
   }
 
@@ -142,7 +147,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                                             wallet.wallets, saving.saving),
                                         onSelect: (id) {
                                           setState(() {
-                                            selectedWallet = id;
+                                            selectedSource = id;
                                           });
                                         },
                                       )),
