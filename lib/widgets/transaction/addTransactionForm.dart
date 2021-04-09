@@ -155,7 +155,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                                   kSizedBoxVerticalXXS,
                                   Container(
                                       width: double.infinity,
-                                      height: 75,
+                                      height: 90,
                                       child: SourceList(
                                         selected: selectedSource,
                                         sources: getSources(

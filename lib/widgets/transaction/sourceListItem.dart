@@ -15,7 +15,7 @@ class SourceListItem extends StatelessWidget {
       margin: EdgeInsets.all(kSizeXS),
       padding: EdgeInsets.all(kSizeXXS),
       width: 160,
-      height: 50,
+      height: 85,
       decoration: BoxDecoration(
           color: isSelect ? kGold300Fade : kNeutral100,
           border: isSelect ? Border.all(color: kGold300, width: 2) : null),
@@ -25,6 +25,11 @@ class SourceListItem extends StatelessWidget {
         children: [
           Text(
             source.title,
+            style: kBody1Black.copyWith(
+                fontWeight: FontWeight.w600, color: kNeutral450),
+          ),
+          Text(
+            '(${source.sourceLabel})',
             style: kBody1Black.copyWith(
                 fontWeight: FontWeight.w600, color: kNeutral350),
           ),

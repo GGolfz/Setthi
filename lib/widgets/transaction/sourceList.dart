@@ -14,6 +14,10 @@ class SourceItem {
       @required this.title,
       @required this.amount,
       @required this.sourceType});
+  String get sourceLabel {
+    return sourceType == SourceType.saving ? 'Saving' : 'Wallet';
+  }
+
   static SourceItem get defaultSource {
     return SourceItem(
         id: 0, title: '', amount: 0, sourceType: SourceType.wallet);
