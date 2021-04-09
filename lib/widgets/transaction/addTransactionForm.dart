@@ -37,6 +37,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   DateTime _dateTime = DateTime.now();
   Category _category = null;
   Saving _saving = null;
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -118,22 +119,24 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   }
 
   Future<void> submitForm() async {
-    // print('title ${_title.text}');
-    // print('amount ${_amount.text}');
-    // print('date is ${_dateTime.toIso8601String()}');
-
-    // print('Transation type ${_current.toString()}');
-    // print('category id ${_category.id}');
-    // print('source type is ${sourceType.toString()}');
-    // print('Source id is ${selectedSource.id}');
+    print('from form saving id is ${_saving.id}');
     final tsProvider = Provider.of<TransactionProvider>(context, listen: false);
-    await tsProvider.createTransaction(
-        title: _title.text,
-        amount: double.tryParse(_amount.text),
-        category: _category,
-        transactionType: _current,
-        selectedSource: selectedSource,
-        dateTime: _dateTime);
+    setState(() => _isLoading = true);
+    try {
+      await tsProvider.createTransaction(
+          title: _title.text,
+          amount: double.tryParse(_amount.text),
+          category: _category,
+          transactionType: _current,
+          selectedSource: selectedSource,
+          dateTime: _dateTime,
+          saving: _saving);
+      setState(() => _isLoading = false);
+      Navigator.of(context).pop();
+    } on HttpException catch (error) {
+      setState(() => _isLoading = false);
+      print(error.message);
+    }
   }
 
   Widget _renderForm(context) {
@@ -238,11 +241,10 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
               kSizedBoxVerticalXS,
               CustomDropDown(
                 title: 'Category',
-                currentValue: _category == null
-                    ? _category
-                    : category.getCategoriesByType(categoryType)[0],
+                currentValue: _category,
                 items: category.getCategoriesByType(categoryType),
                 onChanged: (val) {
+                  print('val is $val');
                   setState(() => _category = val);
                 },
               ),
@@ -253,6 +255,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                   currentValue: _saving,
                   items: saving.saving.inProcess,
                   onChanged: (val) {
+                    print('val is $val');
                     setState(() => _saving = val);
                   },
                 ),
@@ -276,6 +279,14 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
     );
   }
 
+  void changeType(TransactionType value) {
+    final ctProvider = Provider.of<CategoryProvider>(context, listen: false);
+    setState(() {
+      _current = value;
+      _category = ctProvider.getCategoriesByType(categoryType)[0];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -286,7 +297,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
           SelectTypeBar(
               current: _current,
               onChange: (value) {
-                setState(() => _current = value);
+                setState(() => changeType(value));
               }),
           kSizedBoxVerticalXS,
           Container(
