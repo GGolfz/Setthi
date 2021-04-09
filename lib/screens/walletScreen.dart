@@ -55,6 +55,8 @@ class _WalletScreenState extends State<WalletScreen> {
   void fetchWallet() async {
     try {
       await Provider.of<WalletProvider>(context, listen: false).fetchWallet();
+      await Provider.of<WalletProvider>(context, listen: false)
+          .fetchExpenseChart();
     } on HttpException catch (error) {
       showErrorDialog(
           context: context,
@@ -62,6 +64,7 @@ class _WalletScreenState extends State<WalletScreen> {
           isNetwork: error.isInternetProblem);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<WalletProvider>(
@@ -82,7 +85,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           Text('Your expense', style: kHeadline3Black),
                           kSizedBoxVerticalXXS,
                           Container(
-                            child: LineChartSample2(),
+                            child: ExpenseChart(),
                             height: 170,
                           )
                         ],
