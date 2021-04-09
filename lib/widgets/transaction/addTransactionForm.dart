@@ -6,6 +6,7 @@ import 'package:setthi/config/constants.dart';
 import 'package:setthi/config/style.dart';
 import 'package:setthi/model/categoryType.dart';
 import 'package:setthi/model/httpException.dart';
+import 'package:setthi/model/labelType.dart';
 import 'package:setthi/model/transactionType.dart';
 import 'package:setthi/provider/categoryProvider.dart';
 import 'package:setthi/provider/labelProvider.dart';
@@ -103,6 +104,15 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
     return _current == TransactionType.Income ? 'Destination' : 'Source';
   }
 
+  LabelType get labelType {
+    return {
+      TransactionType.Expense: LabelType.Expense,
+      TransactionType.Saving: LabelType.Expense,
+      TransactionType.ExpenseFromSaving: LabelType.Expense,
+      TransactionType.Income: LabelType.Income,
+    }[_current];
+  }
+
   Widget _renderForm(context) {
     return Consumer<WalletProvider>(
       builder: (ctx, wallet, _) => Consumer<CategoryProvider>(
@@ -190,7 +200,8 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                                       width: 300,
                                       child: ListView(
                                         scrollDirection: Axis.horizontal,
-                                        children: label.labels
+                                        children: label
+                                            .getLabelByType(labelType)
                                             .map(
                                               (e) => GestureDetector(
                                                 child: Container(
