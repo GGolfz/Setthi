@@ -64,16 +64,6 @@ class TransactionProvider with ChangeNotifier {
     Saving saving,
   }) async {
     try {
-      print('title ${title}');
-      print('amount ${amount}');
-      print('date is ${dateTime.toIso8601String()}');
-
-      print('Transation type ${transactionType.toString()}');
-      print('category id ${category.id}');
-
-      print('Source id is ${selectedSource.id}');
-      print('Source Type is ${selectedSource.sourceType}');
-      print('Saving id is ${saving.id}');
       var response;
       var baseData = {
         "title": title,
@@ -106,8 +96,6 @@ class TransactionProvider with ChangeNotifier {
             response = await Dio().post(apiEndpoint + '/transaction/saving',
                 data: data, options: options);
             break;
-          default:
-            print('default');
         }
       } on DioError catch (error) {
         print(error.message);

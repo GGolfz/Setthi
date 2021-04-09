@@ -199,9 +199,14 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                         .map(
                           (e) => GestureDetector(
                             child: Container(
-                              child: Text(e.name),
+                              decoration: BoxDecoration(
+                                color: kGold200,
+                                borderRadius: kBorderRadiusXS,
+                              ),
+                              child: Text(e.name, style: kBody2Black),
                               padding: EdgeInsets.symmetric(
-                                  vertical: 1, horizontal: 2),
+                                  vertical: 2, horizontal: 5),
+                              margin: EdgeInsets.only(right: 5),
                             ),
                             onTap: () {
                               _title.text = e.name;
