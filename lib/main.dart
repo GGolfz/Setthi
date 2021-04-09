@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:setthi/provider/categoryProvider.dart';
 import 'package:setthi/provider/labelProvider.dart';
 import 'package:setthi/provider/transactionProvider.dart';
+import 'package:setthi/screens/settingScreen.dart';
 import './config/color.dart';
 import './provider/authenicateProvider.dart';
 import './provider/walletProvider.dart';
@@ -79,6 +80,7 @@ class SetthiApp extends StatelessWidget {
           CategoryScreen.routeName: (ctx) => CategoryScreen(),
           LabelScreen.routeName: (ctx) => LabelScreen(),
           TransactionScreen.routeName: (ctx) => TransactionScreen(),
+          SettingScreen.routeName: (ctx) => SettingScreen(),
         },
       ),
     );
