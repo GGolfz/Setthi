@@ -61,35 +61,23 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   }
 
   CategoryType get categoryType {
-    switch (_current) {
-      case TransactionType.Income:
-        return CategoryType.Income;
-        break;
-      case TransactionType.Expense:
-        return CategoryType.Expense;
-        break;
-      default:
-        return null;
-    }
+    if (_current == TransactionType.Income) return CategoryType.Income;
+    return CategoryType.Expense;
   }
 
   Widget _renderForm(context) {
-    switch (_current) {
-      case TransactionType.Income:
-      case TransactionType.Expense:
-      case TransactionType.Saving:
-      default:
-        return Consumer<WalletProvider>(
-          builder: (ctx, wallet, _) => Consumer<CategoryProvider>(
-            builder: (ctx, category, _) => Container(
-              height: 504,
-              child: wallet.isEmpty() ||
-                      (_current != TransactionType.Saving &&
-                          category.getCategoriesByType(categoryType).isEmpty)
-                  ? Container()
-                  : Wrap(children: [
-                      SingleChildScrollView(
-                          child: Column(
+    return Consumer<WalletProvider>(
+      builder: (ctx, wallet, _) => Consumer<CategoryProvider>(
+        builder: (ctx, category, _) => Container(
+          height: 504,
+          child: wallet.isEmpty() ||
+                  (_current != TransactionType.Saving &&
+                      category.getCategoriesByType(categoryType).isEmpty)
+              ? Container()
+              : Wrap(
+                  children: [
+                    SingleChildScrollView(
+                      child: Column(
                         children: [
                           kSizedBoxVerticalXS,
                           Row(
@@ -182,18 +170,16 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                             ],
                           ),
                           kSizedBoxVerticalXS,
-                          if (_current != TransactionType.Saving)
-                            CategoryDropDown(
-                                title: 'Category',
-                                currentValue: _category == null
-                                    ? _category
-                                    : category
-                                        .getCategoriesByType(categoryType)[0],
-                                items:
-                                    category.getCategoriesByType(categoryType),
-                                onChanged: (val) {
-                                  setState(() => _category = val);
-                                }),
+                          CategoryDropDown(
+                            title: 'Category',
+                            currentValue: _category == null
+                                ? _category
+                                : category.getCategoriesByType(categoryType)[0],
+                            items: category.getCategoriesByType(categoryType),
+                            onChanged: (val) {
+                              setState(() => _category = val);
+                            },
+                          ),
                           kSizedBoxVerticalXS,
                           CustomDatePicker(
                               title: 'Date',
@@ -205,31 +191,32 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                             color: kGold300,
                           )
                         ],
-                      ))
-                    ]),
-            ),
-          ),
-        );
-    }
+                      ),
+                    )
+                  ],
+                ),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 550,
-        width: 400,
-        child: SingleChildScrollView(
-            child: Column(
+      height: 550,
+      width: 400,
+      child: SingleChildScrollView(
+        child: Column(
           children: [
             SelectTypeBar(
                 current: _current,
                 onChange: (value) {
-                  setState(() {
-                    _current = value;
-                  });
+                  setState(() => _current = value);
                 }),
-            _renderForm(context)
+            _renderForm(context),
           ],
-        )));
+        ),
+      ),
+    );
   }
 }
