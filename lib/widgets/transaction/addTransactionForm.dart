@@ -73,24 +73,24 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   }
 
   List<SourceItem> getSources(wallets, savings) {
-    List<SourceItem> sources = [
-      ...(wallets.map(
-        (el) => SourceItem(
-            id: el.id,
-            title: el.title,
-            amount: el.amount,
-            sourceType: SourceType.wallet),
-      )),
-      ...(savings.finish.map(
-        (el) => SourceItem(
-            id: el.id,
-            title: el.title,
-            amount: el.amount,
-            sourceType: SourceType.saving),
-      ))
+    List<SourceItem> walletSources = [
+      ...wallets.map((el) => SourceItem(
+          id: el.id,
+          title: el.title,
+          amount: el.amount,
+          sourceType: SourceType.wallet))
     ];
-
-    return sources;
+    List<SourceItem> savingSources = [
+      ...savings.finish.map((el) => SourceItem(
+          id: el.id,
+          title: el.title,
+          amount: el.amount,
+          sourceType: SourceType.saving))
+    ];
+    List<SourceItem> sources = [...walletSources, ...savingSources];
+    if (_current == TransactionType.Expense ||
+        _current == TransactionType.ExpenseFromSaving) return sources;
+    return walletSources;
   }
 
   Widget _renderForm(context) {
