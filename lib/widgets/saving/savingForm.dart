@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/config/string.dart';
 import '../buttons/actionButton.dart';
 import '../form/customDatePicker.dart';
 import '../form/customFormTitle.dart';
@@ -61,13 +64,14 @@ class _SavingFormState extends State<SavingForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 415,
-      width: 400,
-      child: Form(
+      height: max(MediaQuery.of(context).size.height * 0.5, 415),
+      width: MediaQuery.of(context).size.width * 0.8,
+      child: SingleChildScrollView(
+          child: Form(
         key: _formKey,
         child: Column(
           children: [
-            CustomFormTitle(title: 'Create New Budget'),
+            CustomFormTitle(title: createBudgetText),
             kSizedBoxVerticalS,
             CustomTextField(
               title: 'Title',
@@ -99,7 +103,7 @@ class _SavingFormState extends State<SavingForm> {
             ),
           ],
         ),
-      ),
+      )),
     );
   }
 }
