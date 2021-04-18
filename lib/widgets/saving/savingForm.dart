@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../buttons/actionButton.dart';
@@ -61,9 +63,10 @@ class _SavingFormState extends State<SavingForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 415,
-      width: 400,
-      child: Form(
+      height: max(MediaQuery.of(context).size.height * 0.5, 415),
+      width: MediaQuery.of(context).size.width * 0.8,
+      child: SingleChildScrollView(
+          child: Form(
         key: _formKey,
         child: Column(
           children: [
@@ -99,7 +102,7 @@ class _SavingFormState extends State<SavingForm> {
             ),
           ],
         ),
-      ),
+      )),
     );
   }
 }
