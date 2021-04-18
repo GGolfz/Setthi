@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/config/string.dart';
 import '../config/constants.dart';
 import '../model/httpException.dart';
 import '../provider/savingProvider.dart';
@@ -29,7 +30,7 @@ class _SavingScreenState extends State<SavingScreen> {
             margin: EdgeInsets.symmetric(
                 horizontal: kSizeM * 1.8, vertical: kSizeS),
             child: ActionButton(
-              text: "Create a new saving",
+              text: createBudgetText,
               onPressed: () {
                 showCustomDialog(context: context, content: SavingForm());
               },

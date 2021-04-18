@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/config/string.dart';
 import '../buttons/actionButton.dart';
 import '../form/customDatePicker.dart';
 import '../form/customFormTitle.dart';
@@ -70,7 +71,7 @@ class _SavingFormState extends State<SavingForm> {
         key: _formKey,
         child: Column(
           children: [
-            CustomFormTitle(title: 'Create New Budget'),
+            CustomFormTitle(title: createBudgetText),
             kSizedBoxVerticalS,
             CustomTextField(
               title: 'Title',
