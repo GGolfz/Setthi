@@ -27,10 +27,6 @@ class _SavingFormState extends State<SavingForm> {
         startDay != null &&
         lastDay != null) {
       try {
-        print(_title.text);
-        print(_maxBudget.text);
-        print(startDay);
-        print(lastDay);
         _formKey.currentState.save();
         await Provider.of<SavingProvider>(context, listen: false)
             .addSaving(_title.text, _maxBudget.text, startDay, lastDay);

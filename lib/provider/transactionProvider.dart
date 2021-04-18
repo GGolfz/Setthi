@@ -72,34 +72,30 @@ class TransactionProvider with ChangeNotifier {
         "wallet_id": selectedSource.id,
       };
       var options = Options(headers: {"Authorization": "Bearer " + _token});
-      try {
-        switch (transactionType) {
-          case TransactionType.Income:
-            response = await Dio().post(apiEndpoint + '/transaction/income',
+      switch (transactionType) {
+        case TransactionType.Income:
+          response = await Dio().post(apiEndpoint + '/transaction/income',
+              data: baseData, options: options);
+          break;
+        case TransactionType.Expense:
+        case TransactionType.ExpenseFromSaving:
+          if (selectedSource.sourceType == SourceType.wallet) {
+            response = await Dio().post(apiEndpoint + '/transaction/expense',
                 data: baseData, options: options);
-            break;
-          case TransactionType.Expense:
-          case TransactionType.ExpenseFromSaving:
-            if (selectedSource.sourceType == SourceType.wallet) {
-              response = await Dio().post(apiEndpoint + '/transaction/expense',
-                  data: baseData, options: options);
-            } else {
-              response = await Dio().post(
-                  apiEndpoint + '/transaction/expense-saving',
-                  data: baseData,
-                  options: options);
-            }
-            break;
-          case TransactionType.Saving:
-            var data = {...baseData, "saving_id": saving.id};
-            response = await Dio().post(apiEndpoint + '/transaction/saving',
-                data: data, options: options);
-            break;
-        }
-        _transactions = modifyResponse(response.data.toList());
-      } on DioError catch (error) {
-        print(error.message);
+          } else {
+            response = await Dio().post(
+                apiEndpoint + '/transaction/expense-saving',
+                data: baseData,
+                options: options);
+          }
+          break;
+        case TransactionType.Saving:
+          var data = {...baseData, "saving_id": saving.id};
+          response = await Dio().post(apiEndpoint + '/transaction/saving',
+              data: data, options: options);
+          break;
       }
+      _transactions = modifyResponse(response.data.toList());
       notifyListeners();
     } catch (error) {
       if (error.response == null) throw HttpException(internetException);
