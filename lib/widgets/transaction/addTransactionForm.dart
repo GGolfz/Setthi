@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/utils/keyboards.dart';
 import 'selectTypeBar.dart';
 import 'sourceList.dart';
 import 'transactionDropdown.dart';
@@ -290,24 +291,29 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 550,
-      width: 400,
-      child: Column(
-        children: [
-          SelectTypeBar(
-              current: _current,
-              onChange: (value) {
-                setState(() => changeType(value));
-              }),
-          kSizedBoxVerticalXS,
-          Container(
-            height: 504,
-            child: SingleChildScrollView(
-              child: _renderForm(context),
-            ),
+        height: MediaQuery.of(context).size.height * 0.65,
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SelectTypeBar(
+                  current: _current,
+                  onChange: (value) {
+                    setState(() => changeType(value));
+                  }),
+              kSizedBoxVerticalXS,
+              Container(
+                height: getKeyboardHeight() == 0
+                    ? MediaQuery.of(context).size.height * 0.58
+                    : (MediaQuery.of(context).size.height -
+                            getKeyboardHeight()) *
+                        0.72,
+                child: SingleChildScrollView(
+                  child: _renderForm(context),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }
