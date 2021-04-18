@@ -7,8 +7,7 @@ const suggestRegisterText = "Create Account";
 const suggestSigninQuestion = "Already have an account ? ";
 const suggestSigninText = "Sign In";
 const createWalletText = "Create a new wallet";
-const createBudgetText = "Create a new budget";
-const noBudgetText = "No budget now :(";
+const createBudgetText = "Create a new saving goal";
 
 const authenticateException = "Please login.";
 const internetException = "Please check your internet connection.";

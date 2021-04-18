@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/config/style.dart';
-import 'package:setthi/model/categoryType.dart';
-import 'package:setthi/model/httpException.dart';
-import 'package:setthi/model/labelType.dart';
-import 'package:setthi/model/transactionType.dart';
-import 'package:setthi/provider/transactionProvider.dart';
-import 'package:setthi/provider/categoryProvider.dart';
-import 'package:setthi/provider/labelProvider.dart';
-import 'package:setthi/provider/savingProvider.dart';
-import 'package:setthi/provider/walletProvider.dart';
-import 'package:setthi/screens/settingScreen.dart';
-import 'package:setthi/widgets/buttons/actionButton.dart';
-import 'package:setthi/widgets/form/customDatePicker.dart';
-import 'package:setthi/widgets/transaction/sourceList.dart';
-import 'customDropDown.dart';
-import 'package:setthi/widgets/form/customTextField.dart';
-import 'package:setthi/widgets/layout/errorDialog.dart';
-import 'package:setthi/widgets/transaction/selectTypeBar.dart';
-import 'package:setthi/widgets/transaction/walletList.dart';
+import 'package:setthi/utils/keyboards.dart';
+import 'selectTypeBar.dart';
+import 'sourceList.dart';
+import 'transactionDropdown.dart';
+import '../buttons/actionButton.dart';
+import '../form/customDatePicker.dart';
+import '../form/customTextField.dart';
+import '../layout/errorDialog.dart';
+import '../../config/color.dart';
+import '../../config/constants.dart';
+import '../../config/style.dart';
+import '../../model/categoryType.dart';
+import '../../model/httpException.dart';
+import '../../model/labelType.dart';
+import '../../model/transactionType.dart';
+import '../../provider/transactionProvider.dart';
+import '../../provider/categoryProvider.dart';
+import '../../provider/labelProvider.dart';
+import '../../provider/savingProvider.dart';
+import '../../provider/walletProvider.dart';
 
 class AddTransactionForm extends StatefulWidget {
   @override
@@ -35,9 +34,9 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   TextEditingController _title = TextEditingController();
   TextEditingController _amount = TextEditingController();
   DateTime _dateTime = DateTime.now();
-  Category _category = null;
-  Saving _saving = null;
-  bool _isLoading = false;
+  Category _category;
+  Saving _saving;
+  bool _isLoading;
   @override
   void initState() {
     super.initState();
@@ -119,7 +118,6 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   }
 
   Future<void> submitForm() async {
-    print('from form saving id is ${_saving.id}');
     final tsProvider = Provider.of<TransactionProvider>(context, listen: false);
     setState(() => _isLoading = true);
     try {
@@ -135,7 +133,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
       Navigator.of(context).pop();
     } on HttpException catch (error) {
       setState(() => _isLoading = false);
-      print(error.message);
+      // Handle Error Here
     }
   }
 
@@ -244,23 +242,21 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                 ],
               ),
               kSizedBoxVerticalXS,
-              CustomDropDown(
+              TransactionDropDown(
                 title: 'Category',
                 currentValue: _category,
                 items: category.getCategoriesByType(categoryType),
                 onChanged: (val) {
-                  print('val is $val');
                   setState(() => _category = val);
                 },
               ),
               kSizedBoxVerticalXS,
               if (_current == TransactionType.Saving)
-                CustomDropDown(
+                TransactionDropDown(
                   title: 'Saving',
                   currentValue: _saving,
                   items: saving.saving.inProcess,
                   onChanged: (val) {
-                    print('val is $val');
                     setState(() => _saving = val);
                   },
                 ),
@@ -295,24 +291,29 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 550,
-      width: 400,
-      child: Column(
-        children: [
-          SelectTypeBar(
-              current: _current,
-              onChange: (value) {
-                setState(() => changeType(value));
-              }),
-          kSizedBoxVerticalXS,
-          Container(
-            height: 504,
-            child: SingleChildScrollView(
-              child: _renderForm(context),
-            ),
+        height: MediaQuery.of(context).size.height * 0.65,
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SelectTypeBar(
+                  current: _current,
+                  onChange: (value) {
+                    setState(() => changeType(value));
+                  }),
+              kSizedBoxVerticalXS,
+              Container(
+                height: getKeyboardHeight() == 0
+                    ? MediaQuery.of(context).size.height * 0.58
+                    : (MediaQuery.of(context).size.height -
+                            getKeyboardHeight()) *
+                        0.72,
+                child: SingleChildScrollView(
+                  child: _renderForm(context),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }

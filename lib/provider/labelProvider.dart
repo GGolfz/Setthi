@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:setthi/config/api.dart';
-import 'package:setthi/config/string.dart';
-import 'package:setthi/model/labelType.dart';
-import 'package:setthi/model/httpException.dart';
+import '../config/api.dart';
+import '../config/string.dart';
+import '../model/labelType.dart';
+import '../model/httpException.dart';
 
 class Label {
   int id;

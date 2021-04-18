@@ -15,9 +15,14 @@ class BalanceBox extends StatelessWidget {
         kSizedBoxVerticalS,
         Text('Balance', style: kHeadline2Black),
         kSizedBoxVerticalS,
-        Text(
-          "$currency ${formatCurrencyString(balance)}",
-          style: kHeadline1Black,
+        Container(
+          child: FittedBox(
+              child: Text(
+                "$currency ${formatCurrencyString(balance)}",
+                style: kHeadline1Black,
+              ),
+              fit: BoxFit.fitWidth),
+          width: MediaQuery.of(context).size.width * 0.7,
         ),
         kSizedBoxVerticalS,
       ],

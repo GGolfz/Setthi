@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:setthi/model/transactionType.dart';
-import 'package:setthi/provider/transactionProvider.dart';
+import '../../model/transactionType.dart';
+import '../../provider/transactionProvider.dart';
 import '../../config/color.dart';
 import '../../config/constants.dart';
 import '../../config/style.dart';
-import 'package:setthi/utils/format.dart';
+import '../../utils/format.dart';
 
 class AllTransactionItem extends StatelessWidget {
   final TransactionItem item;

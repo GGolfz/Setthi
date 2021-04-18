@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/model/formType.dart';
-import 'package:setthi/model/labelType.dart';
-import 'package:setthi/provider/labelProvider.dart';
-import 'package:setthi/widgets/buttons/actionButton.dart';
-import 'package:setthi/widgets/label/labelForm.dart';
-import 'package:setthi/widgets/label/labelItem.dart';
-import 'package:setthi/widgets/label/labelTypeSelect.dart';
-import 'package:setthi/widgets/layout/appBar.dart';
-import 'package:setthi/widgets/layout/customDialog.dart';
-import 'package:setthi/widgets/layout/divider.dart';
+import '../config/constants.dart';
+import '../model/formType.dart';
+import '../model/labelType.dart';
+import '../provider/labelProvider.dart';
+import '../widgets/buttons/actionButton.dart';
+import '../widgets/label/labelForm.dart';
+import '../widgets/label/labelItem.dart';
+import '../widgets/label/labelTypeSelect.dart';
+import '../widgets/layout/appBar.dart';
+import '../widgets/layout/customDialog.dart';
+import '../widgets/layout/divider.dart';
 
 class LabelScreen extends StatefulWidget {
   static const routeName = '/label';
@@ -68,7 +68,7 @@ class _LabelScreenState extends State<LabelScreen> {
               _buildSelection(),
               kSizedBoxVerticalS,
               Container(
-                height: 560,
+                height: MediaQuery.of(context).size.height * 0.67,
                 child: Consumer<LabelProvider>(builder: (ctx, labels, _) {
                   final labelList = labels.getLabelByType(_status);
                   return ListView.separated(

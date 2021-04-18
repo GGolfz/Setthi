@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:setthi/config/api.dart';
-import 'package:setthi/config/string.dart';
-import 'package:setthi/model/httpException.dart';
-import 'package:setthi/utils/format.dart';
+import '../config/api.dart';
+import '../config/string.dart';
+import '../model/httpException.dart';
+import '../utils/format.dart';
 
 class WalletItem {
   final int id;
@@ -78,7 +78,6 @@ class WalletProvider with ChangeNotifier {
           response.data["top"].toDouble(), response.data["data"].toList());
       notifyListeners();
     } catch (error) {
-      print(error);
       if (error.response == null) throw HttpException(internetException);
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
@@ -88,12 +87,8 @@ class WalletProvider with ChangeNotifier {
 
   ChartData modifyExpenseChartResponse(double top, List<dynamic> data) {
     List<ChartDataPoint> dataPoints = [];
-    try {
-      data.forEach((el) =>
-          dataPoints.add(ChartDataPoint(el["date"], el["amount"].toDouble())));
-    } catch (error) {
-      print(error);
-    }
+    data.forEach((el) =>
+        dataPoints.add(ChartDataPoint(el["date"], el["amount"].toDouble())));
     return ChartData(top, dataPoints);
   }
 

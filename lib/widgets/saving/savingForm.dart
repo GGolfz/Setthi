@@ -1,14 +1,17 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/config/constants.dart';
-import 'package:setthi/model/httpException.dart';
-import 'package:setthi/widgets/buttons/actionButton.dart';
-import 'package:setthi/widgets/form/customDatePicker.dart';
-import 'package:setthi/widgets/form/customFormTitle.dart';
-import 'package:setthi/widgets/form/customTextField.dart';
+import 'package:setthi/config/string.dart';
+import '../buttons/actionButton.dart';
+import '../form/customDatePicker.dart';
+import '../form/customFormTitle.dart';
+import '../form/customTextField.dart';
+import '../layout/errorDialog.dart';
+import '../../config/color.dart';
+import '../../config/constants.dart';
+import '../../model/httpException.dart';
 import '../../provider/savingProvider.dart';
-import '../../widgets/layout/errorDialog.dart';
 
 class SavingForm extends StatefulWidget {
   @override
@@ -27,10 +30,6 @@ class _SavingFormState extends State<SavingForm> {
         startDay != null &&
         lastDay != null) {
       try {
-        print(_title.text);
-        print(_maxBudget.text);
-        print(startDay);
-        print(lastDay);
         _formKey.currentState.save();
         await Provider.of<SavingProvider>(context, listen: false)
             .addSaving(_title.text, _maxBudget.text, startDay, lastDay);
@@ -65,13 +64,14 @@ class _SavingFormState extends State<SavingForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 415,
-      width: 400,
-      child: Form(
+      height: max(MediaQuery.of(context).size.height * 0.5, 415),
+      width: MediaQuery.of(context).size.width * 0.8,
+      child: SingleChildScrollView(
+          child: Form(
         key: _formKey,
         child: Column(
           children: [
-            CustomFormTitle(title: 'Create New Budget'),
+            CustomFormTitle(title: createBudgetText),
             kSizedBoxVerticalS,
             CustomTextField(
               title: 'Title',
@@ -103,7 +103,7 @@ class _SavingFormState extends State<SavingForm> {
             ),
           ],
         ),
-      ),
+      )),
     );
   }
 }

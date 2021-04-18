@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/model/httpException.dart';
-import '../config/style.dart';
-import '../widgets/wallet/emptyWallet.dart';
-import '../widgets/wallet/walletCard.dart';
-import '../provider/walletProvider.dart';
-import '../widgets/layout/appBar.dart';
-import '../widgets/layout/customDialog.dart';
-import '../widgets/buttons/actionButton.dart';
-import '../widgets/wallet/newWalletForm.dart';
-import '../widgets/wallet/editWalletForm.dart';
-import '../widgets/wallet/expenseChart.dart';
-import '../utils/format.dart';
 import '../config/constants.dart';
 import '../config/color.dart';
+import '../config/style.dart';
+import '../model/httpException.dart';
+import '../provider/walletProvider.dart';
+import '../utils/format.dart';
+import '../widgets/buttons/actionButton.dart';
+import '../widgets/layout/appBar.dart';
+import '../widgets/layout/customDialog.dart';
 import '../widgets/layout/errorDialog.dart';
+import '../widgets/wallet/editWalletForm.dart';
+import '../widgets/wallet/emptyWallet.dart';
+import '../widgets/wallet/expenseChart.dart';
+import '../widgets/wallet/newWalletForm.dart';
+import '../widgets/wallet/walletCard.dart';
 
 class WalletScreen extends StatefulWidget {
   static final routeName = '/wallet';
@@ -86,7 +86,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           kSizedBoxVerticalXXS,
                           Container(
                             child: ExpenseChart(),
-                            height: 170,
+                            height: MediaQuery.of(context).size.height * 0.22,
                           )
                         ],
                       ),
@@ -94,7 +94,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       wallet.isEmpty()
                           ? EmptyWallet()
                           : Container(
-                              height: 310,
+                              height: MediaQuery.of(context).size.height * 0.35,
                               child: ListView.builder(
                                 itemBuilder: (ctx, index) => WalletCard(
                                   item: wallet.wallets[index],

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/model/httpException.dart';
-import 'package:setthi/widgets/buttons/actionButton.dart';
-import 'package:setthi/widgets/layout/customDialog.dart';
-import 'package:setthi/widgets/saving/savingItem.dart';
-import 'package:setthi/widgets/saving/savingTitleToggle.dart';
+import 'package:setthi/config/string.dart';
 import '../config/constants.dart';
+import '../model/httpException.dart';
+import '../provider/savingProvider.dart';
+import '../widgets/buttons/actionButton.dart';
 import '../widgets/layout/appBar.dart';
+import '../widgets/layout/customDialog.dart';
+import '../widgets/layout/errorDialog.dart';
 import '../widgets/saving/savingForm.dart';
 import '../widgets/saving/savingItem.dart';
-import '../provider/savingProvider.dart';
-import '../widgets/layout/errorDialog.dart';
+import '../widgets/saving/savingTitleToggle.dart';
 
 class SavingScreen extends StatefulWidget {
   static final routeName = '/saving';
@@ -30,7 +30,7 @@ class _SavingScreenState extends State<SavingScreen> {
             margin: EdgeInsets.symmetric(
                 horizontal: kSizeM * 1.8, vertical: kSizeS),
             child: ActionButton(
-              text: "Create a new saving",
+              text: createBudgetText,
               onPressed: () {
                 showCustomDialog(context: context, content: SavingForm());
               },
@@ -78,7 +78,8 @@ class _SavingScreenState extends State<SavingScreen> {
                                   ],
                                 )
                               : Container(
-                                  height: 500,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.6,
                                   child: ListView(
                                     children: [
                                       SavingTitleToggle(

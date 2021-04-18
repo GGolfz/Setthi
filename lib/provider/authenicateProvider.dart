@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:setthi/config/api.dart';
-import 'package:setthi/config/string.dart';
-import 'package:setthi/model/httpException.dart';
+import '../config/api.dart';
+import '../config/string.dart';
+import '../model/httpException.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticateProvider with ChangeNotifier {

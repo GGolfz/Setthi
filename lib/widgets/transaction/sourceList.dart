@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
-import 'package:setthi/widgets/transaction/sourceListItem.dart';
+import 'sourceListItem.dart';
 
 enum SourceType { wallet, saving }
 
@@ -33,8 +33,6 @@ class SourceList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScrollSnapList(
       onItemFocus: (val) {
-        print('val is');
-        print(val);
         onSelect(sources[val]);
       },
       itemSize: 176,

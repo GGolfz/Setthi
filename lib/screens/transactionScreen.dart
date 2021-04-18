@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:setthi/config/color.dart';
-import 'package:setthi/model/httpException.dart';
-import 'package:setthi/provider/transactionProvider.dart';
-import 'package:setthi/widgets/layout/errorDialog.dart';
-import '../widgets/layout/appBar.dart';
-import '../widgets/timeline/alltransactionItem.dart';
+import '../config/color.dart';
+import '../model/httpException.dart';
 import '../provider/transactionProvider.dart';
+import '../widgets/layout/appBar.dart';
+import '../widgets/layout/errorDialog.dart';
+import '../widgets/timeline/alltransactionItem.dart';
 
 class TransactionScreen extends StatefulWidget {
   static const routeName = '/transactions';
