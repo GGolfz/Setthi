@@ -86,7 +86,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           kSizedBoxVerticalXXS,
                           Container(
                             child: ExpenseChart(),
-                            height: 170,
+                            height: MediaQuery.of(context).size.height * 0.22,
                           )
                         ],
                       ),
@@ -94,7 +94,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       wallet.isEmpty()
                           ? EmptyWallet()
                           : Container(
-                              height: 310,
+                              height: MediaQuery.of(context).size.height * 0.35,
                               child: ListView.builder(
                                 itemBuilder: (ctx, index) => WalletCard(
                                   item: wallet.wallets[index],
