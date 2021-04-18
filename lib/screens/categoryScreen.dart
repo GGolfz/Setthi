@@ -58,7 +58,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ),
               kSizedBoxVerticalS,
               Container(
-                height: 560,
+                height: MediaQuery.of(context).size.height * 0.67,
                 child:
                     Consumer<CategoryProvider>(builder: (ctx, categories, _) {
                   final categoriesList =

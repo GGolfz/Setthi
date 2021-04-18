@@ -68,7 +68,7 @@ class _LabelScreenState extends State<LabelScreen> {
               _buildSelection(),
               kSizedBoxVerticalS,
               Container(
-                height: 560,
+                height: MediaQuery.of(context).size.height * 0.67,
                 child: Consumer<LabelProvider>(builder: (ctx, labels, _) {
                   final labelList = labels.getLabelByType(_status);
                   return ListView.separated(

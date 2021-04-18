@@ -77,7 +77,8 @@ class _SavingScreenState extends State<SavingScreen> {
                                   ],
                                 )
                               : Container(
-                                  height: 500,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.6,
                                   child: ListView(
                                     children: [
                                       SavingTitleToggle(

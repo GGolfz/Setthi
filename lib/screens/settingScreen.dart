@@ -40,7 +40,8 @@ class _SettingScreenState extends State<SettingScreen> {
   void fetchData() async {
     try {
       await Provider.of<LabelProvider>(context, listen: false).fetchLabels();
-      await Provider.of<CategoryProvider>(context, listen: false).fetchCategories();
+      await Provider.of<CategoryProvider>(context, listen: false)
+          .fetchCategories();
     } on HttpException catch (error) {
       showErrorDialog(
           context: context,
@@ -59,7 +60,7 @@ class _SettingScreenState extends State<SettingScreen> {
             padding: EdgeInsets.all(kSizeS),
             child: Column(children: [
               Container(
-                  height: 500,
+                  height: MediaQuery.of(context).size.height * 0.6,
                   child: ListView(
                     children: [
                       Consumer<LabelProvider>(
