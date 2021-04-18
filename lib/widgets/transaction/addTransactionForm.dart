@@ -117,7 +117,6 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   }
 
   Future<void> submitForm() async {
-    print('from form saving id is ${_saving.id}');
     final tsProvider = Provider.of<TransactionProvider>(context, listen: false);
     setState(() => _isLoading = true);
     try {
@@ -133,7 +132,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
       Navigator.of(context).pop();
     } on HttpException catch (error) {
       setState(() => _isLoading = false);
-      print(error.message);
+      // Handle Error Here
     }
   }
 
@@ -247,7 +246,6 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                 currentValue: _category,
                 items: category.getCategoriesByType(categoryType),
                 onChanged: (val) {
-                  print('val is $val');
                   setState(() => _category = val);
                 },
               ),
@@ -258,7 +256,6 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                   currentValue: _saving,
                   items: saving.saving.inProcess,
                   onChanged: (val) {
-                    print('val is $val');
                     setState(() => _saving = val);
                   },
                 ),
