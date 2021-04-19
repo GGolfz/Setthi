@@ -98,7 +98,7 @@ class WalletProvider with ChangeNotifier {
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _wallets = modifyResponse(response.data.toList());
       notifyListeners();
-    } catch (error) {
+    } on DioError catch (error) {
       if (error.response == null) throw HttpException(internetException);
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
