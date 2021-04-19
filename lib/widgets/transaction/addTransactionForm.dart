@@ -23,6 +23,8 @@ import '../../provider/savingProvider.dart';
 import '../../provider/walletProvider.dart';
 
 class AddTransactionForm extends StatefulWidget {
+  final Function onFinish;
+  AddTransactionForm({@required this.onFinish});
   @override
   _AddTransactionFormState createState() => _AddTransactionFormState();
 }
@@ -130,7 +132,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
           dateTime: _dateTime,
           saving: _saving);
       setState(() => _isLoading = false);
-      Navigator.of(context).pop();
+      widget.onFinish();
     } on HttpException catch (error) {
       setState(() => _isLoading = false);
       // Handle Error Here
