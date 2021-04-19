@@ -5,11 +5,13 @@ class CustomTextField extends StatelessWidget {
   final String title;
   final TextEditingController textEditingController;
   final TextInputType keyboardType;
+  final String alertMessage;
 
   CustomTextField(
       {@required this.title,
       @required this.textEditingController,
-      this.keyboardType = TextInputType.text});
+      this.keyboardType = TextInputType.text,
+      this.alertMessage});
 
   Widget build(BuildContext context) {
     return TextFormField(
@@ -21,7 +23,7 @@ class CustomTextField extends StatelessWidget {
         labelStyle: kSubtitle2Black.copyWith(fontWeight: FontWeight.w600),
       ),
       validator: (value) {
-        if (value.isEmpty) return 'Please enter $title';
+        if (value.isEmpty) return 'Please enter ${alertMessage ?? title.toLowerCase()}';
         return null;
       },
     );
