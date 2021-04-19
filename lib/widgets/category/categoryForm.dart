@@ -34,6 +34,8 @@ class _CategoryFormState extends State<CategoryForm> {
   Color pickerColor;
   Color currentColor;
   var isLoading = false;
+  var isLoadingEdit = false;
+  var isLoadingDelete = false;
   var _formKey = GlobalKey<FormState>();
 
   @override
@@ -98,16 +100,16 @@ class _CategoryFormState extends State<CategoryForm> {
             text: "Delete",
             color: kRed400,
             isOutlined: true,
-            isLoading: isLoading,
+            isLoading: isLoadingDelete,
             onPressed: () async {
               try {
                 setState(() {
-                  isLoading = true;
+                  isLoadingDelete = true;
                 });
                 await Provider.of<CategoryProvider>(context, listen: false)
                     .deleteCategory(widget.labelKey);
                 setState(() {
-                  isLoading = false;
+                  isLoadingDelete = false;
                 });
                 Navigator.of(context).pop();
               } on HttpException catch (error) {
@@ -116,7 +118,7 @@ class _CategoryFormState extends State<CategoryForm> {
                     text: error.message,
                     isNetwork: error.isInternetProblem);
                 setState(() {
-                  isLoading = false;
+                  isLoadingDelete = false;
                 });
               }
             },
@@ -126,18 +128,18 @@ class _CategoryFormState extends State<CategoryForm> {
               child: ActionButton(
             text: "Submit",
             color: kGold300,
-            isLoading: isLoading,
+            isLoading: isLoadingEdit,
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 try {
                   setState(() {
-                    isLoading = true;
+                    isLoadingEdit = true;
                   });
                   await Provider.of<CategoryProvider>(context, listen: false)
                       .editCategory(
                           widget.labelKey, _category.text, currentColor);
                   setState(() {
-                    isLoading = false;
+                    isLoadingEdit = false;
                   });
                   Navigator.of(context).pop();
                 } on HttpException catch (error) {
@@ -146,7 +148,7 @@ class _CategoryFormState extends State<CategoryForm> {
                       text: error.message,
                       isNetwork: error.isInternetProblem);
                   setState(() {
-                    isLoading = false;
+                    isLoadingEdit = false;
                   });
                 }
               }
