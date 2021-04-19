@@ -10,16 +10,18 @@ class ActionButton extends StatelessWidget {
   final Function onPressed;
   final bool isOutlined;
   final bool isFullWidth;
+  final bool isLoading;
   ActionButton(
       {this.text,
       this.onPressed,
       this.color = kNeutral450,
       this.isOutlined = false,
-      this.isFullWidth = false});
+      this.isFullWidth = false,
+      this.isLoading = false});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: isLoading ? () {} : onPressed,
       child: Container(
         height: kSizeM * 1.5,
         width: isFullWidth ? double.infinity : null,
@@ -28,13 +30,15 @@ class ActionButton extends StatelessWidget {
             border: isOutlined ? Border.all(color: color, width: 1) : null,
             color: isOutlined ? kTransparent : color),
         child: Center(
-            child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: kSubtitle1Black.copyWith(
-              color: isOutlined ? color : kNeutralWhite,
-              fontWeight: FontWeight.w600),
-        )),
+            child: isLoading
+                ? CircularProgressIndicator()
+                : Text(
+                    text,
+                    textAlign: TextAlign.center,
+                    style: kSubtitle1Black.copyWith(
+                        color: isOutlined ? color : kNeutralWhite,
+                        fontWeight: FontWeight.w600),
+                  )),
       ),
     );
   }
