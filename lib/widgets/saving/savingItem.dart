@@ -27,16 +27,17 @@ class _SavingItemState extends State<SavingItem> {
               widget.item.title,
               style: kHeadline4Black,
             ),
-            IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () {
-                showCustomDialog(
-                    context: context,
-                    content: SavingEditForm(
-                      selectedSaving: widget.item,
-                    ));
-              },
-            )
+            if (!widget.item.isFinish)
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  showCustomDialog(
+                      context: context,
+                      content: SavingEditForm(
+                        selectedSaving: widget.item,
+                      ));
+                },
+              )
           ]),
           kSizedBoxVerticalXXS,
           Row(
