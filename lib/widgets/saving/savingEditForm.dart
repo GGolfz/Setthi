@@ -18,6 +18,8 @@ class _SavingEditFormState extends State<SavingEditForm> {
   String title = "";
   String amount = "";
   var isLoading = false;
+  var isLoadingEdit = false;
+  var isLoadingDelete = false;
   @override
   void initState() {
     super.initState();
@@ -29,126 +31,130 @@ class _SavingEditFormState extends State<SavingEditForm> {
         new TextEditingController(text: widget.selectedSaving.title);
     TextEditingController _controllerAmount = new TextEditingController(
         text: widget.selectedSaving.targetAmount.toString());
-    return Wrap(children: [
-      Padding(
-        padding: EdgeInsets.all(8),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Edit New Saving',
-                    style: TextStyle(color: kGold500, fontSize: 20),
+    return Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Wrap(children: [
+          Padding(
+            padding: EdgeInsets.all(8),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Edit New Saving',
+                        style: TextStyle(color: kGold500, fontSize: 20),
+                      ),
+                    ],
+                  ),
+                  kSizedBoxVerticalXXS,
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: 'Name',
+                      filled: true,
+                      fillColor: kNeutralWhite,
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                    keyboardType: TextInputType.text,
+                    validator: (value) {
+                      if (value.isEmpty) return 'Title cannot be empty';
+                      return null;
+                    },
+                    controller: _controller,
+                  ),
+                  kSizedBoxVerticalS,
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: 'SavingGoal',
+                      filled: true,
+                      fillColor: kNeutralWhite,
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value.isEmpty) return 'Title cannot be empty';
+                      return null;
+                    },
+                    controller: _controllerAmount,
+                  ),
+                  kSizedBoxVerticalS,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ActionButton(
+                            text: "Delete",
+                            color: kRed400,
+                            isOutlined: true,
+                            isLoading: isLoadingDelete,
+                            onPressed: () async {
+                              try {
+                                setState(() {
+                                  isLoadingDelete = true;
+                                });
+                                await Provider.of<SavingProvider>(context,
+                                        listen: false)
+                                    .deleteSaving(widget.selectedSaving.id);
+                                setState(() {
+                                  isLoadingDelete = false;
+                                });
+                                Navigator.pop(context);
+                              } on HttpException catch (error) {
+                                showErrorDialog(
+                                    context: context,
+                                    text: error.message,
+                                    isNetwork: error.isInternetProblem);
+                                setState(() {
+                                  isLoadingDelete = false;
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                        kSizedBoxHorizontalS,
+                        Expanded(
+                          child: ActionButton(
+                            text: "Submit",
+                            color: kGold300,
+                            isLoading: isLoadingEdit,
+                            onPressed: () async {
+                              try {
+                                setState(() {
+                                  isLoadingEdit = false;
+                                });
+                                await Provider.of<SavingProvider>(context,
+                                        listen: false)
+                                    .editSaving(
+                                        widget.selectedSaving.id,
+                                        _controller.text,
+                                        _controllerAmount.text);
+                                setState(() {
+                                  isLoadingEdit = false;
+                                });
+                                Navigator.pop(context);
+                              } on HttpException catch (error) {
+                                showErrorDialog(
+                                    context: context,
+                                    text: error.message,
+                                    isNetwork: error.isInternetProblem);
+                                setState(() {
+                                  isLoadingEdit = false;
+                                });
+                              }
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
-              kSizedBoxVerticalXXS,
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Name',
-                  filled: true,
-                  fillColor: kNeutralWhite,
-                  contentPadding: EdgeInsets.zero,
-                ),
-                keyboardType: TextInputType.text,
-                validator: (value) {
-                  if (value.isEmpty) return 'Title cannot be empty';
-                  return null;
-                },
-                controller: _controller,
-              ),
-              kSizedBoxVerticalS,
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'SavingGoal',
-                  filled: true,
-                  fillColor: kNeutralWhite,
-                  contentPadding: EdgeInsets.zero,
-                ),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value.isEmpty) return 'Title cannot be empty';
-                  return null;
-                },
-                controller: _controllerAmount,
-              ),
-              kSizedBoxVerticalS,
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ActionButton(
-                        text: "Delete",
-                        color: kRed400,
-                        isOutlined: true,
-                        isLoading: isLoading,
-                        onPressed: () async {
-                          try {
-                            setState(() {
-                              isLoading = true;
-                            });
-                            await Provider.of<SavingProvider>(context,
-                                    listen: false)
-                                .deleteSaving(widget.selectedSaving.id);
-                            setState(() {
-                              isLoading = false;
-                            });
-                            Navigator.pop(context);
-                          } on HttpException catch (error) {
-                            showErrorDialog(
-                                context: context,
-                                text: error.message,
-                                isNetwork: error.isInternetProblem);
-                            setState(() {
-                              isLoading = false;
-                            });
-                          }
-                        },
-                      ),
-                    ),
-                    kSizedBoxHorizontalS,
-                    Expanded(
-                      child: ActionButton(
-                        text: "Submit",
-                        color: kGold300,
-                        isLoading: isLoading,
-                        onPressed: () async {
-                          try {
-                            setState(() {
-                              isLoading = false;
-                            });
-                            await Provider.of<SavingProvider>(context,
-                                    listen: false)
-                                .editSaving(widget.selectedSaving.id,
-                                    _controller.text, _controllerAmount.text);
-                            setState(() {
-                              isLoading = false;
-                            });
-                            Navigator.pop(context);
-                          } on HttpException catch (error) {
-                            showErrorDialog(
-                                context: context,
-                                text: error.message,
-                                isNetwork: error.isInternetProblem);
-                            setState(() {
-                              isLoading = false;
-                            });
-                          }
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
-    ]);
+        ]));
   }
 }
