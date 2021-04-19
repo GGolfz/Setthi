@@ -32,7 +32,11 @@ class _WalletScreenState extends State<WalletScreen> {
         child: ActionButton(
           text: "Create a new wallet",
           onPressed: () {
-            showCustomDialog(context: context, content: NewWalletForm());
+            showCustomDialog(
+                context: context,
+                content: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: NewWalletForm()));
           },
         ),
       ),
@@ -42,7 +46,9 @@ class _WalletScreenState extends State<WalletScreen> {
   void onClickEdit(BuildContext context, WalletItem selectedWallet) {
     showCustomDialog(
       context: context,
-      content: EditWalletForm(selectedWallet: selectedWallet),
+      content: Container(
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: EditWalletForm(selectedWallet: selectedWallet)),
     );
   }
 

@@ -41,7 +41,7 @@ class _EditWalletFormState extends State<EditWalletForm> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Create new wallet',
+                      'Edit wallet',
                       style: TextStyle(color: kGold500, fontSize: 20),
                     ),
                   ],

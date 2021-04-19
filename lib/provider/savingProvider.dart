@@ -142,8 +142,6 @@ class SavingProvider with ChangeNotifier {
     } catch (error) {
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
-      if (error.response.statusCode == 400)
-        throw HttpException(atleastException("Saving"));
       throw HttpException(internetException);
     }
   }
