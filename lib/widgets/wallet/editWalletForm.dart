@@ -17,6 +17,7 @@ class EditWalletForm extends StatefulWidget {
 
 class _EditWalletFormState extends State<EditWalletForm> {
   TextEditingController _title;
+  var isLoading = false;
   @override
   void initState() {
     _title = TextEditingController(text: widget.selectedWallet.title);
@@ -76,10 +77,13 @@ class _EditWalletFormState extends State<EditWalletForm> {
                         child: ActionButton(
                           text: "Submit",
                           color: kGold300,
+                          isLoading: isLoading,
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               try {
-                                _formKey.currentState.save();
+                                setState(() {
+                                  isLoading = true;
+                                });
                                 await Provider.of<WalletProvider>(context,
                                         listen: false)
                                     .editWallet(
@@ -87,12 +91,18 @@ class _EditWalletFormState extends State<EditWalletForm> {
                                   _title.text,
                                   widget.selectedWallet.amount,
                                 );
+                                setState(() {
+                                  isLoading = false;
+                                });
                                 Navigator.pop(context);
                               } on HttpException catch (error) {
                                 showErrorDialog(
                                     context: context,
                                     text: error.message,
                                     isNetwork: error.isInternetProblem);
+                                setState(() {
+                                  isLoading = false;
+                                });
                               }
                             }
                           },

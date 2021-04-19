@@ -99,8 +99,14 @@ class TransactionProvider with ChangeNotifier {
       notifyListeners();
     } catch (error) {
       if (error.response == null) throw HttpException(internetException);
-      if (error.response.statusCode == 400)
-        throw HttpException(overLimitException('On Each Category', 10));
+      if (error.response.statusCode == 400) {
+        if (transactionType == TransactionType.Expense &&
+            selectedSource.sourceType == SourceType.saving)
+          throw HttpException("The amount is does not match the saving amount");
+        if (transactionType == TransactionType.Saving)
+          throw HttpException(
+              "The amount is more than needed to fullfilled the saving");
+      }
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
       throw HttpException(generalException);
@@ -122,7 +128,7 @@ class TransactionProvider with ChangeNotifier {
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _transactions = modifyResponse(response.data);
       notifyListeners();
-    } catch (error) {
+    } on DioError catch (error) {
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
       throw HttpException(internetException);

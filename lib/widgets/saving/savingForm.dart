@@ -22,23 +22,29 @@ class _SavingFormState extends State<SavingForm> {
   final _title = TextEditingController();
   final _maxBudget = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  var isLoading = false;
   DateTime startDay;
   DateTime lastDay;
   void submitData() async {
-    if (_title.text != null &&
-        _maxBudget.text != null &&
-        startDay != null &&
-        lastDay != null) {
+    if (_formKey.currentState.validate()) {
       try {
-        _formKey.currentState.save();
+        setState(() {
+          isLoading = true;
+        });
         await Provider.of<SavingProvider>(context, listen: false)
             .addSaving(_title.text, _maxBudget.text, startDay, lastDay);
+        setState(() {
+          isLoading = false;
+        });
         Navigator.pop(context);
       } on HttpException catch (error) {
         showErrorDialog(
             context: context,
             text: error.message,
             isNetwork: error.isInternetProblem);
+        setState(() {
+          isLoading = false;
+        });
       }
     }
   }
@@ -99,6 +105,7 @@ class _SavingFormState extends State<SavingForm> {
             ActionButton(
               text: "Submit",
               color: kGold300,
+              isLoading: isLoading,
               onPressed: () => submitData(),
             ),
           ],

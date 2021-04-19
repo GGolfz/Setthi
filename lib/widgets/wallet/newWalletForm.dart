@@ -17,6 +17,7 @@ class _NewWalletFormState extends State<NewWalletForm> {
   TextEditingController _title = TextEditingController();
   TextEditingController _amount = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  var isLoading = false;
   InputDecoration buildInputDecoration(String hintText) {
     return InputDecoration(
       filled: true,
@@ -59,20 +60,29 @@ class _NewWalletFormState extends State<NewWalletForm> {
                   child: ActionButton(
                     text: "Submit",
                     color: kGold300,
+                    isLoading: isLoading,
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
                         try {
-                          _formKey.currentState.save();
+                          setState(() {
+                            isLoading = true;
+                          });
                           await Provider.of<WalletProvider>(context,
                                   listen: false)
                               .addWallet(
                                   _title.text, double.tryParse(_amount.text));
+                          setState(() {
+                            isLoading = false;
+                          });
                           Navigator.pop(context);
                         } on HttpException catch (error) {
                           showErrorDialog(
                               context: context,
                               text: error.message,
                               isNetwork: error.isInternetProblem);
+                          setState(() {
+                            isLoading = false;
+                          });
                         }
                       }
                     },
