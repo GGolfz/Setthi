@@ -173,9 +173,9 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                           child: SourceList(
                             selected: selectedSource,
                             sources: getSources(wallet.wallets, saving.saving),
-                            onSelect: (id) {
+                            onSelect: (source) {
                               setState(() {
-                                selectedSource = id;
+                                selectedSource = source;
                               });
                             },
                           )),
@@ -300,9 +300,12 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
 
   void changeType(TransactionType value) {
     final ctProvider = Provider.of<CategoryProvider>(context, listen: false);
+    final wlProvider = Provider.of<WalletProvider>(context, listen: false);
+    final svProvider = Provider.of<SavingProvider>(context, listen: false);
     setState(() {
       _current = value;
       _category = ctProvider.getCategoriesByType(categoryType)[0];
+      selectedSource = getSources(wlProvider.wallets, svProvider.saving)[0];
     });
   }
 
