@@ -122,6 +122,11 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
 
   Future<void> submitForm() async {
     if (_formKey.currentState.validate()) {
+      if (_saving == null) {
+        showErrorDialog(
+            context: context, text: "No saving exists", isNetwork: false);
+        return;
+      }
       final tsProvider =
           Provider.of<TransactionProvider>(context, listen: false);
       setState(() => _isLoading = true);

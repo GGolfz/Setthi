@@ -126,6 +126,9 @@ class SavingProvider with ChangeNotifier {
     } catch (error) {
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
+      if (error.response.statusCode == 400)
+        throw HttpException(
+            "Cannot set new target amount lower than current saving amount");
       throw HttpException(internetException);
     }
   }
