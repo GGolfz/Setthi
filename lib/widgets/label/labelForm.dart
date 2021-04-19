@@ -26,6 +26,7 @@ class _LabelFormState extends State<LabelForm> {
   TextEditingController _label;
   var _labelType;
   var _formKey = GlobalKey<FormState>();
+  var isLoading = false;
   String _getFormTitle() {
     if (widget.type == FormType.Create) {
       return "Create New Label";
@@ -41,17 +42,27 @@ class _LabelFormState extends State<LabelForm> {
       return ActionButton(
         text: "Submit",
         color: kGold300,
+        isLoading: isLoading,
         onPressed: () async {
           if (_formKey.currentState.validate()) {
             try {
+              setState(() {
+                isLoading = true;
+              });
               await Provider.of<LabelProvider>(context, listen: false)
                   .createLabel(_label.text, _labelType);
+              setState(() {
+                isLoading = false;
+              });
               Navigator.of(context).pop();
             } on HttpException catch (error) {
               showErrorDialog(
                   context: context,
                   text: error.message,
                   isNetwork: error.isInternetProblem);
+              setState(() {
+                isLoading = false;
+              });
             }
           }
         },
@@ -63,18 +74,28 @@ class _LabelFormState extends State<LabelForm> {
           Expanded(
               child: ActionButton(
             text: "Delete",
+            isLoading: isLoading,
             color: kRed400,
             isOutlined: true,
             onPressed: () async {
               try {
+                setState(() {
+                  isLoading = true;
+                });
                 await Provider.of<LabelProvider>(context, listen: false)
                     .deleteLabel(widget.labelKey);
+                setState(() {
+                  isLoading = false;
+                });
                 Navigator.of(context).pop();
               } on HttpException catch (error) {
                 showErrorDialog(
                     context: context,
                     text: error.message,
                     isNetwork: error.isInternetProblem);
+                setState(() {
+                  isLoading = false;
+                });
               }
             },
           )),
@@ -83,17 +104,27 @@ class _LabelFormState extends State<LabelForm> {
               child: ActionButton(
             text: "Submit",
             color: kGold300,
+            isLoading: isLoading,
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 try {
+                  setState(() {
+                    isLoading = true;
+                  });
                   await Provider.of<LabelProvider>(context, listen: false)
                       .editLabel(widget.labelKey, _label.text, _labelType);
+                  setState(() {
+                    isLoading = false;
+                  });
                   Navigator.of(context).pop();
                 } on HttpException catch (error) {
                   showErrorDialog(
                       context: context,
                       text: error.message,
                       isNetwork: error.isInternetProblem);
+                  setState(() {
+                    isLoading = false;
+                  });
                 }
               }
             },

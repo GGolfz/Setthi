@@ -39,7 +39,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   DateTime _dateTime = DateTime.now();
   Category _category;
   Saving _saving;
-  bool _isLoading;
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -289,6 +289,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                       ActionButton(
                         text: "Save",
                         color: kGold300,
+                        isLoading: _isLoading,
                         onPressed: () => submitForm(),
                       )
                     ],

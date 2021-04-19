@@ -33,6 +33,7 @@ class _CategoryFormState extends State<CategoryForm> {
   var _categoryType;
   Color pickerColor;
   Color currentColor;
+  var isLoading = false;
   var _formKey = GlobalKey<FormState>();
 
   @override
@@ -63,17 +64,27 @@ class _CategoryFormState extends State<CategoryForm> {
       return ActionButton(
         text: "Submit",
         color: kGold300,
+        isLoading: isLoading,
         onPressed: () async {
           if (_formKey.currentState.validate()) {
             try {
+              setState(() {
+                isLoading = true;
+              });
               await Provider.of<CategoryProvider>(context, listen: false)
                   .createCategory(_category.text, _categoryType, currentColor);
+              setState(() {
+                isLoading = false;
+              });
               Navigator.of(context).pop();
             } on HttpException catch (error) {
               showErrorDialog(
                   context: context,
                   text: error.message,
                   isNetwork: error.isInternetProblem);
+              setState(() {
+                isLoading = false;
+              });
             }
           }
         },
@@ -87,16 +98,26 @@ class _CategoryFormState extends State<CategoryForm> {
             text: "Delete",
             color: kRed400,
             isOutlined: true,
+            isLoading: isLoading,
             onPressed: () async {
               try {
+                setState(() {
+                  isLoading = true;
+                });
                 await Provider.of<CategoryProvider>(context, listen: false)
                     .deleteCategory(widget.labelKey);
+                setState(() {
+                  isLoading = false;
+                });
                 Navigator.of(context).pop();
               } on HttpException catch (error) {
                 showErrorDialog(
                     context: context,
                     text: error.message,
                     isNetwork: error.isInternetProblem);
+                setState(() {
+                  isLoading = false;
+                });
               }
             },
           )),
@@ -105,18 +126,28 @@ class _CategoryFormState extends State<CategoryForm> {
               child: ActionButton(
             text: "Submit",
             color: kGold300,
+            isLoading: isLoading,
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 try {
+                  setState(() {
+                    isLoading = true;
+                  });
                   await Provider.of<CategoryProvider>(context, listen: false)
                       .editCategory(
                           widget.labelKey, _category.text, currentColor);
+                  setState(() {
+                    isLoading = false;
+                  });
                   Navigator.of(context).pop();
                 } on HttpException catch (error) {
                   showErrorDialog(
                       context: context,
                       text: error.message,
                       isNetwork: error.isInternetProblem);
+                  setState(() {
+                    isLoading = false;
+                  });
                 }
               }
             },
