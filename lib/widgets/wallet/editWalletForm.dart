@@ -18,6 +18,7 @@ class EditWalletForm extends StatefulWidget {
 class _EditWalletFormState extends State<EditWalletForm> {
   TextEditingController _title;
   var isLoading = false;
+  var isLoadingDelete = false;
   @override
   void initState() {
     _title = TextEditingController(text: widget.selectedWallet.title);
@@ -40,7 +41,7 @@ class _EditWalletFormState extends State<EditWalletForm> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Create new wallet',
+                      'Edit wallet',
                       style: TextStyle(color: kGold500, fontSize: 20),
                     ),
                   ],
@@ -57,17 +58,27 @@ class _EditWalletFormState extends State<EditWalletForm> {
                           text: "Delete",
                           color: kRed400,
                           isOutlined: true,
+                          isLoading: isLoadingDelete,
                           onPressed: () async {
                             try {
+                              setState(() {
+                                isLoadingDelete = true;
+                              });
                               await Provider.of<WalletProvider>(context,
                                       listen: false)
                                   .removeWallet(widget.selectedWallet.id);
+                              setState(() {
+                                isLoadingDelete = false;
+                              });
                               Navigator.pop(context);
                             } on HttpException catch (error) {
                               showErrorDialog(
                                   context: context,
                                   text: error.message,
                                   isNetwork: error.isInternetProblem);
+                              setState(() {
+                                isLoadingDelete = false;
+                              });
                             }
                           },
                         ),

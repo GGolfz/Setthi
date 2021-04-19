@@ -27,16 +27,17 @@ class _SavingItemState extends State<SavingItem> {
               widget.item.title,
               style: kHeadline4Black,
             ),
-            IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () {
-                showCustomDialog(
-                    context: context,
-                    content: SavingEditForm(
-                      selectedSaving: widget.item,
-                    ));
-              },
-            )
+            if (!widget.item.isFinish)
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  showCustomDialog(
+                      context: context,
+                      content: SavingEditForm(
+                        selectedSaving: widget.item,
+                      ));
+                },
+              )
           ]),
           kSizedBoxVerticalXXS,
           Row(
@@ -71,11 +72,19 @@ class _SavingItemState extends State<SavingItem> {
             children: [
               Text(
                 formatDate(widget.item.startDay),
-                style: kBody1Black.copyWith(color: kNeutral300),
+                style: kBody1Black.copyWith(
+                    color: DateTime.now().isAfter(widget.item.endDay) &&
+                            !widget.item.isFinish
+                        ? kRed200
+                        : kNeutral300),
               ),
               Text(
                 formatDate(widget.item.endDay),
-                style: kBody1Black.copyWith(color: kNeutral300),
+                style: kBody1Black.copyWith(
+                    color: DateTime.now().isAfter(widget.item.endDay) &&
+                            !widget.item.isFinish
+                        ? kRed200
+                        : kNeutral300),
               ),
             ],
           ),

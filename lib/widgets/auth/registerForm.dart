@@ -36,10 +36,10 @@ class _RegisterFormState extends State<RegisterForm> {
   Future<void> register() async {
     var email = _email.text;
     var password = _password.text;
-    setState(() {
-      _isLoading = true;
-    });
     if (validate()) {
+      setState(() {
+        _isLoading = true;
+      });
       try {
         await Provider.of<AuthenticateProvider>(context, listen: false)
             .register(email, password);
@@ -48,9 +48,9 @@ class _RegisterFormState extends State<RegisterForm> {
         });
         await widget.changeModal(AuthType.close);
         setState(() => _isLoading = false);
-      } on HttpException catch (error){
+      } on HttpException catch (error) {
         setState(() => _isLoading = false);
-        showErrorDialog(context: context,text: error.message);
+        showErrorDialog(context: context, text: error.message);
       }
     }
   }
