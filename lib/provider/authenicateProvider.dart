@@ -58,12 +58,12 @@ class AuthenticateProvider with ChangeNotifier {
 
   Future<void> tryAutoLogin() async {
     final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('userToken')) return false;
+    if (!prefs.containsKey('userToken')) return;
     final token = prefs.getString('userToken');
     _token = token;
     notifyListeners();
     try {
-      await Dio().get(apiEndpoint + '/auth/user',
+      await Dio().get(apiEndpoint + '/user',
           options: Options(headers: {"Authorization": "Bearer " + token}));
     } catch (error) {
       prefs.clear();
