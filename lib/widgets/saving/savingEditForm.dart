@@ -10,7 +10,7 @@ import '../../config/constants.dart';
 class SavingEditForm extends StatefulWidget {
   final Saving selectedSaving;
   final Function onFinish;
-  SavingEditForm({@required this.selectedSaving,this.onFinish});
+  SavingEditForm({@required this.selectedSaving, this.onFinish});
   @override
   _SavingEditFormState createState() => _SavingEditFormState();
 }
@@ -137,7 +137,7 @@ class _SavingEditFormState extends State<SavingEditForm> {
                                 setState(() {
                                   isLoadingEdit = false;
                                 });
-                                widget.onFinish();
+                                widget.onFinish(result);
                               } on HttpException catch (error) {
                                 showErrorDialog(
                                     context: context,
