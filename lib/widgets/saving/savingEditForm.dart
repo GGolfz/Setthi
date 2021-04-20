@@ -9,7 +9,8 @@ import '../../config/constants.dart';
 
 class SavingEditForm extends StatefulWidget {
   final Saving selectedSaving;
-  SavingEditForm({@required this.selectedSaving});
+  final Function onFinish;
+  SavingEditForm({@required this.selectedSaving,this.onFinish});
   @override
   _SavingEditFormState createState() => _SavingEditFormState();
 }
@@ -126,16 +127,17 @@ class _SavingEditFormState extends State<SavingEditForm> {
                                 setState(() {
                                   isLoadingEdit = false;
                                 });
-                                await Provider.of<SavingProvider>(context,
-                                        listen: false)
-                                    .editSaving(
-                                        widget.selectedSaving.id,
-                                        _controller.text,
-                                        _controllerAmount.text);
+                                final result =
+                                    await Provider.of<SavingProvider>(context,
+                                            listen: false)
+                                        .editSaving(
+                                            widget.selectedSaving.id,
+                                            _controller.text,
+                                            _controllerAmount.text);
                                 setState(() {
                                   isLoadingEdit = false;
                                 });
-                                Navigator.pop(context);
+                                widget.onFinish();
                               } on HttpException catch (error) {
                                 showErrorDialog(
                                     context: context,

@@ -121,8 +121,11 @@ class SavingProvider with ChangeNotifier {
             "target_amount": double.parse(targetAmount),
           },
           options: Options(headers: {"Authorization": "Bearer " + _token}));
-      _saving = modifyResponse(response.data);
+      _saving = modifyResponse(response.data["saving"]);
       notifyListeners();
+      if (response.data["saving_finish"]) {
+        return response.data["saving_name"];
+      }
     } catch (error) {
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
@@ -131,6 +134,7 @@ class SavingProvider with ChangeNotifier {
             "Cannot set new target amount lower than current saving amount");
       throw HttpException(internetException);
     }
+    return null;
   }
 
   Future<void> deleteSaving(int id) async {
