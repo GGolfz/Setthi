@@ -260,6 +260,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                               title: '',
                               alertMessage: 'amount',
                               textEditingController: _amount,
+                              keyboardType: TextInputType.number,
                             ),
                           )
                         ],
