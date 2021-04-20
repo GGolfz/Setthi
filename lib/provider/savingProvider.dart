@@ -121,7 +121,7 @@ class SavingProvider with ChangeNotifier {
             "target_amount": double.parse(targetAmount),
           },
           options: Options(headers: {"Authorization": "Bearer " + _token}));
-      _saving = modifyResponse(response.data["saving"]);
+      _saving = modifyResponse(response.data["savings"]);
       notifyListeners();
       if (response.data["saving_finish"]) {
         return response.data["saving_name"];
