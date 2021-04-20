@@ -27,6 +27,9 @@ class _SavingFormState extends State<SavingForm> {
   DateTime lastDay;
   void submitData() async {
     if (_formKey.currentState.validate()) {
+      if(startDay == null || lastDay == null){
+
+      }
       try {
         setState(() {
           isLoading = true;

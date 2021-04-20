@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/widgets/layout/congratsDialog.dart';
 import '../layout/customDialog.dart';
 import '../transaction/addTransactionForm.dart';
 import '../../config/color.dart';
@@ -19,7 +20,7 @@ class AddButton extends StatelessWidget {
         showCustomDialog(
             context: context,
             content: AddTransactionForm(
-              onFinish: () async {
+              onFinish: (result) async {
                 Navigator.of(context).pop();
                 await Provider.of<WalletProvider>(context, listen: false)
                     .fetchExpenseChart();
@@ -27,6 +28,9 @@ class AddButton extends StatelessWidget {
                     .fetchWallet();
                 await Provider.of<SavingProvider>(context, listen: false)
                     .fetchSaving();
+                if (result != null) {
+                  showCongratsDialog(context: context, savingName: result);
+                }
               },
             ));
       },

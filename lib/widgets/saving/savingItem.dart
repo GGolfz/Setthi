@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:setthi/widgets/layout/congratsDialog.dart';
 import 'savingEditForm.dart';
 import '../layout/customDialog.dart';
 import '../../config/color.dart';
@@ -35,6 +36,13 @@ class _SavingItemState extends State<SavingItem> {
                       context: context,
                       content: SavingEditForm(
                         selectedSaving: widget.item,
+                        onFinish: (result) {
+                          Navigator.pop(context);
+                          if (result != null) {
+                            showCongratsDialog(
+                                context: context, savingName: result);
+                          }
+                        },
                       ));
                 },
               )

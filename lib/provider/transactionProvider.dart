@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:setthi/widgets/layout/congratsDialog.dart';
 import '../config/api.dart';
 import '../config/string.dart';
 import '../model/httpException.dart';
@@ -53,7 +54,7 @@ class TransactionProvider with ChangeNotifier {
     return dateTime.toString().split(' ')[0];
   }
 
-  Future<void> createTransaction({
+  Future<String> createTransaction({
     @required String title,
     @required double amount,
     @required TransactionType transactionType,
@@ -95,8 +96,13 @@ class TransactionProvider with ChangeNotifier {
               data: data, options: options);
           break;
       }
-      _transactions = modifyResponse(response.data.toList());
+      _transactions = modifyResponse(response.data["transactions"].toList());
       notifyListeners();
+      if (transactionType == TransactionType.Saving) {
+        if (response.data["saving_finish"]) {
+          return response.data["saving_name"];
+        }
+      }
     } catch (error) {
       if (error.response == null) throw HttpException(internetException);
       if (error.response.statusCode == 400) {
@@ -111,6 +117,7 @@ class TransactionProvider with ChangeNotifier {
         throw HttpException(authenticateException);
       throw HttpException(generalException);
     }
+    return null;
   }
 
   TransactionType getTransactionType(String type) {

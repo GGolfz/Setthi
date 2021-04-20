@@ -24,6 +24,10 @@ class CustomDatePicker extends StatelessWidget {
       GestureDetector(
         child: TextFormField(
           style: kBody1Gold,
+          validator: (value) {
+            if (dateTime == null) return 'Please enter ${title.toLowerCase()}';
+            return null;
+          },
           decoration: InputDecoration(
             suffixIcon: Icon(
               Icons.calendar_today,
@@ -33,9 +37,12 @@ class CustomDatePicker extends StatelessWidget {
             fillColor: kNeutral100,
             enabled: false,
             labelStyle: kBody2Black,
-            hintText:
-                dateTime == null ? title : DateFormat.yMMMd().format(dateTime),
-            contentPadding: EdgeInsets.all(kSizeS),
+            errorStyle: kBody2Red,
+            hintText: '   ' +
+                (dateTime == null
+                    ? title
+                    : DateFormat.yMMMd().format(dateTime)),
+            contentPadding: EdgeInsets.only(top: kSizeS),
           ),
         ),
         onTap: () {

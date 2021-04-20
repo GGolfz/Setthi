@@ -131,7 +131,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
           Provider.of<TransactionProvider>(context, listen: false);
       setState(() => _isLoading = true);
       try {
-        await tsProvider.createTransaction(
+        final result = await tsProvider.createTransaction(
             title: _title.text,
             amount: double.tryParse(_amount.text),
             category: _category,
@@ -140,7 +140,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
             dateTime: _dateTime,
             saving: _saving);
         setState(() => _isLoading = false);
-        widget.onFinish();
+        widget.onFinish(result);
       } on HttpException catch (error) {
         setState(() => _isLoading = false);
         showErrorDialog(
@@ -260,6 +260,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                               title: '',
                               alertMessage: 'amount',
                               textEditingController: _amount,
+                              keyboardType: TextInputType.number,
                             ),
                           )
                         ],
