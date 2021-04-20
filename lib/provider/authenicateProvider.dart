@@ -27,7 +27,7 @@ class AuthenticateProvider with ChangeNotifier {
           data: {"email": email, "password": password});
       final token = response.data["token"];
       _token = token;
-      Timer(Duration(milliseconds: 500), () => notifyListeners());
+      notifyListeners();
       prefs.setString('userToken', _token);
     } on DioError catch (error) {
       prefs.clear();
@@ -48,7 +48,7 @@ class AuthenticateProvider with ChangeNotifier {
           data: {"email": email, "password": password});
       final token = response.data["token"];
       _token = token;
-      Timer(Duration(milliseconds: 500), () => notifyListeners());
+      notifyListeners();
       prefs.setString('userToken', _token);
     } catch (error) {
       prefs.clear();
