@@ -113,7 +113,7 @@ class SavingProvider with ChangeNotifier {
     }
   }
 
-  Future<void> editSaving(int id, String title, String targetAmount) async {
+  Future<String> editSaving(int id, String title, String targetAmount) async {
     try {
       final response = await Dio().patch(apiEndpoint + '/saving/$id',
           data: {
