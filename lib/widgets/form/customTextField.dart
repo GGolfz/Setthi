@@ -29,6 +29,9 @@ class CustomTextField extends StatelessWidget {
           if (double.tryParse(value) == null) {
             return 'Amount should be a number';
           }
+          if (double.tryParse(value) <= 0) {
+            return 'Amount should be positive';
+          }
         }
         return null;
       },
