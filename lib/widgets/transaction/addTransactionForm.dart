@@ -127,13 +127,6 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
             context: context, text: "No saving exists", isNetwork: false);
         return;
       }
-      if (double.tryParse(_amount.text) == null) {
-        showErrorDialog(
-            context: context,
-            text: "Amount should be number",
-            isNetwork: false);
-        return;
-      }
       final tsProvider =
           Provider.of<TransactionProvider>(context, listen: false);
       setState(() => _isLoading = true);

@@ -23,7 +23,13 @@ class CustomTextField extends StatelessWidget {
         labelStyle: kSubtitle2Black.copyWith(fontWeight: FontWeight.w600),
       ),
       validator: (value) {
-        if (value.isEmpty) return 'Please enter ${alertMessage ?? title.toLowerCase()}';
+        if (value.isEmpty)
+          return 'Please enter ${alertMessage ?? title.toLowerCase()}';
+        if (keyboardType == TextInputType.number) {
+          if (double.tryParse(value) == null) {
+            return 'Amount should be a number';
+          }
+        }
         return null;
       },
     );
