@@ -84,9 +84,10 @@ class TransactionProvider with ChangeNotifier {
             response = await Dio().post(apiEndpoint + '/transaction/expense',
                 data: baseData, options: options);
           } else {
+            var data = {...baseData, "saving_id": selectedSource.id};
             response = await Dio().post(
                 apiEndpoint + '/transaction/expense-saving',
-                data: baseData,
+                data: data,
                 options: options);
           }
           break;
@@ -94,6 +95,7 @@ class TransactionProvider with ChangeNotifier {
           var data = {...baseData, "saving_id": saving.id};
           response = await Dio().post(apiEndpoint + '/transaction/saving',
               data: data, options: options);
+
           break;
       }
       _transactions = modifyResponse(response.data["transactions"].toList());
@@ -104,6 +106,7 @@ class TransactionProvider with ChangeNotifier {
         }
       }
     } catch (error) {
+      print(error.response.data);
       if (error.response == null) throw HttpException(internetException);
       if (error.response.statusCode == 400) {
         if (transactionType == TransactionType.Expense &&
@@ -194,7 +197,7 @@ class TransactionProvider with ChangeNotifier {
           amount: double.parse(el["amount"]),
           date: stringToDateTime(el["date"]),
           wallet: type == TransactionType.ExpenseFromSaving
-              ? el["saving"]["name"]
+              ? el["saving"]["title"]
               : el["wallet"]["name"],
           color: getColorFromText(el["category"]["color"])));
     });
