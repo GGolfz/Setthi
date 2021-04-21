@@ -122,7 +122,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
 
   Future<void> submitForm() async {
     if (_formKey.currentState.validate()) {
-      if (_saving == null) {
+      if (_current == TransactionType.Saving && _saving == null) {
         showErrorDialog(
             context: context, text: "No saving exists", isNetwork: false);
         return;
