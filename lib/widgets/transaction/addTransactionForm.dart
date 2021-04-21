@@ -327,6 +327,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
       _current = value;
       _category = ctProvider.getCategoriesByType(categoryType)[0];
       selectedSource = getSources(wlProvider.wallets, svProvider.saving)[0];
+      _amount.text = '';
     });
   }
 
