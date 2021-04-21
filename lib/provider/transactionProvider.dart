@@ -151,7 +151,7 @@ class TransactionProvider with ChangeNotifier {
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _allTransactions = modifyResponse(response.data);
       notifyListeners();
-    } catch (error) {
+    } on DioError catch (error) {
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
       throw HttpException(internetException);
@@ -165,7 +165,7 @@ class TransactionProvider with ChangeNotifier {
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _allTransactions = modifyResponse(response.data);
       notifyListeners();
-    } catch (error) {
+    } on DioError catch (error) {
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
       throw HttpException(internetException);
@@ -179,7 +179,7 @@ class TransactionProvider with ChangeNotifier {
           options: Options(headers: {"Authorization": "Bearer " + _token}));
       _allTransactions = modifyResponse(response.data);
       notifyListeners();
-    } catch (error) {
+    } on DioError catch (error) {
       if (error.response.statusCode == 401)
         throw HttpException(authenticateException);
       throw HttpException(internetException);
