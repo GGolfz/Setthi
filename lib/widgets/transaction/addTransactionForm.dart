@@ -122,7 +122,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
 
   Future<void> submitForm() async {
     if (_formKey.currentState.validate()) {
-      if (_saving == null) {
+      if (_current == TransactionType.Saving && _saving == null) {
         showErrorDialog(
             context: context, text: "No saving exists", isNetwork: false);
         return;
@@ -320,6 +320,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
       _current = value;
       _category = ctProvider.getCategoriesByType(categoryType)[0];
       selectedSource = getSources(wlProvider.wallets, svProvider.saving)[0];
+      _amount.text = '';
     });
   }
 
