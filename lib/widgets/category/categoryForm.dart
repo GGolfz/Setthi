@@ -208,7 +208,8 @@ class _CategoryFormState extends State<CategoryForm> {
                   kSizedBoxHorizontalS,
                   Flexible(
                       child: CustomTextField(
-                          title: "Label", textEditingController: _category))
+                          title: "Category Name",
+                          textEditingController: _category))
                 ],
               ),
               if (widget.type == FormType.Create) kSizedBoxVerticalS,

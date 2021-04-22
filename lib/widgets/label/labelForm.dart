@@ -154,7 +154,8 @@ class _LabelFormState extends State<LabelForm> {
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
               CustomFormTitle(title: _getFormTitle()),
               kSizedBoxVerticalS,
-              CustomTextField(title: "Label", textEditingController: _label),
+              CustomTextField(
+                  title: "Prefilled Title", textEditingController: _label),
               kSizedBoxVerticalS,
               CustomDropDown(
                   title: "Type",
