@@ -46,7 +46,7 @@ class _SavingEditFormState extends State<SavingEditForm> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Edit New Saving',
+                        'Edit Saving',
                         style: TextStyle(color: kGold500, fontSize: 20),
                       ),
                     ],
