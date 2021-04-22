@@ -31,10 +31,10 @@ class _LabelFormState extends State<LabelForm> {
   var isLoadingDelete = false;
   String _getFormTitle() {
     if (widget.type == FormType.Create) {
-      return "Create New Label";
+      return "Create New Prefilled Title";
     }
     if (widget.type == FormType.Edit) {
-      return "Edit Label";
+      return "Edit Prefilled Title";
     }
     return "";
   }

@@ -39,12 +39,12 @@ class _LabelScreenState extends State<LabelScreen> {
       child: Row(
         children: [
           LabelTypeSelect(
-              text: "Income Label",
+              text: "Income Title",
               type: LabelType.Income,
               changeStatus: _changeStatus,
               current: _status),
           LabelTypeSelect(
-              text: "Expense Label",
+              text: "Expense Title",
               type: LabelType.Expense,
               changeStatus: _changeStatus,
               current: _status),
@@ -57,7 +57,7 @@ class _LabelScreenState extends State<LabelScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: SetthiAppBar(
-          title: 'Label',
+          title: 'Prefilled Title',
           leading: BackButton(),
         ),
         resizeToAvoidBottomInset: false,
@@ -93,7 +93,7 @@ class _LabelScreenState extends State<LabelScreen> {
               Container(
                   width: 220,
                   child: ActionButton(
-                    text: "Create a new label",
+                    text: "Create a new title",
                     onPressed: () {
                       showCustomDialog(
                           context: context,
