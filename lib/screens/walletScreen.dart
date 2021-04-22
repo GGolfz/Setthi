@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/widgets/wallet/circularChart.dart';
+import 'package:setthi/widgets/wallet/indicator.dart';
 import '../config/constants.dart';
 import '../config/color.dart';
 import '../config/style.dart';
@@ -99,43 +101,26 @@ class _WalletScreenState extends State<WalletScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                width: 100,
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 20,
-                                        height: 20,
-                                        decoration: BoxDecoration(
-                                            color: const Color(0xFF57C84D),
-                                            borderRadius: kBorderRadiusXS),
-                                      ),
-                                      kSizedBoxHorizontalXS,
-                                      Text("Income")
-                                    ]),
+                              Indicator(
+                                text: "Income",
+                                color: const Color(0xFF57C84D),
+                                alignment: MainAxisAlignment.center,
                               ),
-                              Container(
-                                width: 100,
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 20,
-                                        height: 20,
-                                        decoration: BoxDecoration(
-                                            color: const Color(0xFFEA4C46),
-                                            borderRadius: kBorderRadiusXS),
-                                      ),
-                                      kSizedBoxHorizontalXS,
-                                      Text("Expense")
-                                    ]),
-                              )
+                              Indicator(
+                                text: "Expense",
+                                color: const Color(0xFFEA4C46),
+                                alignment: MainAxisAlignment.center,
+                              ),
                             ],
-                          )
+                          ),
+                          kSizedBoxVerticalS,
+                          Text('Income by category', style: kHeadline3Black),
+                          CircularChart(),
+                          kSizedBoxVerticalS,
+                          Text('Expense by category', style: kHeadline3Black),
+                          CircularChart(),
                         ],
                       ),
-                      kSizedBoxVerticalS,
                     ],
                   ),
                 ),

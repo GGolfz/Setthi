@@ -97,7 +97,7 @@ class _BalanceChartState extends State<BalanceChart> {
         LineChartBarData(
           spots: Iterable<int>.generate(7)
               .toList()
-              .map((i) => FlSpot(i.toDouble(), data.data[i].amount + 500))
+              .map((i) => FlSpot(i.toDouble(), i * 1000.0 - i * i * 150))
               .toList(),
           colors: incomeGradientColors,
           barWidth: 5,
