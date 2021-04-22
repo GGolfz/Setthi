@@ -12,7 +12,7 @@ import '../widgets/layout/customDialog.dart';
 import '../widgets/layout/errorDialog.dart';
 import '../widgets/wallet/editWalletForm.dart';
 import '../widgets/wallet/emptyWallet.dart';
-import '../widgets/wallet/expenseChart.dart';
+import '../widgets/wallet/balanceChart.dart';
 import '../widgets/wallet/newWalletForm.dart';
 import '../widgets/wallet/walletCard.dart';
 
@@ -87,30 +87,55 @@ class _WalletScreenState extends State<WalletScreen> {
                   child: Column(
                     children: <Widget>[
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Your expense', style: kHeadline3Black),
-                          kSizedBoxVerticalXXS,
+                          Text('Transactions Chart', style: kHeadline3Black),
+                          kSizedBoxVerticalXS,
                           Container(
-                            child: ExpenseChart(),
+                            child: BalanceChart(),
                             height: MediaQuery.of(context).size.height * 0.22,
+                          ),
+                          kSizedBoxVerticalXS,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 100,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFF57C84D),
+                                            borderRadius: kBorderRadiusXS),
+                                      ),
+                                      kSizedBoxHorizontalXS,
+                                      Text("Income")
+                                    ]),
+                              ),
+                              Container(
+                                width: 100,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFEA4C46),
+                                            borderRadius: kBorderRadiusXS),
+                                      ),
+                                      kSizedBoxHorizontalXS,
+                                      Text("Expense")
+                                    ]),
+                              )
+                            ],
                           )
                         ],
                       ),
                       kSizedBoxVerticalS,
-                      wallet.isEmpty()
-                          ? EmptyWallet()
-                          : Container(
-                              height: MediaQuery.of(context).size.height * 0.35,
-                              child: ListView.builder(
-                                itemBuilder: (ctx, index) => WalletCard(
-                                  item: wallet.wallets[index],
-                                  onTap: () => onClickEdit(
-                                      context, wallet.wallets[index]),
-                                ),
-                                itemCount: wallet.walletCount,
-                              ),
-                            ),
-                      _buildButtonCreate(context),
                     ],
                   ),
                 ),
