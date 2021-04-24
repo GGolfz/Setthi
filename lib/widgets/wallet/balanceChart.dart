@@ -72,7 +72,7 @@ class _BalanceChartState extends State<BalanceChart> {
           reservedSize: 22,
           getTextStyles: (value) => kBody1Black,
           getTitles: (value) {
-            return data.data[value.toInt()].date;
+            return data.income[value.toInt()].date;
           },
           margin: 8,
         ),
@@ -83,7 +83,7 @@ class _BalanceChartState extends State<BalanceChart> {
             return (value.floor()).toString();
           },
           interval: getInterval(data.max),
-          reservedSize: 28,
+          reservedSize: 32,
           margin: 12,
         ),
       ),
@@ -97,7 +97,7 @@ class _BalanceChartState extends State<BalanceChart> {
         LineChartBarData(
           spots: Iterable<int>.generate(7)
               .toList()
-              .map((i) => FlSpot(i.toDouble(), i * 1000.0 - i * i * 150))
+              .map((i) => FlSpot(i.toDouble(), data.income[i].amount))
               .toList(),
           colors: incomeGradientColors,
           barWidth: 5,
@@ -109,7 +109,7 @@ class _BalanceChartState extends State<BalanceChart> {
         LineChartBarData(
           spots: Iterable<int>.generate(7)
               .toList()
-              .map((i) => FlSpot(i.toDouble(), data.data[i].amount))
+              .map((i) => FlSpot(i.toDouble(), data.expense[i].amount))
               .toList(),
           colors: expenseGradientColor,
           barWidth: 5,
