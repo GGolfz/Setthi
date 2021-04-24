@@ -8,13 +8,9 @@ import '../config/style.dart';
 import '../model/httpException.dart';
 import '../provider/walletProvider.dart';
 import '../utils/format.dart';
-import '../widgets/buttons/actionButton.dart';
 import '../widgets/layout/appBar.dart';
-import '../widgets/layout/customDialog.dart';
 import '../widgets/layout/errorDialog.dart';
-import '../widgets/wallet/editWalletForm.dart';
 import '../widgets/wallet/balanceChart.dart';
-import '../widgets/wallet/newWalletForm.dart';
 
 class WalletScreen extends StatefulWidget {
   static final routeName = '/wallet';
