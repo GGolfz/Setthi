@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import '../config/api.dart';
 import '../config/string.dart';
 import '../model/httpException.dart';
@@ -43,11 +44,52 @@ class ChartData {
   }
 }
 
+class CategoryChartDataItem {
+  int id;
+  String name;
+  Color color;
+  int count;
+  double max;
+  CategoryChartDataItem(this.id, this.name, this.color, this.count, this.max);
+  double get amount {
+    return count.toDouble();
+  }
+
+  double get percent {
+    return count / max;
+  }
+
+  String get label {
+    return (percent * 100).toStringAsFixed(2);
+  }
+}
+
+class CategoryChartDataItemEach {
+  int max;
+  List<CategoryChartDataItem> data;
+  CategoryChartDataItemEach(this.max, this.data);
+  static get empty {
+    return CategoryChartDataItemEach(0, []);
+  }
+}
+
+class CategoryChartData {
+  CategoryChartDataItemEach income;
+  CategoryChartDataItemEach expense;
+  CategoryChartData(this.income, this.expense);
+  static get empty {
+    return CategoryChartData(
+        CategoryChartDataItemEach.empty, CategoryChartDataItemEach.empty);
+  }
+}
+
 class WalletProvider with ChangeNotifier {
   String _token;
   List<WalletItem> _wallets;
   ChartData _chartData;
-  WalletProvider(this._token, this._wallets, this._chartData);
+  CategoryChartData _categoryChartData;
+  WalletProvider(
+      this._token, this._wallets, this._chartData, this._categoryChartData);
 
   List<WalletItem> get wallets {
     return _wallets ?? [];
@@ -55,6 +97,10 @@ class WalletProvider with ChangeNotifier {
 
   ChartData get chartData {
     return _chartData ?? ChartData.empty;
+  }
+
+  CategoryChartData get categoryData {
+    return _categoryChartData ?? CategoryChartData.empty;
   }
 
   double get totalAmount {
@@ -91,6 +137,22 @@ class WalletProvider with ChangeNotifier {
     }
   }
 
+  Future<void> fetchCategoryChart() async {
+    try {
+      final response = await Dio().get(apiEndpoint + '/category-graph',
+          options: Options(headers: {"Authorization": "Bearer " + _token}));
+      _categoryChartData = modifyCategoryChartResponse(
+          response.data["income"], response.data["expense"]);
+      notifyListeners();
+    } on DioError catch (error) {
+      print(error);
+      if (error.response == null) throw HttpException(internetException);
+      if (error.response.statusCode == 401)
+        throw HttpException(authenticateException);
+      throw HttpException(generalException);
+    }
+  }
+
   ChartData modifyTransationChartResponse(
       double top, List<dynamic> income, List<dynamic> expense) {
     List<ChartDataPoint> incomeDataPoint = [];
@@ -100,6 +162,28 @@ class WalletProvider with ChangeNotifier {
     expense.forEach((el) => expenseDataPoint
         .add(ChartDataPoint(el["date"], el["amount"].toDouble())));
     return ChartData(top, incomeDataPoint, expenseDataPoint);
+  }
+
+  CategoryChartData modifyCategoryChartResponse(Map income, Map expense) {
+    List<CategoryChartDataItem> incomeData = [];
+    List<CategoryChartDataItem> expenseData = [];
+    income["data"].entries.forEach((entry) => incomeData.add(
+        CategoryChartDataItem(
+            int.tryParse(entry.key),
+            entry.value["name"],
+            getColorFromText(entry.value["color"]),
+            entry.value["count"],
+            income["count"].toDouble())));
+    expense["data"].entries.forEach((entry) => expenseData.add(
+        CategoryChartDataItem(
+            int.tryParse(entry.key),
+            entry.value["name"],
+            getColorFromText(entry.value["color"]),
+            entry.value["count"],
+            expense["count"].toDouble())));
+    return CategoryChartData(
+        CategoryChartDataItemEach(income["count"], incomeData),
+        CategoryChartDataItemEach(expense["count"], expenseData));
   }
 
   Future<void> fetchWallet() async {

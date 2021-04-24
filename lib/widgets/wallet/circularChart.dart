@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:setthi/config/color.dart';
 import 'package:setthi/config/constants.dart';
+import 'package:setthi/provider/walletProvider.dart';
 import 'package:setthi/widgets/wallet/indicator.dart';
 
 class CircularChart extends StatefulWidget {
+  final CategoryChartDataItemEach data;
+  CircularChart(this.data);
   @override
   _CircularChartState createState() => _CircularChartState();
 }
@@ -30,35 +33,19 @@ class _CircularChartState extends State<CircularChart> {
                       graphData(),
                     )),
               ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Indicator(
-                    color: Color(0xff0293ee),
-                    text: 'First',
-                    textColor: kNeutral100,
+              Container(
+                height: double.infinity,
+                width: 100,
+                child: ListView.separated(
+                  itemBuilder: (ctx, index) => Indicator(
+                    color: widget.data.data[index].color,
+                    text: widget.data.data[index].name,
+                    textColor: kNeutralWhite,
                   ),
-                  kSizedBoxVerticalXS,
-                  Indicator(
-                    color: Color(0xfff8b250),
-                    text: 'Second',
-                    textColor: kNeutral100,
-                  ),
-                  kSizedBoxVerticalXS,
-                  Indicator(
-                    color: Color(0xff845bef),
-                    text: 'Third',
-                    textColor: kNeutral100,
-                  ),
-                  kSizedBoxVerticalXS,
-                  Indicator(
-                    color: Color(0xff13d38e),
-                    text: 'Fourth',
-                    textColor: kNeutral100,
-                  ),
-                ],
-              ),
+                  separatorBuilder: (ctx, index) => kSizedBoxVerticalXS,
+                  itemCount: widget.data.data.length,
+                ),
+              )
             ])),
       ),
     );
@@ -88,58 +75,21 @@ class _CircularChartState extends State<CircularChart> {
   }
 
   List<PieChartSectionData> showingSections() {
-    return List.generate(4, (i) {
-      final isTouched = i == touchedIndex;
-      final double fontSize = isTouched ? 16 : 14;
-      final double radius = isTouched ? 50 : 40;
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: const Color(0xff0293ee),
-            value: 40,
-            title: '40%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 1:
-          return PieChartSectionData(
-            color: const Color(0xfff8b250),
-            value: 30,
-            title: '30%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 2:
-          return PieChartSectionData(
-            color: const Color(0xff845bef),
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 3:
-          return PieChartSectionData(
-            color: const Color(0xff13d38e),
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        default:
-          return null;
-      }
-    });
+    if (widget.data.data.length == 0) {
+      return List.generate(1, (index) => PieChartSectionData(title: ''));
+    }
+    int index = -1;
+    return widget.data.data.map((data) {
+      index += 1;
+      return PieChartSectionData(
+          color: data.color,
+          value: data.amount,
+          radius: index == touchedIndex ? 50 : 40,
+          title: data.label,
+          titleStyle: TextStyle(
+              fontSize: index == touchedIndex ? 14 : 10,
+              fontWeight: FontWeight.bold,
+              color: kNeutralWhite));
+    }).toList();
   }
 }

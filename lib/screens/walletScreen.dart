@@ -13,10 +13,8 @@ import '../widgets/layout/appBar.dart';
 import '../widgets/layout/customDialog.dart';
 import '../widgets/layout/errorDialog.dart';
 import '../widgets/wallet/editWalletForm.dart';
-import '../widgets/wallet/emptyWallet.dart';
 import '../widgets/wallet/balanceChart.dart';
 import '../widgets/wallet/newWalletForm.dart';
-import '../widgets/wallet/walletCard.dart';
 
 class WalletScreen extends StatefulWidget {
   static final routeName = '/wallet';
@@ -26,34 +24,6 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
-  Widget _buildButtonCreate(BuildContext context) {
-    return Center(
-      child: Container(
-        margin:
-            EdgeInsets.symmetric(horizontal: kSizeM * 1.8, vertical: kSizeS),
-        child: ActionButton(
-          text: "Create a new wallet",
-          onPressed: () {
-            showCustomDialog(
-                context: context,
-                content: Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: NewWalletForm()));
-          },
-        ),
-      ),
-    );
-  }
-
-  void onClickEdit(BuildContext context, WalletItem selectedWallet) {
-    showCustomDialog(
-      context: context,
-      content: Container(
-          width: MediaQuery.of(context).size.width * 0.8,
-          child: EditWalletForm(selectedWallet: selectedWallet)),
-    );
-  }
-
   @override
   void initState() {
     fetchWallet();
@@ -65,6 +35,8 @@ class _WalletScreenState extends State<WalletScreen> {
       await Provider.of<WalletProvider>(context, listen: false).fetchWallet();
       await Provider.of<WalletProvider>(context, listen: false)
           .fetchExpenseChart();
+      await Provider.of<WalletProvider>(context, listen: false)
+          .fetchCategoryChart();
     } on HttpException catch (error) {
       showErrorDialog(
           context: context,
@@ -83,10 +55,11 @@ class _WalletScreenState extends State<WalletScreen> {
                 subtitle: 'Total Wealth',
               ),
               body: SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: kSizeS, vertical: kSizeXS),
-                  child: Column(
+                  child: Container(
+                padding:
+                    EdgeInsets.symmetric(horizontal: kSizeS, vertical: kSizeXS),
+                child: Consumer<WalletProvider>(
+                  builder: (ctx, wallet, _) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
@@ -118,14 +91,16 @@ class _WalletScreenState extends State<WalletScreen> {
                       ),
                       kSizedBoxVerticalS,
                       Text('Income by category', style: kHeadline3Black),
-                      CircularChart(),
+                      kSizedBoxVerticalXS,
+                      CircularChart(wallet.categoryData.income),
                       kSizedBoxVerticalS,
                       Text('Expense by category', style: kHeadline3Black),
-                      CircularChart(),
+                      kSizedBoxVerticalXS,
+                      CircularChart(wallet.categoryData.expense),
                     ],
                   ),
                 ),
-              ),
+              )),
             ));
   }
 }
