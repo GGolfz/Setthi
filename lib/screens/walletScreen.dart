@@ -87,40 +87,41 @@ class _WalletScreenState extends State<WalletScreen> {
                   padding: EdgeInsets.symmetric(
                       horizontal: kSizeS, vertical: kSizeXS),
                   child: Column(
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Weekly statistic', style: kHeadline2Black)
+                          ]),
+                      Text('Transactions Chart', style: kHeadline3Black),
+                      kSizedBoxVerticalXS,
+                      Container(
+                        child: BalanceChart(),
+                        height: MediaQuery.of(context).size.height * 0.22,
+                      ),
+                      kSizedBoxVerticalXS,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Transactions Chart', style: kHeadline3Black),
-                          kSizedBoxVerticalXS,
-                          Container(
-                            child: BalanceChart(),
-                            height: MediaQuery.of(context).size.height * 0.22,
+                          Indicator(
+                            text: "Income",
+                            color: const Color(0xFF57C84D),
+                            alignment: MainAxisAlignment.center,
                           ),
-                          kSizedBoxVerticalXS,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Indicator(
-                                text: "Income",
-                                color: const Color(0xFF57C84D),
-                                alignment: MainAxisAlignment.center,
-                              ),
-                              Indicator(
-                                text: "Expense",
-                                color: const Color(0xFFEA4C46),
-                                alignment: MainAxisAlignment.center,
-                              ),
-                            ],
+                          Indicator(
+                            text: "Expense",
+                            color: const Color(0xFFEA4C46),
+                            alignment: MainAxisAlignment.center,
                           ),
-                          kSizedBoxVerticalS,
-                          Text('Income by category', style: kHeadline3Black),
-                          CircularChart(),
-                          kSizedBoxVerticalS,
-                          Text('Expense by category', style: kHeadline3Black),
-                          CircularChart(),
                         ],
                       ),
+                      kSizedBoxVerticalS,
+                      Text('Income by category', style: kHeadline3Black),
+                      CircularChart(),
+                      kSizedBoxVerticalS,
+                      Text('Expense by category', style: kHeadline3Black),
+                      CircularChart(),
                     ],
                   ),
                 ),
