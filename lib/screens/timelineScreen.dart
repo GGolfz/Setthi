@@ -83,14 +83,28 @@ class _TimelineScreenState extends State<TimelineScreen> {
             ),
             Expanded(
               child: Consumer<TransactionProvider>(
-                builder: (ctx, transaction, _) => ListView(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    controller: _scrollController,
-                    children: transaction.transactions.map((transaction) {
-                      return TransactionItemBox(item: transaction);
-                    }).toList()),
-              ),
+                  builder: (ctx, transaction, _) => transaction
+                          .transactions.isNotEmpty
+                      ? ListView(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          controller: _scrollController,
+                          children: transaction.transactions.map((transaction) {
+                            return TransactionItemBox(item: transaction);
+                          }).toList())
+                      : Column(children: [
+                          SizedBox(
+                            height: 200,
+                            child: Image.asset(
+                              "assets/images/empty-transaction.png",
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          Text(
+                            "No transaction",
+                            style: kSubtitle1Black,
+                          )
+                        ])),
             ),
           ],
         ),

@@ -50,7 +50,9 @@ flutter:
   assets:
     - assets/images/app-logo.png
     - assets/images/app-logo-text.png
+    - assets/images/empty-data.png
     - assets/images/empty-item.png
+    - assets/images/empty-transaction.png
     - assets/images/empty-wallet.png
     - assets/images/account_balance_wallet.png
   #   - images/a_dot_ham.jpeg

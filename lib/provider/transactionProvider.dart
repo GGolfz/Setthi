@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:setthi/widgets/layout/congratsDialog.dart';
 import '../config/api.dart';
 import '../config/string.dart';
 import '../model/httpException.dart';
