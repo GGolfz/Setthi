@@ -18,6 +18,7 @@ class TransactionItem {
   DateTime date;
   String wallet;
   Color color;
+  String category;
   TransactionItem(
       {this.id,
       this.name,
@@ -25,14 +26,16 @@ class TransactionItem {
       this.amount,
       this.date,
       this.wallet,
-      this.color});
+      this.color,
+      this.category});
 
   String get stringType {
     return {
       TransactionType.Income: "Income",
       TransactionType.Expense: "Expense",
       TransactionType.Saving: "Saving",
-      TransactionType.ExpenseFromSaving: "Expense_from_saving"
+      TransactionType.ExpenseFromSaving: "Expense_from_saving",
+      TransactionType.IncomeFromSaving: "Income_from_saving"
     }[this.type];
   }
 }
@@ -95,7 +98,8 @@ class TransactionProvider with ChangeNotifier {
           var data = {...baseData, "saving_id": saving.id};
           response = await Dio().post(apiEndpoint + '/transaction/saving',
               data: data, options: options);
-
+          break;
+        default:
           break;
       }
       _transactions = modifyResponse(response.data["transactions"].toList());
@@ -106,7 +110,6 @@ class TransactionProvider with ChangeNotifier {
         }
       }
     } catch (error) {
-      print(error.response.data);
       if (error.response == null) throw HttpException(internetException);
       if (error.response.statusCode == 400) {
         if (transactionType == TransactionType.Expense &&
@@ -129,6 +132,7 @@ class TransactionProvider with ChangeNotifier {
       "EXPENSE": TransactionType.Expense,
       "SAVING": TransactionType.Saving,
       "EXPENSE_FROM_SAVING": TransactionType.ExpenseFromSaving,
+      "INCOME_FROM_SAVING": TransactionType.IncomeFromSaving,
     }[type];
   }
 
@@ -191,15 +195,17 @@ class TransactionProvider with ChangeNotifier {
     data.forEach((el) {
       TransactionType type = getTransactionType(el["transaction_type"]);
       transactions.add(TransactionItem(
-          id: el["id"],
-          name: el["title"],
-          type: type,
-          amount: double.parse(el["amount"]),
-          date: stringToDateTime(el["date"]),
-          wallet: type == TransactionType.ExpenseFromSaving
-              ? el["saving"]["title"]
-              : el["wallet"]["name"],
-          color: getColorFromText(el["category"]["color"])));
+        id: el["id"],
+        name: el["title"],
+        type: type,
+        amount: double.parse(el["amount"]),
+        date: stringToDateTime(el["date"]),
+        wallet: type == TransactionType.ExpenseFromSaving
+            ? el["saving"]["title"]
+            : el["wallet"]["name"],
+        color: getColorFromText(el["category"]["color"]),
+        category: el["category"]["name"],
+      ));
     });
     return transactions;
   }
