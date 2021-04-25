@@ -31,10 +31,10 @@ class _LabelFormState extends State<LabelForm> {
   var isLoadingDelete = false;
   String _getFormTitle() {
     if (widget.type == FormType.Create) {
-      return "Create New Label";
+      return "Create New Prefilled Title";
     }
     if (widget.type == FormType.Edit) {
-      return "Edit Label";
+      return "Edit Prefilled Title";
     }
     return "";
   }
@@ -154,7 +154,8 @@ class _LabelFormState extends State<LabelForm> {
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
               CustomFormTitle(title: _getFormTitle()),
               kSizedBoxVerticalS,
-              CustomTextField(title: "Label", textEditingController: _label),
+              CustomTextField(
+                  title: "Prefilled Title", textEditingController: _label),
               kSizedBoxVerticalS,
               CustomDropDown(
                   title: "Type",

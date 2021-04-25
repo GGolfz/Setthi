@@ -13,6 +13,7 @@ class AllTransactionItem extends StatelessWidget {
   Widget _textType(type) {
     switch (type) {
       case TransactionType.Income:
+      case TransactionType.IncomeFromSaving:
         return Text("+ THB ${formatCurrencyString(item.amount)}",
             style: kSubtitle1Green);
         break;
@@ -59,7 +60,7 @@ class AllTransactionItem extends StatelessWidget {
               title: Text(item.name,
                   style: kSubtitle1Black.copyWith(fontSize: 18)),
               subtitle: Column(children: [
-                _subtitleRow(item.wallet),
+                _subtitleRow(item.category),
                 _subtitleRow(formatDate(item.date))
               ]),
               trailing: Container(

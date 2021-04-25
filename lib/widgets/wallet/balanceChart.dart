@@ -6,40 +6,39 @@ import '../../config/constants.dart';
 import '../../config/style.dart';
 import '../../provider/walletProvider.dart';
 
-class ExpenseChart extends StatefulWidget {
+class BalanceChart extends StatefulWidget {
   @override
-  _ExpenseChartState createState() => _ExpenseChartState();
+  _BalanceChartState createState() => _BalanceChartState();
 }
 
-class _ExpenseChartState extends State<ExpenseChart> {
-  List<Color> gradientColors = [
-    const Color(0xFFDEC489),
-    const Color(0xFFF6E0A4),
-    const Color(0xFFD1B372),
-    const Color(0xFFE3CC97),
-    const Color(0xFFBF9A5E),
+class _BalanceChartState extends State<BalanceChart> {
+  List<Color> incomeGradientColors = [
+    const Color(0xFF2EB62C),
+    const Color(0xFF57C84D),
+    const Color(0xFF83D475),
+  ];
+  List<Color> expenseGradientColor = [
+    const Color(0xFFCC1C13),
+    const Color(0xFFEA4C46),
+    const Color(0xFFF07470),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: 2,
-          child: Container(
-            decoration: const BoxDecoration(
-                borderRadius: kBorderRadiusS, color: kNeutral700),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  right: 18, left: 12, top: 24, bottom: 12),
-              child: Consumer<WalletProvider>(
-                  builder: (ctx, wallet, _) => LineChart(
-                        graphData(wallet.chartData),
-                      )),
-            ),
-          ),
+    return AspectRatio(
+      aspectRatio: 2,
+      child: Container(
+        decoration: const BoxDecoration(
+            borderRadius: kBorderRadiusS, color: kNeutral700),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(right: 18, left: 12, top: 24, bottom: 12),
+          child: Consumer<WalletProvider>(
+              builder: (ctx, wallet, _) => LineChart(
+                    graphData(wallet.chartData),
+                  )),
         ),
-      ],
+      ),
     );
   }
 
@@ -73,7 +72,7 @@ class _ExpenseChartState extends State<ExpenseChart> {
           reservedSize: 22,
           getTextStyles: (value) => kBody1Black,
           getTitles: (value) {
-            return data.data[value.toInt()].date;
+            return data.income[value.toInt()].date;
           },
           margin: 8,
         ),
@@ -84,7 +83,7 @@ class _ExpenseChartState extends State<ExpenseChart> {
             return (value.floor()).toString();
           },
           interval: getInterval(data.max),
-          reservedSize: 28,
+          reservedSize: 32,
           margin: 12,
         ),
       ),
@@ -98,18 +97,25 @@ class _ExpenseChartState extends State<ExpenseChart> {
         LineChartBarData(
           spots: Iterable<int>.generate(7)
               .toList()
-              .map((i) => FlSpot(i.toDouble(), data.data[i].amount))
+              .map((i) => FlSpot(i.toDouble(), data.income[i].amount))
               .toList(),
-          colors: gradientColors,
+          colors: incomeGradientColors,
           barWidth: 5,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: false,
           ),
-          belowBarData: BarAreaData(
-            show: true,
-            colors:
-                gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+        ),
+        LineChartBarData(
+          spots: Iterable<int>.generate(7)
+              .toList()
+              .map((i) => FlSpot(i.toDouble(), data.expense[i].amount))
+              .toList(),
+          colors: expenseGradientColor,
+          barWidth: 5,
+          isStrokeCapRound: true,
+          dotData: FlDotData(
+            show: false,
           ),
         ),
       ],

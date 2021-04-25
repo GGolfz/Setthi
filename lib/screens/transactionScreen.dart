@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/config/style.dart';
 import '../config/color.dart';
 import '../model/httpException.dart';
 import '../provider/transactionProvider.dart';
@@ -121,13 +122,28 @@ class _TransactionScreenState extends State<TransactionScreen> {
           ),
           Expanded(
             child: Consumer<TransactionProvider>(
-              builder: (ctx, transaction, _) => ListView(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  controller: _scrollController,
-                  children: transaction.allTransactions.map((transaction) {
-                    return AllTransactionItem(item: transaction);
-                  }).toList()),
+              builder: (ctx, transaction, _) => transaction
+                      .allTransactions.isNotEmpty
+                  ? ListView(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      controller: _scrollController,
+                      children: transaction.allTransactions.map((transaction) {
+                        return AllTransactionItem(item: transaction);
+                      }).toList())
+                  : Column(children: [
+                      SizedBox(
+                        height: 200,
+                        child: Image.asset(
+                          "assets/images/empty-transaction.png",
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      Text(
+                        "No transaction",
+                        style: kSubtitle1Black,
+                      )
+                    ]),
             ),
           ),
         ],

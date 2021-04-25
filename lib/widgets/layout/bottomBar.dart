@@ -13,11 +13,7 @@ class BottomBar extends StatelessWidget {
   BottomBar({@required this.currentTab, @required this.changeTab});
   final barItems = [
     {'icon': Icons.list, 'tab': TimelineScreen.routeName, 'blank': false},
-    {
-      'icon': Icons.account_balance_wallet,
-      'tab': WalletScreen.routeName,
-      'blank': false
-    },
+    {'icon': Icons.show_chart, 'tab': WalletScreen.routeName, 'blank': false},
     {'blank': true},
     {
       'icon': Icons.monetization_on,

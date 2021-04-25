@@ -66,7 +66,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       Consumer<LabelProvider>(
                           builder: (ctx, label, _) => SettingItem(
                                 icon: Icons.label,
-                                text: "Labels",
+                                text: "Prefilled Titles",
                                 amount: label.labelCount,
                                 routeName: LabelScreen.routeName,
                               )),

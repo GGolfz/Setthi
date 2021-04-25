@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/widgets/wallet/circularChart.dart';
+import 'package:setthi/widgets/wallet/indicator.dart';
 import '../config/constants.dart';
 import '../config/color.dart';
 import '../config/style.dart';
 import '../model/httpException.dart';
 import '../provider/walletProvider.dart';
 import '../utils/format.dart';
-import '../widgets/buttons/actionButton.dart';
 import '../widgets/layout/appBar.dart';
-import '../widgets/layout/customDialog.dart';
 import '../widgets/layout/errorDialog.dart';
-import '../widgets/wallet/editWalletForm.dart';
-import '../widgets/wallet/emptyWallet.dart';
-import '../widgets/wallet/expenseChart.dart';
-import '../widgets/wallet/newWalletForm.dart';
-import '../widgets/wallet/walletCard.dart';
+import '../widgets/wallet/balanceChart.dart';
 
 class WalletScreen extends StatefulWidget {
   static final routeName = '/wallet';
@@ -24,34 +20,6 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
-  Widget _buildButtonCreate(BuildContext context) {
-    return Center(
-      child: Container(
-        margin:
-            EdgeInsets.symmetric(horizontal: kSizeM * 1.8, vertical: kSizeS),
-        child: ActionButton(
-          text: "Create a new wallet",
-          onPressed: () {
-            showCustomDialog(
-                context: context,
-                content: Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: NewWalletForm()));
-          },
-        ),
-      ),
-    );
-  }
-
-  void onClickEdit(BuildContext context, WalletItem selectedWallet) {
-    showCustomDialog(
-      context: context,
-      content: Container(
-          width: MediaQuery.of(context).size.width * 0.8,
-          child: EditWalletForm(selectedWallet: selectedWallet)),
-    );
-  }
-
   @override
   void initState() {
     fetchWallet();
@@ -63,6 +31,8 @@ class _WalletScreenState extends State<WalletScreen> {
       await Provider.of<WalletProvider>(context, listen: false).fetchWallet();
       await Provider.of<WalletProvider>(context, listen: false)
           .fetchExpenseChart();
+      await Provider.of<WalletProvider>(context, listen: false)
+          .fetchCategoryChart();
     } on HttpException catch (error) {
       showErrorDialog(
           context: context,
@@ -81,40 +51,52 @@ class _WalletScreenState extends State<WalletScreen> {
                 subtitle: 'Total Wealth',
               ),
               body: SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: kSizeS, vertical: kSizeXS),
-                  child: Column(
-                    children: <Widget>[
-                      Column(
+                  child: Container(
+                padding:
+                    EdgeInsets.symmetric(horizontal: kSizeS, vertical: kSizeXS),
+                child: Consumer<WalletProvider>(
+                  builder: (ctx, wallet, _) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Weekly statistic', style: kHeadline2Black)
+                          ]),
+                      Text('Transactions Chart', style: kHeadline3Black),
+                      kSizedBoxVerticalXS,
+                      Container(
+                        child: BalanceChart(),
+                        height: MediaQuery.of(context).size.height * 0.22,
+                      ),
+                      kSizedBoxVerticalXS,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Your expense', style: kHeadline3Black),
-                          kSizedBoxVerticalXXS,
-                          Container(
-                            child: ExpenseChart(),
-                            height: MediaQuery.of(context).size.height * 0.22,
-                          )
+                          Indicator(
+                            text: "Income",
+                            color: const Color(0xFF57C84D),
+                            alignment: MainAxisAlignment.center,
+                          ),
+                          Indicator(
+                            text: "Expense",
+                            color: const Color(0xFFEA4C46),
+                            alignment: MainAxisAlignment.center,
+                          ),
                         ],
                       ),
                       kSizedBoxVerticalS,
-                      wallet.isEmpty()
-                          ? EmptyWallet()
-                          : Container(
-                              height: MediaQuery.of(context).size.height * 0.35,
-                              child: ListView.builder(
-                                itemBuilder: (ctx, index) => WalletCard(
-                                  item: wallet.wallets[index],
-                                  onTap: () => onClickEdit(
-                                      context, wallet.wallets[index]),
-                                ),
-                                itemCount: wallet.walletCount,
-                              ),
-                            ),
-                      _buildButtonCreate(context),
+                      Text('Income by category', style: kHeadline3Black),
+                      kSizedBoxVerticalXS,
+                      CircularChart(wallet.categoryData.income),
+                      kSizedBoxVerticalS,
+                      Text('Expense by category', style: kHeadline3Black),
+                      kSizedBoxVerticalXS,
+                      CircularChart(wallet.categoryData.expense),
                     ],
                   ),
                 ),
-              ),
+              )),
             ));
   }
 }
