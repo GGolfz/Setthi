@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:setthi/config/color.dart';
 import 'package:setthi/config/string.dart';
+import 'package:setthi/screens/tutorialScreen.dart';
 import '../config/constants.dart';
 import '../model/httpException.dart';
 import '../provider/savingProvider.dart';
@@ -33,6 +35,20 @@ class _SavingScreenState extends State<SavingScreen> {
               text: createBudgetText,
               onPressed: () {
                 showCustomDialog(context: context, content: SavingForm());
+              },
+            )));
+  }
+
+  Widget _buildButtonTutorial(BuildContext context) {
+    return Center(
+        child: Container(
+            margin: EdgeInsets.symmetric(
+                horizontal: kSizeM * 1.8, vertical: kSizeS),
+            child: ActionButton(
+              text: tutorialText,
+              color: kGold400,
+              onPressed: () {
+                Navigator.of(context).pushNamed(TutorialScreen.routeName);
               },
             )));
   }
@@ -136,7 +152,8 @@ class _SavingScreenState extends State<SavingScreen> {
                                     ],
                                   )),
                           kSizedBoxVerticalS,
-                          _buildButtonCreate(context)
+                          _buildButtonCreate(context),
+                          _buildButtonTutorial(context)
                         ])))));
   }
 }

@@ -8,7 +8,7 @@ const suggestSigninQuestion = "Already have an account ? ";
 const suggestSigninText = "Sign In";
 const createWalletText = "Create a new wallet";
 const createBudgetText = "Create a new saving goal";
-
+const tutorialText = "How does it works";
 const authenticateException = "Please login.";
 const internetException = "Please check your internet connection.";
 const generalException = "Something went wrong. Please try again later.";
