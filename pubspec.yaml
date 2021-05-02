@@ -55,6 +55,7 @@ flutter:
     - assets/images/empty-transaction.png
     - assets/images/empty-wallet.png
     - assets/images/account_balance_wallet.png
+    - assets/images/saving-tutorial-screen.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
