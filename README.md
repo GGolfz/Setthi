@@ -1,16 +1,19 @@
 # setthi
 
-A new Flutter project.
+Money Management Application
 
-## Getting Started
+## About This Project
 
-This project is a starting point for a Flutter application.
+Setthi is a money management mobile application with pocket functionality allows users to organize their finances by dividing their money into different pockets or virtual envelopes. This feature enables users to allocate funds for specific purposes, such as groceries, rent, entertainment, or savings.
 
-A few resources to get you started if this is your first Flutter project:
+## Contributor
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<a href="https://github.com/GGolfz">Wisarut Kitticharoenphonngam (GGolfz)</a>
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<a href="https://github.com/coolkidneversleep">Kaewket Saelee (coolkidneversleep)</a>
+
+<a href="https://github.com/thetkpark">Sethanant Pipatpakorn (thetkpark)</a>
+
+<a href="https://github.com/boyplus">Thanaphon Sombunkaeo (boyplus)</a>
+
+<a href="https://github.com/rabbitnote">Thanakorn Aungkunchuchod (rabbitnote)</a>
